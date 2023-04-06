@@ -1,0 +1,16 @@
+[23:13:05] [INFO] received Windows console close event; shutting log-core down
+[23:14:29] [INFO] received Windows console close event; shutting log-core down
+[23:14:53] [INFO] received Windows console close event; shutting log-core down
+[23:16:09] [INFO] received Windows console close event; shutting log-core down
+[23:17:06] [INFO] received Windows console close event; shutting log-core down
+[23:20:10] [INFO] received Windows console close event; shutting log-core down
+[23:22:35] [ERROR] exception 0XE06D7363 (<unknown>) from Unhandled Exception Handler catched; shutting log-core down
+[23:22:37] [ERROR] exception 0XE06D7363 (<unknown>) from Unhandled Exception Handler catched; shutting log-core down
+[23:22:46] [ERROR] exception 0XE06D7363 (<unknown>) from Unhandled Exception Handler catched; shutting log-core down
+[23:23:19] [ERROR] exception 0XE06D7363 (<unknown>) from Unhandled Exception Handler catched; shutting log-core down
+[23:23:28] [ERROR] exception 0XE06D7363 (<unknown>) from Unhandled Exception Handler catched; shutting log-core down
+[23:23:29] [ERROR] exception 0XE06D7363 (<unknown>) from Unhandled Exception Handler catched; shutting log-core down
+[23:23:29] [ERROR] exception 0XE06D7363 (<unknown>) from Unhandled Exception Handler catched; shutting log-core down
+[23:23:37] [ERROR] exception 0XE06D7363 (<unknown>) from Unhandled Exception Handler catched; shutting log-core down
+[23:23:59] [ERROR] exception 0XE06D7363 (<unknown>) from Unhandled Exception Handler catched; shutting log-core down
+[23:55:25] [INFO] received Windows console close event; shutting log-core down

@@ -1,0 +1,314 @@
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[23:23:37] filterscripts = ""  (string)
+[23:23:37] weburl = "www.sa-mp.com"  (string)
+[23:23:37] 
+[23:23:37] Server Plugins
+[23:23:37] --------------
+[23:23:37]  Loading plugin: sscanf
+[23:23:37] 
+[23:23:37]  ===============================
+[23:23:37] 
+[23:23:37]       sscanf plugin loaded.     
+[23:23:37] 
+[23:23:37]          Version: 2.13.1
+[23:23:37] 
+[23:23:37]    (c) 2022 Alex "Y_Less" Cole  
+[23:23:37] 
+[23:23:37]  ===============================
+[23:23:37] 
+[23:23:37]   Loaded.
+[23:23:37]  Loading plugin: streamer
+[23:23:37] 
+
+*** Streamer Plugin v2.9.5 by Incognito loaded ***
+
+[23:23:37]   Loaded.
+[23:23:37]  Loading plugin: mysql
+[23:23:37]  >> plugin.mysql: R41-4 successfully loaded.
+[23:23:37]   Loaded.
+[23:23:37]  Loading plugin: PawnPlus
+[23:23:37]  PawnPlus v1.4.2 loaded
+[23:23:37]  Created by IllidanS4
+[23:23:37]   Loaded.
+[23:23:37]  Loading plugin: log-plugin
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[23:23:59] filterscripts = ""  (string)
+[23:23:59] weburl = "www.sa-mp.com"  (string)
+[23:23:59] 
+[23:23:59] Server Plugins
+[23:23:59] --------------
+[23:23:59]  Loading plugin: sscanf
+[23:23:59] 
+[23:23:59]  ===============================
+[23:23:59] 
+[23:23:59]       sscanf plugin loaded.     
+[23:23:59] 
+[23:23:59]          Version: 2.13.1
+[23:23:59] 
+[23:23:59]    (c) 2022 Alex "Y_Less" Cole  
+[23:23:59] 
+[23:23:59]  ===============================
+[23:23:59] 
+[23:23:59]   Loaded.
+[23:23:59]  Loading plugin: streamer
+[23:23:59] 
+
+*** Streamer Plugin v2.9.5 by Incognito loaded ***
+
+[23:23:59]   Loaded.
+[23:23:59]  Loading plugin: mysql
+[23:23:59]  >> plugin.mysql: R41-4 successfully loaded.
+[23:23:59]   Loaded.
+[23:23:59]  Loading plugin: PawnPlus
+[23:23:59]  PawnPlus v1.4.2 loaded
+[23:23:59]  Created by IllidanS4
+[23:23:59]   Loaded.
+[23:23:59]  Loading plugin: log-plugin
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[23:24:08] filterscripts = ""  (string)
+[23:24:08] weburl = "www.sa-mp.com"  (string)
+[23:24:08] 
+[23:24:08] Server Plugins
+[23:24:08] --------------
+[23:24:08]  Loading plugin: log-plugin
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[23:25:31] filterscripts = ""  (string)
+[23:25:31] weburl = "www.sa-mp.com"  (string)
+[23:25:31] 
+[23:25:31] Server Plugins
+[23:25:31] --------------
+[23:25:31]  Loading plugin: log-plugin
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[23:26:29] filterscripts = ""  (string)
+[23:26:29] weburl = "www.sa-mp.com"  (string)
+[23:26:29] 
+[23:26:29] Server Plugins
+[23:26:29] --------------
+[23:26:29]  Loading plugin: log-plugin
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[23:26:56] filterscripts = ""  (string)
+[23:26:56] weburl = "www.sa-mp.com"  (string)
+[23:26:56] 
+[23:26:56] Server Plugins
+[23:26:56] --------------
+[23:26:56]  Loading plugin: log-plugin
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[23:28:05] filterscripts = ""  (string)
+[23:28:05] weburl = "www.sa-mp.com"  (string)
+[23:28:05] 
+[23:28:05] Server Plugins
+[23:28:05] --------------
+[23:28:05]  Loading plugin: sscanf
+[23:28:05] 
+[23:28:05]  ===============================
+[23:28:05] 
+[23:28:05]       sscanf plugin loaded.     
+[23:28:05] 
+[23:28:05]          Version: 2.13.1
+[23:28:05] 
+[23:28:05]    (c) 2022 Alex "Y_Less" Cole  
+[23:28:05] 
+[23:28:05]  ===============================
+[23:28:05] 
+[23:28:05]   Loaded.
+[23:28:05]  Loading plugin: streamer
+[23:28:05] 
+
+*** Streamer Plugin v2.9.5 by Incognito loaded ***
+
+[23:28:05]   Loaded.
+[23:28:05]  Loading plugin: mysql
+[23:28:05]  >> plugin.mysql: R41-4 successfully loaded.
+[23:28:05]   Loaded.
+[23:28:05]  Loading plugin: PawnPlus
+[23:28:05]  PawnPlus v1.4.2 loaded
+[23:28:05]  Created by IllidanS4
+[23:28:05]   Loaded.
+[23:28:05]  Loaded 4 plugins.
+
+[23:28:05] I couldn't load any gamemode scripts. Please verify your server.cfg
+[23:28:05] It needs a gamemode0 line at the very least.
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[23:53:38] filterscripts = ""  (string)
+[23:53:38] weburl = "www.sa-mp.com"  (string)
+[23:53:38] 
+[23:53:38] Server Plugins
+[23:53:38] --------------
+[23:53:38]  Loading plugin: sscanf
+[23:53:38] 
+[23:53:38]  ===============================
+[23:53:38] 
+[23:53:38]       sscanf plugin loaded.     
+[23:53:38] 
+[23:53:38]          Version: 2.13.1
+[23:53:38] 
+[23:53:38]    (c) 2022 Alex "Y_Less" Cole  
+[23:53:38] 
+[23:53:38]  ===============================
+[23:53:38] 
+[23:53:38]   Loaded.
+[23:53:38]  Loading plugin: streamer
+[23:53:38] 
+
+*** Streamer Plugin v2.9.5 by Incognito loaded ***
+
+[23:53:38]   Loaded.
+[23:53:38]  Loading plugin: mysql
+[23:53:38]  >> plugin.mysql: R41-4 successfully loaded.
+[23:53:38]   Loaded.
+[23:53:38]  Loading plugin: PawnPlus
+[23:53:38]  PawnPlus v1.4.2 loaded
+[23:53:38]  Created by IllidanS4
+[23:53:38]   Loaded.
+[23:53:38]  Loaded 4 plugins.
+
+[23:53:38] 
+[23:53:38] Filterscripts
+[23:53:38] ---------------
+[23:53:38]   Loaded 0 filterscripts.
+
+[23:53:38]  
+[23:53:38]  
+[23:53:38]          ==============================================================
+[23:53:38]          |                                                            |
+[23:53:38]          |                                                            |
+[23:53:38]          |    YYYYYYY       YYYYYYY    SSSSSSSSSSSSSSS  IIIIIIIIII    |
+[23:53:38]          |    Y:::::Y       Y:::::Y  SS:::::::::::::::S I::::::::I    |
+[23:53:38]          |    Y:::::Y       Y:::::Y S:::::SSSSSS::::::S I::::::::I    |
+[23:53:38]          |    Y::::::Y     Y::::::Y S:::::S     SSSSSSS II::::::II    |
+[23:53:38]          |    YYY:::::Y   Y:::::YYY S:::::S               I::::I      |
+[23:53:38]          |       Y:::::Y Y:::::Y    S:::::S               I::::I      |
+[23:53:38]          |        Y:::::Y:::::Y      S::::SSSS            I::::I      |
+[23:53:38]          |         Y:::::::::Y        SS::::::SSSSS       I::::I      |
+[23:53:38]          |          Y:::::::Y           SSS::::::::SS     I::::I      |
+[23:53:38]          |           Y:::::Y               SSSSSS::::S    I::::I      |
+[23:53:38]          |           Y:::::Y                    S:::::S   I::::I      |
+[23:53:38]          |           Y:::::Y                    S:::::S   I::::I      |
+[23:53:38]          |           Y:::::Y        SSSSSSS     S:::::S II::::::II    |
+[23:53:38]          |        YYYY:::::YYYY     S::::::SSSSSS:::::S I::::::::I    |
+[23:53:38]          |        Y:::::::::::Y     S:::::::::::::::SS  I::::::::I    |
+[23:53:38]          |        YYYYYYYYYYYYY      SSSSSSSSSSSSSSS    IIIIIIIIII    |
+[23:53:38]          |                                                            |
+[23:53:38]          |                                                            |
+[23:53:38]          |                      (c) 2021 MPL v1.1                     |
+[23:53:38]          |            Alex "Y_Less" Cole and contributors.            |
+[23:53:38]          |                                                            |
+[23:53:38]          |                                                            |
+[23:53:38]          ==============================================================
+[23:53:38]  
+[23:53:38]  
+[23:53:38]  ========================================== 
+[23:53:38]  |                                        | 
+[23:53:38]  |  Missing YSI scriptfiles directories:  | 
+[23:53:38]  |                                        | 
+[23:53:38]  |      /scriptfiles/YSI/fixes/           | 
+[23:53:38]  |      /scriptfiles/YSI/temp/            | 
+[23:53:38]  |                                        | 
+[23:53:38]  ========================================== 
+[23:53:38]  |                                        | 
+[23:53:38]  |   Generating code, this may take a     | 
+[23:53:38]  |  little bit of time.  Note that this   | 
+[23:53:38]  |  code generation works best with the   | 
+[23:53:38]  |     JIT plugin, which you are not      | 
+[23:53:38]  |     currently using.  Get it here:     | 
+[23:53:38]  |                                        | 
+[23:53:38]  |       https://git.io/jit-plugin        | 
+[23:53:38]  |                                        | 
+[23:53:38]  |             Please wait...             | 
+[23:53:38]  |                                        | 
+[23:53:38]  |                 Done!                  | 
+[23:53:38]  |                                        | 
+[23:53:38]  ========================================== 
+[23:53:38]  |                                        | 
+[23:53:38]  | Server:      0.3DL - Windows           | 
+[23:53:38]  | Compiler:    3.10.10 - Windows         | 
+[23:53:38]  | Codepage:    <none>                    | 
+[23:53:38]  | YSI:         5.06.1932                 | 
+[23:53:38]  | Started:     1680818018                | 
+[23:53:38]  | JIT:         <none>                    | 
+[23:53:38]  | Crashdetect: <none>                    | 
+[23:53:38]  |                                        | 
+[23:53:38]  ========================================== 
+[23:53:38]  
+[23:53:38]   Filterscript '../scriptfiles/callbackfix.amx' loaded.
+[23:53:38] *** YSI Info: YSI Script ID: 1
+[23:53:38]  
+[23:53:38] -                                     -
+[23:53:38] -                                     -
+[23:53:38]  Founder : Nickname
+[23:53:38]  Version : 1.0 - Naziv
+[23:53:38]  Credits : realnaith for Scripting 
+[23:53:38]  Frontend : 
+[23:53:38] -                                     -
+[23:53:38] > Gamemode Starting...
+[23:53:38] >> myproject Gamemode Started
+[23:53:38] -                                     -
+[23:53:38] Number of vehicle models: 0
+[23:54:03] [connection] 127.0.0.1:64851 requests connection cookie.
+[23:54:04] [connection] incoming connection: 127.0.0.1:64851 id: 0
+[23:54:04] [join] Danis_Cavalic has joined the server (0:127.0.0.1)
+[23:55:22] [part] Danis_Cavalic has left the server (0:1)
