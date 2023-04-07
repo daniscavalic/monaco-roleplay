@@ -95,6 +95,8 @@ bool:Auth(playerid, level) {
 // --------------------------------------------------------------------//
 //			Backend
 #include 	"backend/vehicles_handler.pwn"
+//			Frontend
+#include 	"client/register_char.pwn"
 // --------------------------------------------------------------------//
 
 main()
@@ -481,24 +483,7 @@ public OnPlayerClickPlayer(playerid, clickedplayerid, source)
 forward OnPlayerRegister(playerid);
 public OnPlayerRegister(playerid)
 {
-
-	Player[playerid][IsLoggedIn] = true;
-
-	Player[playerid][X_Pos] = DEFAULT_POS_X;
-	Player[playerid][Y_Pos] = DEFAULT_POS_Y;
-	Player[playerid][Z_Pos] = DEFAULT_POS_Z;
-	Player[playerid][A_Pos] = DEFAULT_POS_A;
-	Player[playerid][Skin] = 60;
-
-	SendClientMessage(playerid, -1, ""c_server"myproject // "c_white"Uspesno ste se registrovali!");
-	SetSpawnInfo(playerid, 0, Player[playerid][Skin],
-		154.2401,-1942.5531,3.7734,0.4520,
-		0, 0, 0, 0, 0, 0
-	);
-	SpawnPlayer(playerid);
-
-	//SetSpawnInfo(playerid, NO_TEAM, 0, Player[playerid][X_Pos], Player[playerid][Y_Pos], Player[playerid][Z_Pos], Player[playerid][A_Pos], 0, 0, 0, 0, 0, 0);
-	//SpawnPlayer(playerid);
+	StartCharacterRegistration(playerid);
 	return 1;
 }
 
@@ -588,6 +573,12 @@ public e_COMMAND_ERRORS:OnPlayerCommandPerformed(playerid, cmdtext[], e_COMMAND_
 		return COMMAND_OK;
 	}
 	return COMMAND_OK;
+}
+
+YCMD:test(playerid, params[], help) 
+{
+	StartCharacterRegistration(playerid);
+	return 1;
 }
 
 YCMD:cmdhelp(playerid, params[], help)

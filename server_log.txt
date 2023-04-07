@@ -2577,3 +2577,1344 @@ v0.3.7-R2, (C)2005-2015 SA-MP Team
 [19:44:15] [connection] incoming connection: 127.0.0.1:53919 id: 0
 [19:44:15] [join] Danis_Cavalic has joined the server (0:127.0.0.1)
 [19:46:23] [part] Danis_Cavalic has left the server (0:1)
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[00:04:35] filterscripts = ""  (string)
+[00:04:35] weburl = "www.sa-mp.com"  (string)
+[00:04:35] 
+[00:04:35] Server Plugins
+[00:04:35] --------------
+[00:04:35]  Loading plugin: crashdetect
+[00:04:35]   CrashDetect plugin 4.21
+[00:04:35]   Loaded.
+[00:04:35]  Loading plugin: sscanf
+[00:04:35] 
+[00:04:35]  ===============================
+[00:04:35] 
+[00:04:35]       sscanf plugin loaded.     
+[00:04:35] 
+[00:04:35]          Version: 2.13.1
+[00:04:35] 
+[00:04:35]    (c) 2022 Alex "Y_Less" Cole  
+[00:04:35] 
+[00:04:35]  ===============================
+[00:04:35] 
+[00:04:35]   Loaded.
+[00:04:35]  Loading plugin: streamer
+[00:04:35] 
+
+*** Streamer Plugin v2.9.5 by Incognito loaded ***
+
+[00:04:35]   Loaded.
+[00:04:35]  Loading plugin: mysql
+[00:04:35]  >> plugin.mysql: R41-4 successfully loaded.
+[00:04:35]   Loaded.
+[00:04:35]  Loaded 4 plugins.
+
+[00:04:35] 
+[00:04:35] Filterscripts
+[00:04:35] ---------------
+[00:04:35]   Loaded 0 filterscripts.
+
+[00:04:35]  
+[00:04:35]  
+[00:04:35]          ==============================================================
+[00:04:35]          |                                                            |
+[00:04:35]          |                                                            |
+[00:04:35]          |    YYYYYYY       YYYYYYY    SSSSSSSSSSSSSSS  IIIIIIIIII    |
+[00:04:35]          |    Y:::::Y       Y:::::Y  SS:::::::::::::::S I::::::::I    |
+[00:04:35]          |    Y:::::Y       Y:::::Y S:::::SSSSSS::::::S I::::::::I    |
+[00:04:35]          |    Y::::::Y     Y::::::Y S:::::S     SSSSSSS II::::::II    |
+[00:04:35]          |    YYY:::::Y   Y:::::YYY S:::::S               I::::I      |
+[00:04:35]          |       Y:::::Y Y:::::Y    S:::::S               I::::I      |
+[00:04:35]          |        Y:::::Y:::::Y      S::::SSSS            I::::I      |
+[00:04:35]          |         Y:::::::::Y        SS::::::SSSSS       I::::I      |
+[00:04:35]          |          Y:::::::Y           SSS::::::::SS     I::::I      |
+[00:04:35]          |           Y:::::Y               SSSSSS::::S    I::::I      |
+[00:04:35]          |           Y:::::Y                    S:::::S   I::::I      |
+[00:04:35]          |           Y:::::Y                    S:::::S   I::::I      |
+[00:04:35]          |           Y:::::Y        SSSSSSS     S:::::S II::::::II    |
+[00:04:35]          |        YYYY:::::YYYY     S::::::SSSSSS:::::S I::::::::I    |
+[00:04:35]          |        Y:::::::::::Y     S:::::::::::::::SS  I::::::::I    |
+[00:04:35]          |        YYYYYYYYYYYYY      SSSSSSSSSSSSSSS    IIIIIIIIII    |
+[00:04:35]          |                                                            |
+[00:04:35]          |                                                            |
+[00:04:35]          |                      (c) 2021 MPL v1.1                     |
+[00:04:35]          |            Alex "Y_Less" Cole and contributors.            |
+[00:04:35]          |                                                            |
+[00:04:35]          |                                                            |
+[00:04:35]          ==============================================================
+[00:04:35]  
+[00:04:35]  
+[00:04:35]  ========================================== 
+[00:04:35]  |                                        | 
+[00:04:35]  |  Missing YSI scriptfiles directories:  | 
+[00:04:35]  |                                        | 
+[00:04:35]  |      /scriptfiles/YSI/fixes/           | 
+[00:04:35]  |      /scriptfiles/YSI/temp/            | 
+[00:04:35]  |                                        | 
+[00:04:35]  ========================================== 
+[00:04:35]  |                                        | 
+[00:04:35]  |   Generating code, this may take a     | 
+[00:04:35]  |  little bit of time.  Note that this   | 
+[00:04:35]  |  code generation works best with the   | 
+[00:04:35]  |     JIT plugin, which you are not      | 
+[00:04:35]  |     currently using.  Get it here:     | 
+[00:04:35]  |                                        | 
+[00:04:35]  |       https://git.io/jit-plugin        | 
+[00:04:35]  |                                        | 
+[00:04:35]  |             Please wait...             | 
+[00:04:35] [debug] Long callback execution detected (hang or performance issue)
+[00:04:35] [debug] AMX backtrace:
+[00:04:35] [debug] #0 0000d3f4 in InitOpcodeTable () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\y_cgen\..\..\YSI_Core\y_core\..\..\amx\opcode.inc:755
+[00:04:35] [debug] #1 0000d478 in Opcode:RelocateOpcode (Opcode:opcode=134) at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\y_cgen\..\..\YSI_Core\y_core\..\..\amx\opcode.inc:765
+[00:04:35] [debug] #2 0001542c in CodeScanInit (scanner[CodeScanner:172]=@02860fc8) at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\y_cgen\..\..\YSI_Core\y_core\..\..\amx\codescan.inc:1037
+[00:04:35] [debug] #3 00015aac in AddressofResolve () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\y_cgen\..\..\YSI_Core\y_core\..\..\amx\addressof_jit.inc:106
+[00:04:35] [debug] #4 00016ed8 in public AMX_OnCodeInit () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\y_cgen\..\..\YSI_Core\y_core\y_thirdpartyinclude.inc:380
+[00:04:35] [debug] #5 0000482c in public Debug_OnCodeInit () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\..\YSI_Core\y_core\y_amx_impl.inc:207
+[00:04:35] [debug] #6 00004124 in public ScriptInit_OnCodeInit () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\..\YSI_Core\y_core\y_debug_impl.inc:646
+[00:04:35] [debug] #7 00001dd0 in bool:ScriptInit_CallOnCodeInit (bool:jit=false, bool:fs=false) at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\..\YSI_Core\y_core\y_scriptinit_impl.inc:706
+[00:04:35] [debug] #8 00002d68 in public OnGameModeInit () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\..\YSI_Core\y_core\y_scriptinit_impl.inc:1105
+[00:04:35]  |                                        | 
+[00:04:35]  |                 Done!                  | 
+[00:04:35]  |                                        | 
+[00:04:35]  ========================================== 
+[00:04:35]  |                                        | 
+[00:04:35]  | Server:      0.3DL - Windows           | 
+[00:04:35]  | Compiler:    3.10.10 - Windows         | 
+[00:04:35]  | Codepage:    <none>                    | 
+[00:04:35]  | YSI:         5.06.1932                 | 
+[00:04:35]  | Started:     1680905075                | 
+[00:04:35]  | JIT:         <none>                    | 
+[00:04:35]  | Crashdetect: <found>                   | 
+[00:04:35]  |                                        | 
+[00:04:35]  ========================================== 
+[00:04:35]  
+[00:04:35]   Filterscript '../scriptfiles/callbackfix.amx' loaded.
+[00:04:35] *** YSI Info: YSI Script ID: 1
+[00:04:35]  
+[00:04:35] -                                     -
+[00:04:35]  Founder : Danis Cavalic (Slade)
+[00:04:35]  Monaco : v0.1
+[00:04:35]  Credits : realnaith (myserver) 
+[00:04:35] -                                     -
+[00:04:35] Number of vehicle models: 0
+[00:04:45] [connection] 127.0.0.1:59680 requests connection cookie.
+[00:04:46] [connection] incoming connection: 127.0.0.1:59680 id: 0
+[00:04:47] [join] Danis_Cavalic has joined the server (0:127.0.0.1)
+[00:04:53] RCON (In-Game): Player #0 (Danis_Cavalic) has logged in.
+[00:04:55] RCON (In-Game): Player [Danis_Cavalic] sent command: loadfs cameditor
+[00:04:55] 
+--------------------------------------
+[00:04:55]  CamEditor by Drebin
+[00:04:55] --------------------------------------
+
+[00:04:55]   Filterscript 'cameditor.amx' loaded.
+[00:09:50] [part] Danis_Cavalic has left the server (0:1)
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[00:58:01] filterscripts = ""  (string)
+[00:58:01] weburl = "www.sa-mp.com"  (string)
+[00:58:01] 
+[00:58:01] Server Plugins
+[00:58:01] --------------
+[00:58:01]  Loading plugin: crashdetect
+[00:58:01]   CrashDetect plugin 4.21
+[00:58:01]   Loaded.
+[00:58:01]  Loading plugin: sscanf
+[00:58:01] 
+[00:58:01]  ===============================
+[00:58:01] 
+[00:58:01]       sscanf plugin loaded.     
+[00:58:01] 
+[00:58:01]          Version: 2.13.1
+[00:58:01] 
+[00:58:01]    (c) 2022 Alex "Y_Less" Cole  
+[00:58:01] 
+[00:58:01]  ===============================
+[00:58:01] 
+[00:58:01]   Loaded.
+[00:58:01]  Loading plugin: streamer
+[00:58:01] 
+
+*** Streamer Plugin v2.9.5 by Incognito loaded ***
+
+[00:58:01]   Loaded.
+[00:58:01]  Loading plugin: mysql
+[00:58:01]  >> plugin.mysql: R41-4 successfully loaded.
+[00:58:01]   Loaded.
+[00:58:01]  Loaded 4 plugins.
+
+[00:58:01] 
+[00:58:01] Filterscripts
+[00:58:01] ---------------
+[00:58:01]   Loaded 0 filterscripts.
+
+[00:58:01]  
+[00:58:01]  
+[00:58:01]          ==============================================================
+[00:58:01]          |                                                            |
+[00:58:01]          |                                                            |
+[00:58:01]          |    YYYYYYY       YYYYYYY    SSSSSSSSSSSSSSS  IIIIIIIIII    |
+[00:58:01]          |    Y:::::Y       Y:::::Y  SS:::::::::::::::S I::::::::I    |
+[00:58:01]          |    Y:::::Y       Y:::::Y S:::::SSSSSS::::::S I::::::::I    |
+[00:58:01]          |    Y::::::Y     Y::::::Y S:::::S     SSSSSSS II::::::II    |
+[00:58:01]          |    YYY:::::Y   Y:::::YYY S:::::S               I::::I      |
+[00:58:01]          |       Y:::::Y Y:::::Y    S:::::S               I::::I      |
+[00:58:01]          |        Y:::::Y:::::Y      S::::SSSS            I::::I      |
+[00:58:01]          |         Y:::::::::Y        SS::::::SSSSS       I::::I      |
+[00:58:01]          |          Y:::::::Y           SSS::::::::SS     I::::I      |
+[00:58:01]          |           Y:::::Y               SSSSSS::::S    I::::I      |
+[00:58:01]          |           Y:::::Y                    S:::::S   I::::I      |
+[00:58:01]          |           Y:::::Y                    S:::::S   I::::I      |
+[00:58:01]          |           Y:::::Y        SSSSSSS     S:::::S II::::::II    |
+[00:58:01]          |        YYYY:::::YYYY     S::::::SSSSSS:::::S I::::::::I    |
+[00:58:01]          |        Y:::::::::::Y     S:::::::::::::::SS  I::::::::I    |
+[00:58:01]          |        YYYYYYYYYYYYY      SSSSSSSSSSSSSSS    IIIIIIIIII    |
+[00:58:01]          |                                                            |
+[00:58:01]          |                                                            |
+[00:58:01]          |                      (c) 2021 MPL v1.1                     |
+[00:58:01]          |            Alex "Y_Less" Cole and contributors.            |
+[00:58:01]          |                                                            |
+[00:58:01]          |                                                            |
+[00:58:01]          ==============================================================
+[00:58:01]  
+[00:58:01]  
+[00:58:01]  ========================================== 
+[00:58:01]  |                                        | 
+[00:58:01]  |  Missing YSI scriptfiles directories:  | 
+[00:58:01]  |                                        | 
+[00:58:01]  |      /scriptfiles/YSI/fixes/           | 
+[00:58:01]  |      /scriptfiles/YSI/temp/            | 
+[00:58:01]  |                                        | 
+[00:58:01]  ========================================== 
+[00:58:01]  |                                        | 
+[00:58:01]  |   Generating code, this may take a     | 
+[00:58:01]  |  little bit of time.  Note that this   | 
+[00:58:01]  |  code generation works best with the   | 
+[00:58:01]  |     JIT plugin, which you are not      | 
+[00:58:01]  |     currently using.  Get it here:     | 
+[00:58:01]  |                                        | 
+[00:58:01]  |       https://git.io/jit-plugin        | 
+[00:58:01]  |                                        | 
+[00:58:01]  |             Please wait...             | 
+[00:58:01] [debug] Long callback execution detected (hang or performance issue)
+[00:58:01] [debug] AMX backtrace:
+[00:58:01] [debug] #0 0000d3f4 in InitOpcodeTable () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\y_cgen\..\..\YSI_Core\y_core\..\..\amx\opcode.inc:755
+[00:58:01] [debug] #1 0000d478 in Opcode:RelocateOpcode (Opcode:opcode=134) at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\y_cgen\..\..\YSI_Core\y_core\..\..\amx\opcode.inc:765
+[00:58:01] [debug] #2 0001542c in CodeScanInit (scanner[CodeScanner:172]=@028663ac) at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\y_cgen\..\..\YSI_Core\y_core\..\..\amx\codescan.inc:1037
+[00:58:01] [debug] #3 00015aac in AddressofResolve () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\y_cgen\..\..\YSI_Core\y_core\..\..\amx\addressof_jit.inc:106
+[00:58:01] [debug] #4 00016ed8 in public AMX_OnCodeInit () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\y_cgen\..\..\YSI_Core\y_core\y_thirdpartyinclude.inc:380
+[00:58:01] [debug] #5 0000482c in public Debug_OnCodeInit () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\..\YSI_Core\y_core\y_amx_impl.inc:207
+[00:58:01] [debug] #6 00004124 in public ScriptInit_OnCodeInit () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\..\YSI_Core\y_core\y_debug_impl.inc:646
+[00:58:01] [debug] #7 00001dd0 in bool:ScriptInit_CallOnCodeInit (bool:jit=false, bool:fs=false) at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\..\YSI_Core\y_core\y_scriptinit_impl.inc:706
+[00:58:01] [debug] #8 00002d68 in public OnGameModeInit () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\..\YSI_Core\y_core\y_scriptinit_impl.inc:1105
+[00:58:01]  |                                        | 
+[00:58:01]  |                 Done!                  | 
+[00:58:01]  |                                        | 
+[00:58:01]  ========================================== 
+[00:58:01]  |                                        | 
+[00:58:01]  | Server:      0.3DL - Windows           | 
+[00:58:01]  | Compiler:    3.10.10 - Windows         | 
+[00:58:01]  | Codepage:    <none>                    | 
+[00:58:01]  | YSI:         5.06.1932                 | 
+[00:58:01]  | Started:     1680908281                | 
+[00:58:01]  | JIT:         <none>                    | 
+[00:58:01]  | Crashdetect: <found>                   | 
+[00:58:01]  |                                        | 
+[00:58:01]  ========================================== 
+[00:58:01]  
+[00:58:01]   Filterscript '../scriptfiles/callbackfix.amx' loaded.
+[00:58:01] *** YSI Info: YSI Script ID: 1
+[00:58:01]  
+[00:58:01] -                                     -
+[00:58:01]  Founder : Danis Cavalic (Slade)
+[00:58:01]  Monaco : v0.1
+[00:58:01]  Credits : realnaith (myserver) 
+[00:58:01] -                                     -
+[00:58:01] Number of vehicle models: 0
+[00:58:09] [connection] 127.0.0.1:59461 requests connection cookie.
+[00:58:10] [connection] incoming connection: 127.0.0.1:59461 id: 0
+[00:58:11] [join] Danis_Cavalic has joined the server (0:127.0.0.1)
+[01:05:01] [part] Danis_Cavalic has left the server (0:1)
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[01:06:47] filterscripts = ""  (string)
+[01:06:47] weburl = "www.sa-mp.com"  (string)
+[01:06:47] 
+[01:06:47] Server Plugins
+[01:06:47] --------------
+[01:06:47]  Loading plugin: crashdetect
+[01:06:47]   CrashDetect plugin 4.21
+[01:06:47]   Loaded.
+[01:06:47]  Loading plugin: sscanf
+[01:06:47] 
+[01:06:47]  ===============================
+[01:06:47] 
+[01:06:47]       sscanf plugin loaded.     
+[01:06:47] 
+[01:06:47]          Version: 2.13.1
+[01:06:47] 
+[01:06:47]    (c) 2022 Alex "Y_Less" Cole  
+[01:06:47] 
+[01:06:47]  ===============================
+[01:06:47] 
+[01:06:47]   Loaded.
+[01:06:47]  Loading plugin: streamer
+[01:06:47] 
+
+*** Streamer Plugin v2.9.5 by Incognito loaded ***
+
+[01:06:47]   Loaded.
+[01:06:47]  Loading plugin: mysql
+[01:06:47]  >> plugin.mysql: R41-4 successfully loaded.
+[01:06:47]   Loaded.
+[01:06:47]  Loaded 4 plugins.
+
+[01:06:47] 
+[01:06:47] Filterscripts
+[01:06:47] ---------------
+[01:06:47]   Loaded 0 filterscripts.
+
+[01:06:47]  
+[01:06:47]  
+[01:06:47]          ==============================================================
+[01:06:47]          |                                                            |
+[01:06:47]          |                                                            |
+[01:06:47]          |    YYYYYYY       YYYYYYY    SSSSSSSSSSSSSSS  IIIIIIIIII    |
+[01:06:47]          |    Y:::::Y       Y:::::Y  SS:::::::::::::::S I::::::::I    |
+[01:06:47]          |    Y:::::Y       Y:::::Y S:::::SSSSSS::::::S I::::::::I    |
+[01:06:47]          |    Y::::::Y     Y::::::Y S:::::S     SSSSSSS II::::::II    |
+[01:06:47]          |    YYY:::::Y   Y:::::YYY S:::::S               I::::I      |
+[01:06:47]          |       Y:::::Y Y:::::Y    S:::::S               I::::I      |
+[01:06:47]          |        Y:::::Y:::::Y      S::::SSSS            I::::I      |
+[01:06:47]          |         Y:::::::::Y        SS::::::SSSSS       I::::I      |
+[01:06:47]          |          Y:::::::Y           SSS::::::::SS     I::::I      |
+[01:06:47]          |           Y:::::Y               SSSSSS::::S    I::::I      |
+[01:06:47]          |           Y:::::Y                    S:::::S   I::::I      |
+[01:06:47]          |           Y:::::Y                    S:::::S   I::::I      |
+[01:06:47]          |           Y:::::Y        SSSSSSS     S:::::S II::::::II    |
+[01:06:47]          |        YYYY:::::YYYY     S::::::SSSSSS:::::S I::::::::I    |
+[01:06:47]          |        Y:::::::::::Y     S:::::::::::::::SS  I::::::::I    |
+[01:06:47]          |        YYYYYYYYYYYYY      SSSSSSSSSSSSSSS    IIIIIIIIII    |
+[01:06:47]          |                                                            |
+[01:06:47]          |                                                            |
+[01:06:47]          |                      (c) 2021 MPL v1.1                     |
+[01:06:47]          |            Alex "Y_Less" Cole and contributors.            |
+[01:06:47]          |                                                            |
+[01:06:47]          |                                                            |
+[01:06:47]          ==============================================================
+[01:06:47]  
+[01:06:47]  
+[01:06:47]  ========================================== 
+[01:06:47]  |                                        | 
+[01:06:47]  |  Missing YSI scriptfiles directories:  | 
+[01:06:47]  |                                        | 
+[01:06:47]  |      /scriptfiles/YSI/fixes/           | 
+[01:06:47]  |      /scriptfiles/YSI/temp/            | 
+[01:06:47]  |                                        | 
+[01:06:47]  ========================================== 
+[01:06:47]  |                                        | 
+[01:06:47]  |   Generating code, this may take a     | 
+[01:06:47]  |  little bit of time.  Note that this   | 
+[01:06:47]  |  code generation works best with the   | 
+[01:06:47]  |     JIT plugin, which you are not      | 
+[01:06:47]  |     currently using.  Get it here:     | 
+[01:06:47]  |                                        | 
+[01:06:47]  |       https://git.io/jit-plugin        | 
+[01:06:47]  |                                        | 
+[01:06:47]  |             Please wait...             | 
+[01:06:47] [debug] Long callback execution detected (hang or performance issue)
+[01:06:47] [debug] AMX backtrace:
+[01:06:47] [debug] #0 0000d3f4 in InitOpcodeTable () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\y_cgen\..\..\YSI_Core\y_core\..\..\amx\opcode.inc:755
+[01:06:47] [debug] #1 0000d478 in Opcode:RelocateOpcode (Opcode:opcode=134) at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\y_cgen\..\..\YSI_Core\y_core\..\..\amx\opcode.inc:765
+[01:06:47] [debug] #2 0001542c in CodeScanInit (scanner[CodeScanner:172]=@02867414) at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\y_cgen\..\..\YSI_Core\y_core\..\..\amx\codescan.inc:1037
+[01:06:47] [debug] #3 00015aac in AddressofResolve () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\y_cgen\..\..\YSI_Core\y_core\..\..\amx\addressof_jit.inc:106
+[01:06:47] [debug] #4 00016ed8 in public AMX_OnCodeInit () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\y_cgen\..\..\YSI_Core\y_core\y_thirdpartyinclude.inc:380
+[01:06:47] [debug] #5 0000482c in public Debug_OnCodeInit () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\..\YSI_Core\y_core\y_amx_impl.inc:207
+[01:06:47] [debug] #6 00004124 in public ScriptInit_OnCodeInit () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\..\YSI_Core\y_core\y_debug_impl.inc:646
+[01:06:47] [debug] #7 00001dd0 in bool:ScriptInit_CallOnCodeInit (bool:jit=false, bool:fs=false) at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\..\YSI_Core\y_core\y_scriptinit_impl.inc:706
+[01:06:47] [debug] #8 00002d68 in public OnGameModeInit () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\..\YSI_Core\y_core\y_scriptinit_impl.inc:1105
+[01:06:47]  |                                        | 
+[01:06:47]  |                 Done!                  | 
+[01:06:47]  |                                        | 
+[01:06:47]  ========================================== 
+[01:06:47]  |                                        | 
+[01:06:47]  | Server:      0.3DL - Windows           | 
+[01:06:47]  | Compiler:    3.10.10 - Windows         | 
+[01:06:47]  | Codepage:    <none>                    | 
+[01:06:47]  | YSI:         5.06.1932                 | 
+[01:06:47]  | Started:     1680908807                | 
+[01:06:47]  | JIT:         <none>                    | 
+[01:06:47]  | Crashdetect: <found>                   | 
+[01:06:47]  |                                        | 
+[01:06:47]  ========================================== 
+[01:06:47]  
+[01:06:47]   Filterscript '../scriptfiles/callbackfix.amx' loaded.
+[01:06:47] *** YSI Info: YSI Script ID: 1
+[01:06:47]  
+[01:06:47] -                                     -
+[01:06:47]  Founder : Danis Cavalic (Slade)
+[01:06:47]  Monaco : v0.1
+[01:06:47]  Credits : realnaith (myserver) 
+[01:06:47] -                                     -
+[01:06:47] Number of vehicle models: 0
+[01:06:57] [connection] 127.0.0.1:54032 requests connection cookie.
+[01:06:58] [connection] incoming connection: 127.0.0.1:54032 id: 0
+[01:06:58] [join] Danis_Cavalic has joined the server (0:127.0.0.1)
+[01:06:58] [debug] Long callback execution detected (hang or performance issue)
+[01:06:58] [debug] AMX backtrace:
+[01:06:58] [debug] #0 00079390 in Dialog_Open (playerid=0, function[]=@01822dfc "dialog_login", style=3, caption[]=@01822e30 "{F81414}Mon{FFFFFF}aco", info[]=@01822e8c "{72EFC0}Dobrodosao %s nazad na {F81414}Mon{FFFFFF}aco {72EFC0}RolePlay.", button1[]=@01823074 "Prijava", button2[]=@01823094 "Izlaz", 42104612) at C:\Users\llc\Documents\monaco-rp\pawno\include\easyDialog.inc:48
+[01:06:58] [debug] #1 00089ac0 in public OnPlayerDataLoaded (0, 1) at c:\Users\llc\Documents\monaco-rp\gamemodes\core.pwn:222
+[01:07:19] [part] Danis_Cavalic has left the server (0:1)
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[01:07:45] filterscripts = ""  (string)
+[01:07:45] weburl = "www.sa-mp.com"  (string)
+[01:07:45] 
+[01:07:45] Server Plugins
+[01:07:45] --------------
+[01:07:45]  Loading plugin: crashdetect
+[01:07:45]   CrashDetect plugin 4.21
+[01:07:45]   Loaded.
+[01:07:45]  Loading plugin: sscanf
+[01:07:45] 
+[01:07:45]  ===============================
+[01:07:45] 
+[01:07:45]       sscanf plugin loaded.     
+[01:07:45] 
+[01:07:45]          Version: 2.13.1
+[01:07:45] 
+[01:07:45]    (c) 2022 Alex "Y_Less" Cole  
+[01:07:45] 
+[01:07:45]  ===============================
+[01:07:45] 
+[01:07:45]   Loaded.
+[01:07:45]  Loading plugin: streamer
+[01:07:45] 
+
+*** Streamer Plugin v2.9.5 by Incognito loaded ***
+
+[01:07:45]   Loaded.
+[01:07:45]  Loading plugin: mysql
+[01:07:45]  >> plugin.mysql: R41-4 successfully loaded.
+[01:07:45]   Loaded.
+[01:07:45]  Loaded 4 plugins.
+
+[01:07:45] 
+[01:07:45] Filterscripts
+[01:07:45] ---------------
+[01:07:45]   Loaded 0 filterscripts.
+
+[01:07:45]  
+[01:07:45]  
+[01:07:45]          ==============================================================
+[01:07:45]          |                                                            |
+[01:07:45]          |                                                            |
+[01:07:45]          |    YYYYYYY       YYYYYYY    SSSSSSSSSSSSSSS  IIIIIIIIII    |
+[01:07:45]          |    Y:::::Y       Y:::::Y  SS:::::::::::::::S I::::::::I    |
+[01:07:45]          |    Y:::::Y       Y:::::Y S:::::SSSSSS::::::S I::::::::I    |
+[01:07:45]          |    Y::::::Y     Y::::::Y S:::::S     SSSSSSS II::::::II    |
+[01:07:45]          |    YYY:::::Y   Y:::::YYY S:::::S               I::::I      |
+[01:07:45]          |       Y:::::Y Y:::::Y    S:::::S               I::::I      |
+[01:07:45]          |        Y:::::Y:::::Y      S::::SSSS            I::::I      |
+[01:07:45]          |         Y:::::::::Y        SS::::::SSSSS       I::::I      |
+[01:07:45]          |          Y:::::::Y           SSS::::::::SS     I::::I      |
+[01:07:45]          |           Y:::::Y               SSSSSS::::S    I::::I      |
+[01:07:45]          |           Y:::::Y                    S:::::S   I::::I      |
+[01:07:45]          |           Y:::::Y                    S:::::S   I::::I      |
+[01:07:45]          |           Y:::::Y        SSSSSSS     S:::::S II::::::II    |
+[01:07:45]          |        YYYY:::::YYYY     S::::::SSSSSS:::::S I::::::::I    |
+[01:07:45]          |        Y:::::::::::Y     S:::::::::::::::SS  I::::::::I    |
+[01:07:45]          |        YYYYYYYYYYYYY      SSSSSSSSSSSSSSS    IIIIIIIIII    |
+[01:07:45]          |                                                            |
+[01:07:45]          |                                                            |
+[01:07:45]          |                      (c) 2021 MPL v1.1                     |
+[01:07:45]          |            Alex "Y_Less" Cole and contributors.            |
+[01:07:45]          |                                                            |
+[01:07:45]          |                                                            |
+[01:07:45]          ==============================================================
+[01:07:45]  
+[01:07:45]  
+[01:07:45]  ========================================== 
+[01:07:45]  |                                        | 
+[01:07:45]  |  Missing YSI scriptfiles directories:  | 
+[01:07:45]  |                                        | 
+[01:07:45]  |      /scriptfiles/YSI/fixes/           | 
+[01:07:45]  |      /scriptfiles/YSI/temp/            | 
+[01:07:45]  |                                        | 
+[01:07:45]  ========================================== 
+[01:07:45]  |                                        | 
+[01:07:45]  |   Generating code, this may take a     | 
+[01:07:45]  |  little bit of time.  Note that this   | 
+[01:07:45]  |  code generation works best with the   | 
+[01:07:45]  |     JIT plugin, which you are not      | 
+[01:07:45]  |     currently using.  Get it here:     | 
+[01:07:45]  |                                        | 
+[01:07:45]  |       https://git.io/jit-plugin        | 
+[01:07:45]  |                                        | 
+[01:07:45]  |             Please wait...             | 
+[01:07:45] [debug] Long callback execution detected (hang or performance issue)
+[01:07:45] [debug] AMX backtrace:
+[01:07:45] [debug] #0 0000d3f4 in InitOpcodeTable () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\y_cgen\..\..\YSI_Core\y_core\..\..\amx\opcode.inc:755
+[01:07:45] [debug] #1 0000d478 in Opcode:RelocateOpcode (Opcode:opcode=134) at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\y_cgen\..\..\YSI_Core\y_core\..\..\amx\opcode.inc:765
+[01:07:45] [debug] #2 0001542c in CodeScanInit (scanner[CodeScanner:172]=@02867414) at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\y_cgen\..\..\YSI_Core\y_core\..\..\amx\codescan.inc:1037
+[01:07:45] [debug] #3 00015aac in AddressofResolve () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\y_cgen\..\..\YSI_Core\y_core\..\..\amx\addressof_jit.inc:106
+[01:07:45] [debug] #4 00016ed8 in public AMX_OnCodeInit () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\y_cgen\..\..\YSI_Core\y_core\y_thirdpartyinclude.inc:380
+[01:07:45] [debug] #5 0000482c in public Debug_OnCodeInit () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\..\YSI_Core\y_core\y_amx_impl.inc:207
+[01:07:45] [debug] #6 00004124 in public ScriptInit_OnCodeInit () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\..\YSI_Core\y_core\y_debug_impl.inc:646
+[01:07:45] [debug] #7 00001dd0 in bool:ScriptInit_CallOnCodeInit (bool:jit=false, bool:fs=false) at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\..\YSI_Core\y_core\y_scriptinit_impl.inc:706
+[01:07:45] [debug] #8 00002d68 in public OnGameModeInit () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\..\YSI_Core\y_core\y_scriptinit_impl.inc:1105
+[01:07:45]  |                                        | 
+[01:07:45]  |                 Done!                  | 
+[01:07:45]  |                                        | 
+[01:07:45]  ========================================== 
+[01:07:45]  |                                        | 
+[01:07:45]  | Server:      0.3DL - Windows           | 
+[01:07:45]  | Compiler:    3.10.10 - Windows         | 
+[01:07:45]  | Codepage:    <none>                    | 
+[01:07:45]  | YSI:         5.06.1932                 | 
+[01:07:45]  | Started:     1680908865                | 
+[01:07:45]  | JIT:         <none>                    | 
+[01:07:45]  | Crashdetect: <found>                   | 
+[01:07:45]  |                                        | 
+[01:07:45]  ========================================== 
+[01:07:45]  
+[01:07:45]   Filterscript '../scriptfiles/callbackfix.amx' loaded.
+[01:07:45] *** YSI Info: YSI Script ID: 1
+[01:07:45]  
+[01:07:45] -                                     -
+[01:07:45]  Founder : Danis Cavalic (Slade)
+[01:07:45]  Monaco : v0.1
+[01:07:45]  Credits : realnaith (myserver) 
+[01:07:45] -                                     -
+[01:07:45] Number of vehicle models: 0
+[01:07:53] [connection] 127.0.0.1:61616 requests connection cookie.
+[01:07:54] [connection] incoming connection: 127.0.0.1:61616 id: 0
+[01:07:55] [join] Danis_Cavalic has joined the server (0:127.0.0.1)
+[01:09:06] [part] Danis_Cavalic has left the server (0:1)
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[01:10:03] filterscripts = ""  (string)
+[01:10:03] weburl = "www.sa-mp.com"  (string)
+[01:10:03] 
+[01:10:03] Server Plugins
+[01:10:03] --------------
+[01:10:03]  Loading plugin: crashdetect
+[01:10:03]   CrashDetect plugin 4.21
+[01:10:03]   Loaded.
+[01:10:03]  Loading plugin: sscanf
+[01:10:03] 
+[01:10:03]  ===============================
+[01:10:03] 
+[01:10:03]       sscanf plugin loaded.     
+[01:10:03] 
+[01:10:03]          Version: 2.13.1
+[01:10:03] 
+[01:10:03]    (c) 2022 Alex "Y_Less" Cole  
+[01:10:03] 
+[01:10:03]  ===============================
+[01:10:03] 
+[01:10:03]   Loaded.
+[01:10:03]  Loading plugin: streamer
+[01:10:03] 
+
+*** Streamer Plugin v2.9.5 by Incognito loaded ***
+
+[01:10:03]   Loaded.
+[01:10:03]  Loading plugin: mysql
+[01:10:04]  >> plugin.mysql: R41-4 successfully loaded.
+[01:10:04]   Loaded.
+[01:10:04]  Loaded 4 plugins.
+
+[01:10:04] 
+[01:10:04] Filterscripts
+[01:10:04] ---------------
+[01:10:04]   Loaded 0 filterscripts.
+
+[01:10:04]  
+[01:10:04]  
+[01:10:04]          ==============================================================
+[01:10:04]          |                                                            |
+[01:10:04]          |                                                            |
+[01:10:04]          |    YYYYYYY       YYYYYYY    SSSSSSSSSSSSSSS  IIIIIIIIII    |
+[01:10:04]          |    Y:::::Y       Y:::::Y  SS:::::::::::::::S I::::::::I    |
+[01:10:04]          |    Y:::::Y       Y:::::Y S:::::SSSSSS::::::S I::::::::I    |
+[01:10:04]          |    Y::::::Y     Y::::::Y S:::::S     SSSSSSS II::::::II    |
+[01:10:04]          |    YYY:::::Y   Y:::::YYY S:::::S               I::::I      |
+[01:10:04]          |       Y:::::Y Y:::::Y    S:::::S               I::::I      |
+[01:10:04]          |        Y:::::Y:::::Y      S::::SSSS            I::::I      |
+[01:10:04]          |         Y:::::::::Y        SS::::::SSSSS       I::::I      |
+[01:10:04]          |          Y:::::::Y           SSS::::::::SS     I::::I      |
+[01:10:04]          |           Y:::::Y               SSSSSS::::S    I::::I      |
+[01:10:04]          |           Y:::::Y                    S:::::S   I::::I      |
+[01:10:04]          |           Y:::::Y                    S:::::S   I::::I      |
+[01:10:04]          |           Y:::::Y        SSSSSSS     S:::::S II::::::II    |
+[01:10:04]          |        YYYY:::::YYYY     S::::::SSSSSS:::::S I::::::::I    |
+[01:10:04]          |        Y:::::::::::Y     S:::::::::::::::SS  I::::::::I    |
+[01:10:04]          |        YYYYYYYYYYYYY      SSSSSSSSSSSSSSS    IIIIIIIIII    |
+[01:10:04]          |                                                            |
+[01:10:04]          |                                                            |
+[01:10:04]          |                      (c) 2021 MPL v1.1                     |
+[01:10:04]          |            Alex "Y_Less" Cole and contributors.            |
+[01:10:04]          |                                                            |
+[01:10:04]          |                                                            |
+[01:10:04]          ==============================================================
+[01:10:04]  
+[01:10:04]  
+[01:10:04]  ========================================== 
+[01:10:04]  |                                        | 
+[01:10:04]  |  Missing YSI scriptfiles directories:  | 
+[01:10:04]  |                                        | 
+[01:10:04]  |      /scriptfiles/YSI/fixes/           | 
+[01:10:04]  |      /scriptfiles/YSI/temp/            | 
+[01:10:04]  |                                        | 
+[01:10:04]  ========================================== 
+[01:10:04]  |                                        | 
+[01:10:04]  |   Generating code, this may take a     | 
+[01:10:04]  |  little bit of time.  Note that this   | 
+[01:10:04]  |  code generation works best with the   | 
+[01:10:04]  |     JIT plugin, which you are not      | 
+[01:10:04]  |     currently using.  Get it here:     | 
+[01:10:04]  |                                        | 
+[01:10:04]  |       https://git.io/jit-plugin        | 
+[01:10:04]  |                                        | 
+[01:10:04]  |             Please wait...             | 
+[01:10:04] [debug] Long callback execution detected (hang or performance issue)
+[01:10:04] [debug] AMX backtrace:
+[01:10:04] [debug] #0 0000d3f4 in InitOpcodeTable () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\y_cgen\..\..\YSI_Core\y_core\..\..\amx\opcode.inc:755
+[01:10:04] [debug] #1 0000d478 in Opcode:RelocateOpcode (Opcode:opcode=134) at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\y_cgen\..\..\YSI_Core\y_core\..\..\amx\opcode.inc:765
+[01:10:04] [debug] #2 0001542c in CodeScanInit (scanner[CodeScanner:172]=@02867414) at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\y_cgen\..\..\YSI_Core\y_core\..\..\amx\codescan.inc:1037
+[01:10:04] [debug] #3 00015aac in AddressofResolve () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\y_cgen\..\..\YSI_Core\y_core\..\..\amx\addressof_jit.inc:106
+[01:10:04] [debug] #4 00016ed8 in public AMX_OnCodeInit () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\y_cgen\..\..\YSI_Core\y_core\y_thirdpartyinclude.inc:380
+[01:10:04] [debug] #5 0000482c in public Debug_OnCodeInit () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\..\YSI_Core\y_core\y_amx_impl.inc:207
+[01:10:04] [debug] #6 00004124 in public ScriptInit_OnCodeInit () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\..\YSI_Core\y_core\y_debug_impl.inc:646
+[01:10:04] [debug] #7 00001dd0 in bool:ScriptInit_CallOnCodeInit (bool:jit=false, bool:fs=false) at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\..\YSI_Core\y_core\y_scriptinit_impl.inc:706
+[01:10:04] [debug] #8 00002d68 in public OnGameModeInit () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\..\YSI_Core\y_core\y_scriptinit_impl.inc:1105
+[01:10:04]  |                                        | 
+[01:10:04]  |                 Done!                  | 
+[01:10:04]  |                                        | 
+[01:10:04]  ========================================== 
+[01:10:04]  |                                        | 
+[01:10:04]  | Server:      0.3DL - Windows           | 
+[01:10:04]  | Compiler:    3.10.10 - Windows         | 
+[01:10:04]  | Codepage:    <none>                    | 
+[01:10:04]  | YSI:         5.06.1932                 | 
+[01:10:04]  | Started:     1680909004                | 
+[01:10:04]  | JIT:         <none>                    | 
+[01:10:04]  | Crashdetect: <found>                   | 
+[01:10:04]  |                                        | 
+[01:10:04]  ========================================== 
+[01:10:04]  
+[01:10:04]   Filterscript '../scriptfiles/callbackfix.amx' loaded.
+[01:10:04] *** YSI Info: YSI Script ID: 1
+[01:10:04]  
+[01:10:04] -                                     -
+[01:10:04]  Founder : Danis Cavalic (Slade)
+[01:10:04]  Monaco : v0.1
+[01:10:04]  Credits : realnaith (myserver) 
+[01:10:04] -                                     -
+[01:10:04] Number of vehicle models: 0
+[01:10:13] [connection] 127.0.0.1:60870 requests connection cookie.
+[01:10:14] [connection] incoming connection: 127.0.0.1:60870 id: 0
+[01:10:14] [join] Danis_Cavalic has joined the server (0:127.0.0.1)
+[01:10:30] [part] Danis_Cavalic has left the server (0:1)
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[01:11:34] filterscripts = ""  (string)
+[01:11:34] weburl = "www.sa-mp.com"  (string)
+[01:11:34] 
+[01:11:34] Server Plugins
+[01:11:34] --------------
+[01:11:34]  Loading plugin: crashdetect
+[01:11:34]   CrashDetect plugin 4.21
+[01:11:34]   Loaded.
+[01:11:34]  Loading plugin: sscanf
+[01:11:34] 
+[01:11:34]  ===============================
+[01:11:34] 
+[01:11:34]       sscanf plugin loaded.     
+[01:11:34] 
+[01:11:34]          Version: 2.13.1
+[01:11:34] 
+[01:11:34]    (c) 2022 Alex "Y_Less" Cole  
+[01:11:34] 
+[01:11:34]  ===============================
+[01:11:34] 
+[01:11:34]   Loaded.
+[01:11:34]  Loading plugin: streamer
+[01:11:34] 
+
+*** Streamer Plugin v2.9.5 by Incognito loaded ***
+
+[01:11:34]   Loaded.
+[01:11:34]  Loading plugin: mysql
+[01:11:34]  >> plugin.mysql: R41-4 successfully loaded.
+[01:11:34]   Loaded.
+[01:11:34]  Loaded 4 plugins.
+
+[01:11:34] 
+[01:11:34] Filterscripts
+[01:11:34] ---------------
+[01:11:34]   Loaded 0 filterscripts.
+
+[01:11:34]  
+[01:11:34]  
+[01:11:34]          ==============================================================
+[01:11:34]          |                                                            |
+[01:11:34]          |                                                            |
+[01:11:34]          |    YYYYYYY       YYYYYYY    SSSSSSSSSSSSSSS  IIIIIIIIII    |
+[01:11:34]          |    Y:::::Y       Y:::::Y  SS:::::::::::::::S I::::::::I    |
+[01:11:34]          |    Y:::::Y       Y:::::Y S:::::SSSSSS::::::S I::::::::I    |
+[01:11:34]          |    Y::::::Y     Y::::::Y S:::::S     SSSSSSS II::::::II    |
+[01:11:34]          |    YYY:::::Y   Y:::::YYY S:::::S               I::::I      |
+[01:11:34]          |       Y:::::Y Y:::::Y    S:::::S               I::::I      |
+[01:11:34]          |        Y:::::Y:::::Y      S::::SSSS            I::::I      |
+[01:11:34]          |         Y:::::::::Y        SS::::::SSSSS       I::::I      |
+[01:11:34]          |          Y:::::::Y           SSS::::::::SS     I::::I      |
+[01:11:34]          |           Y:::::Y               SSSSSS::::S    I::::I      |
+[01:11:34]          |           Y:::::Y                    S:::::S   I::::I      |
+[01:11:34]          |           Y:::::Y                    S:::::S   I::::I      |
+[01:11:34]          |           Y:::::Y        SSSSSSS     S:::::S II::::::II    |
+[01:11:34]          |        YYYY:::::YYYY     S::::::SSSSSS:::::S I::::::::I    |
+[01:11:34]          |        Y:::::::::::Y     S:::::::::::::::SS  I::::::::I    |
+[01:11:34]          |        YYYYYYYYYYYYY      SSSSSSSSSSSSSSS    IIIIIIIIII    |
+[01:11:34]          |                                                            |
+[01:11:34]          |                                                            |
+[01:11:34]          |                      (c) 2021 MPL v1.1                     |
+[01:11:34]          |            Alex "Y_Less" Cole and contributors.            |
+[01:11:34]          |                                                            |
+[01:11:34]          |                                                            |
+[01:11:34]          ==============================================================
+[01:11:34]  
+[01:11:34]  
+[01:11:34]  ========================================== 
+[01:11:34]  |                                        | 
+[01:11:34]  |  Missing YSI scriptfiles directories:  | 
+[01:11:34]  |                                        | 
+[01:11:34]  |      /scriptfiles/YSI/fixes/           | 
+[01:11:34]  |      /scriptfiles/YSI/temp/            | 
+[01:11:34]  |                                        | 
+[01:11:34]  ========================================== 
+[01:11:34]  |                                        | 
+[01:11:34]  |   Generating code, this may take a     | 
+[01:11:34]  |  little bit of time.  Note that this   | 
+[01:11:34]  |  code generation works best with the   | 
+[01:11:34]  |     JIT plugin, which you are not      | 
+[01:11:34]  |     currently using.  Get it here:     | 
+[01:11:34]  |                                        | 
+[01:11:34]  |       https://git.io/jit-plugin        | 
+[01:11:34]  |                                        | 
+[01:11:34]  |             Please wait...             | 
+[01:11:34] [debug] Long callback execution detected (hang or performance issue)
+[01:11:34] [debug] AMX backtrace:
+[01:11:34] [debug] #0 0000d3f4 in InitOpcodeTable () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\y_cgen\..\..\YSI_Core\y_core\..\..\amx\opcode.inc:755
+[01:11:34] [debug] #1 0000d478 in Opcode:RelocateOpcode (Opcode:opcode=134) at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\y_cgen\..\..\YSI_Core\y_core\..\..\amx\opcode.inc:765
+[01:11:34] [debug] #2 0001542c in CodeScanInit (scanner[CodeScanner:172]=@02867414) at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\y_cgen\..\..\YSI_Core\y_core\..\..\amx\codescan.inc:1037
+[01:11:34] [debug] #3 00015aac in AddressofResolve () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\y_cgen\..\..\YSI_Core\y_core\..\..\amx\addressof_jit.inc:106
+[01:11:34] [debug] #4 00016ed8 in public AMX_OnCodeInit () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\y_cgen\..\..\YSI_Core\y_core\y_thirdpartyinclude.inc:380
+[01:11:34] [debug] #5 0000482c in public Debug_OnCodeInit () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\..\YSI_Core\y_core\y_amx_impl.inc:207
+[01:11:34] [debug] #6 00004124 in public ScriptInit_OnCodeInit () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\..\YSI_Core\y_core\y_debug_impl.inc:646
+[01:11:34] [debug] #7 00001dd0 in bool:ScriptInit_CallOnCodeInit (bool:jit=false, bool:fs=false) at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\..\YSI_Core\y_core\y_scriptinit_impl.inc:706
+[01:11:34] [debug] #8 00002d68 in public OnGameModeInit () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\..\YSI_Core\y_core\y_scriptinit_impl.inc:1105
+[01:11:35]  |                                        | 
+[01:11:35]  |                 Done!                  | 
+[01:11:35]  |                                        | 
+[01:11:35]  ========================================== 
+[01:11:35]  |                                        | 
+[01:11:35]  | Server:      0.3DL - Windows           | 
+[01:11:35]  | Compiler:    3.10.10 - Windows         | 
+[01:11:35]  | Codepage:    <none>                    | 
+[01:11:35]  | YSI:         5.06.1932                 | 
+[01:11:35]  | Started:     1680909094                | 
+[01:11:35]  | JIT:         <none>                    | 
+[01:11:35]  | Crashdetect: <found>                   | 
+[01:11:35]  |                                        | 
+[01:11:35]  ========================================== 
+[01:11:35]  
+[01:11:35]   Filterscript '../scriptfiles/callbackfix.amx' loaded.
+[01:11:35] *** YSI Info: YSI Script ID: 1
+[01:11:35]  
+[01:11:35] -                                     -
+[01:11:35]  Founder : Danis Cavalic (Slade)
+[01:11:35]  Monaco : v0.1
+[01:11:35]  Credits : realnaith (myserver) 
+[01:11:35] -                                     -
+[01:11:35] Number of vehicle models: 0
+[01:11:43] [connection] 127.0.0.1:54597 requests connection cookie.
+[01:11:44] [connection] incoming connection: 127.0.0.1:54597 id: 0
+[01:11:44] [join] Danis_Cavalic has joined the server (0:127.0.0.1)
+[01:11:59] [part] Danis_Cavalic has left the server (0:1)
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[01:12:59] filterscripts = ""  (string)
+[01:12:59] weburl = "www.sa-mp.com"  (string)
+[01:12:59] 
+[01:12:59] Server Plugins
+[01:12:59] --------------
+[01:12:59]  Loading plugin: crashdetect
+[01:12:59]   CrashDetect plugin 4.21
+[01:12:59]   Loaded.
+[01:12:59]  Loading plugin: sscanf
+[01:12:59] 
+[01:12:59]  ===============================
+[01:12:59] 
+[01:12:59]       sscanf plugin loaded.     
+[01:12:59] 
+[01:12:59]          Version: 2.13.1
+[01:12:59] 
+[01:12:59]    (c) 2022 Alex "Y_Less" Cole  
+[01:12:59] 
+[01:12:59]  ===============================
+[01:12:59] 
+[01:12:59]   Loaded.
+[01:12:59]  Loading plugin: streamer
+[01:12:59] 
+
+*** Streamer Plugin v2.9.5 by Incognito loaded ***
+
+[01:12:59]   Loaded.
+[01:12:59]  Loading plugin: mysql
+[01:12:59]  >> plugin.mysql: R41-4 successfully loaded.
+[01:12:59]   Loaded.
+[01:12:59]  Loaded 4 plugins.
+
+[01:12:59] 
+[01:12:59] Filterscripts
+[01:12:59] ---------------
+[01:12:59]   Loaded 0 filterscripts.
+
+[01:13:00]  
+[01:13:00]  
+[01:13:00]          ==============================================================
+[01:13:00]          |                                                            |
+[01:13:00]          |                                                            |
+[01:13:00]          |    YYYYYYY       YYYYYYY    SSSSSSSSSSSSSSS  IIIIIIIIII    |
+[01:13:00]          |    Y:::::Y       Y:::::Y  SS:::::::::::::::S I::::::::I    |
+[01:13:00]          |    Y:::::Y       Y:::::Y S:::::SSSSSS::::::S I::::::::I    |
+[01:13:00]          |    Y::::::Y     Y::::::Y S:::::S     SSSSSSS II::::::II    |
+[01:13:00]          |    YYY:::::Y   Y:::::YYY S:::::S               I::::I      |
+[01:13:00]          |       Y:::::Y Y:::::Y    S:::::S               I::::I      |
+[01:13:00]          |        Y:::::Y:::::Y      S::::SSSS            I::::I      |
+[01:13:00]          |         Y:::::::::Y        SS::::::SSSSS       I::::I      |
+[01:13:00]          |          Y:::::::Y           SSS::::::::SS     I::::I      |
+[01:13:00]          |           Y:::::Y               SSSSSS::::S    I::::I      |
+[01:13:00]          |           Y:::::Y                    S:::::S   I::::I      |
+[01:13:00]          |           Y:::::Y                    S:::::S   I::::I      |
+[01:13:00]          |           Y:::::Y        SSSSSSS     S:::::S II::::::II    |
+[01:13:00]          |        YYYY:::::YYYY     S::::::SSSSSS:::::S I::::::::I    |
+[01:13:00]          |        Y:::::::::::Y     S:::::::::::::::SS  I::::::::I    |
+[01:13:00]          |        YYYYYYYYYYYYY      SSSSSSSSSSSSSSS    IIIIIIIIII    |
+[01:13:00]          |                                                            |
+[01:13:00]          |                                                            |
+[01:13:00]          |                      (c) 2021 MPL v1.1                     |
+[01:13:00]          |            Alex "Y_Less" Cole and contributors.            |
+[01:13:00]          |                                                            |
+[01:13:00]          |                                                            |
+[01:13:00]          ==============================================================
+[01:13:00]  
+[01:13:00]  
+[01:13:00]  ========================================== 
+[01:13:00]  |                                        | 
+[01:13:00]  |  Missing YSI scriptfiles directories:  | 
+[01:13:00]  |                                        | 
+[01:13:00]  |      /scriptfiles/YSI/fixes/           | 
+[01:13:00]  |      /scriptfiles/YSI/temp/            | 
+[01:13:00]  |                                        | 
+[01:13:00]  ========================================== 
+[01:13:00]  |                                        | 
+[01:13:00]  |   Generating code, this may take a     | 
+[01:13:00]  |  little bit of time.  Note that this   | 
+[01:13:00]  |  code generation works best with the   | 
+[01:13:00]  |     JIT plugin, which you are not      | 
+[01:13:00]  |     currently using.  Get it here:     | 
+[01:13:00]  |                                        | 
+[01:13:00]  |       https://git.io/jit-plugin        | 
+[01:13:00]  |                                        | 
+[01:13:00]  |             Please wait...             | 
+[01:13:00] [debug] Long callback execution detected (hang or performance issue)
+[01:13:00] [debug] AMX backtrace:
+[01:13:00] [debug] #0 0000d3f4 in InitOpcodeTable () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\y_cgen\..\..\YSI_Core\y_core\..\..\amx\opcode.inc:755
+[01:13:00] [debug] #1 0000d478 in Opcode:RelocateOpcode (Opcode:opcode=134) at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\y_cgen\..\..\YSI_Core\y_core\..\..\amx\opcode.inc:765
+[01:13:00] [debug] #2 0001542c in CodeScanInit (scanner[CodeScanner:172]=@02867408) at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\y_cgen\..\..\YSI_Core\y_core\..\..\amx\codescan.inc:1037
+[01:13:00] [debug] #3 00015aac in AddressofResolve () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\y_cgen\..\..\YSI_Core\y_core\..\..\amx\addressof_jit.inc:106
+[01:13:00] [debug] #4 00016ed8 in public AMX_OnCodeInit () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\y_cgen\..\..\YSI_Core\y_core\y_thirdpartyinclude.inc:380
+[01:13:00] [debug] #5 0000482c in public Debug_OnCodeInit () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\..\YSI_Core\y_core\y_amx_impl.inc:207
+[01:13:00] [debug] #6 00004124 in public ScriptInit_OnCodeInit () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\..\YSI_Core\y_core\y_debug_impl.inc:646
+[01:13:00] [debug] #7 00001dd0 in bool:ScriptInit_CallOnCodeInit (bool:jit=false, bool:fs=false) at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\..\YSI_Core\y_core\y_scriptinit_impl.inc:706
+[01:13:00] [debug] #8 00002d68 in public OnGameModeInit () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\..\YSI_Core\y_core\y_scriptinit_impl.inc:1105
+[01:13:00]  |                                        | 
+[01:13:00]  |                 Done!                  | 
+[01:13:00]  |                                        | 
+[01:13:00]  ========================================== 
+[01:13:00]  |                                        | 
+[01:13:00]  | Server:      0.3DL - Windows           | 
+[01:13:00]  | Compiler:    3.10.10 - Windows         | 
+[01:13:00]  | Codepage:    <none>                    | 
+[01:13:00]  | YSI:         5.06.1932                 | 
+[01:13:00]  | Started:     1680909180                | 
+[01:13:00]  | JIT:         <none>                    | 
+[01:13:00]  | Crashdetect: <found>                   | 
+[01:13:00]  |                                        | 
+[01:13:00]  ========================================== 
+[01:13:00]  
+[01:13:00]   Filterscript '../scriptfiles/callbackfix.amx' loaded.
+[01:13:00] *** YSI Info: YSI Script ID: 1
+[01:13:00]  
+[01:13:00] -                                     -
+[01:13:00]  Founder : Danis Cavalic (Slade)
+[01:13:00]  Monaco : v0.1
+[01:13:00]  Credits : realnaith (myserver) 
+[01:13:00] -                                     -
+[01:13:00] Number of vehicle models: 0
+[01:13:08] [connection] 127.0.0.1:56318 requests connection cookie.
+[01:13:09] [connection] incoming connection: 127.0.0.1:56318 id: 0
+[01:13:09] [join] Danis_Cavalic has joined the server (0:127.0.0.1)
+[01:16:47] [part] Danis_Cavalic has left the server (0:1)
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[01:16:53] filterscripts = ""  (string)
+[01:16:53] weburl = "www.sa-mp.com"  (string)
+[01:16:53] 
+[01:16:53] Server Plugins
+[01:16:53] --------------
+[01:16:53]  Loading plugin: crashdetect
+[01:16:53]   CrashDetect plugin 4.21
+[01:16:53]   Loaded.
+[01:16:53]  Loading plugin: sscanf
+[01:16:53] 
+[01:16:53]  ===============================
+[01:16:53] 
+[01:16:53]       sscanf plugin loaded.     
+[01:16:53] 
+[01:16:53]          Version: 2.13.1
+[01:16:53] 
+[01:16:53]    (c) 2022 Alex "Y_Less" Cole  
+[01:16:53] 
+[01:16:53]  ===============================
+[01:16:53] 
+[01:16:53]   Loaded.
+[01:16:53]  Loading plugin: streamer
+[01:16:53] 
+
+*** Streamer Plugin v2.9.5 by Incognito loaded ***
+
+[01:16:53]   Loaded.
+[01:16:53]  Loading plugin: mysql
+[01:16:53]  >> plugin.mysql: R41-4 successfully loaded.
+[01:16:53]   Loaded.
+[01:16:53]  Loaded 4 plugins.
+
+[01:16:53] 
+[01:16:53] Filterscripts
+[01:16:53] ---------------
+[01:16:53]   Loaded 0 filterscripts.
+
+[01:16:53]  
+[01:16:53]  
+[01:16:53]          ==============================================================
+[01:16:53]          |                                                            |
+[01:16:53]          |                                                            |
+[01:16:53]          |    YYYYYYY       YYYYYYY    SSSSSSSSSSSSSSS  IIIIIIIIII    |
+[01:16:53]          |    Y:::::Y       Y:::::Y  SS:::::::::::::::S I::::::::I    |
+[01:16:53]          |    Y:::::Y       Y:::::Y S:::::SSSSSS::::::S I::::::::I    |
+[01:16:53]          |    Y::::::Y     Y::::::Y S:::::S     SSSSSSS II::::::II    |
+[01:16:53]          |    YYY:::::Y   Y:::::YYY S:::::S               I::::I      |
+[01:16:53]          |       Y:::::Y Y:::::Y    S:::::S               I::::I      |
+[01:16:53]          |        Y:::::Y:::::Y      S::::SSSS            I::::I      |
+[01:16:53]          |         Y:::::::::Y        SS::::::SSSSS       I::::I      |
+[01:16:53]          |          Y:::::::Y           SSS::::::::SS     I::::I      |
+[01:16:53]          |           Y:::::Y               SSSSSS::::S    I::::I      |
+[01:16:53]          |           Y:::::Y                    S:::::S   I::::I      |
+[01:16:53]          |           Y:::::Y                    S:::::S   I::::I      |
+[01:16:53]          |           Y:::::Y        SSSSSSS     S:::::S II::::::II    |
+[01:16:53]          |        YYYY:::::YYYY     S::::::SSSSSS:::::S I::::::::I    |
+[01:16:53]          |        Y:::::::::::Y     S:::::::::::::::SS  I::::::::I    |
+[01:16:53]          |        YYYYYYYYYYYYY      SSSSSSSSSSSSSSS    IIIIIIIIII    |
+[01:16:53]          |                                                            |
+[01:16:53]          |                                                            |
+[01:16:53]          |                      (c) 2021 MPL v1.1                     |
+[01:16:53]          |            Alex "Y_Less" Cole and contributors.            |
+[01:16:53]          |                                                            |
+[01:16:53]          |                                                            |
+[01:16:53]          ==============================================================
+[01:16:53]  
+[01:16:53]  
+[01:16:53]  ========================================== 
+[01:16:53]  |                                        | 
+[01:16:53]  |  Missing YSI scriptfiles directories:  | 
+[01:16:53]  |                                        | 
+[01:16:53]  |      /scriptfiles/YSI/fixes/           | 
+[01:16:53]  |      /scriptfiles/YSI/temp/            | 
+[01:16:53]  |                                        | 
+[01:16:53]  ========================================== 
+[01:16:53]  |                                        | 
+[01:16:53]  |   Generating code, this may take a     | 
+[01:16:53]  |  little bit of time.  Note that this   | 
+[01:16:53]  |  code generation works best with the   | 
+[01:16:53]  |     JIT plugin, which you are not      | 
+[01:16:53]  |     currently using.  Get it here:     | 
+[01:16:53]  |                                        | 
+[01:16:53]  |       https://git.io/jit-plugin        | 
+[01:16:53]  |                                        | 
+[01:16:53]  |             Please wait...             | 
+[01:16:53] [debug] Long callback execution detected (hang or performance issue)
+[01:16:53] [debug] AMX backtrace:
+[01:16:53] [debug] #0 0000d3f4 in InitOpcodeTable () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\y_cgen\..\..\YSI_Core\y_core\..\..\amx\opcode.inc:755
+[01:16:53] [debug] #1 0000d478 in Opcode:RelocateOpcode (Opcode:opcode=134) at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\y_cgen\..\..\YSI_Core\y_core\..\..\amx\opcode.inc:765
+[01:16:53] [debug] #2 0001542c in CodeScanInit (scanner[CodeScanner:172]=@02867450) at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\y_cgen\..\..\YSI_Core\y_core\..\..\amx\codescan.inc:1037
+[01:16:53] [debug] #3 00015aac in AddressofResolve () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\y_cgen\..\..\YSI_Core\y_core\..\..\amx\addressof_jit.inc:106
+[01:16:53] [debug] #4 00016ed8 in public AMX_OnCodeInit () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\y_cgen\..\..\YSI_Core\y_core\y_thirdpartyinclude.inc:380
+[01:16:53] [debug] #5 0000482c in public Debug_OnCodeInit () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\..\YSI_Core\y_core\y_amx_impl.inc:207
+[01:16:53] [debug] #6 00004124 in public ScriptInit_OnCodeInit () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\..\YSI_Core\y_core\y_debug_impl.inc:646
+[01:16:53] [debug] #7 00001dd0 in bool:ScriptInit_CallOnCodeInit (bool:jit=false, bool:fs=false) at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\..\YSI_Core\y_core\y_scriptinit_impl.inc:706
+[01:16:53] [debug] #8 00002d68 in public OnGameModeInit () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\..\YSI_Core\y_core\y_scriptinit_impl.inc:1105
+[01:16:53]  |                                        | 
+[01:16:53]  |                 Done!                  | 
+[01:16:53]  |                                        | 
+[01:16:53]  ========================================== 
+[01:16:53]  |                                        | 
+[01:16:53]  | Server:      0.3DL - Windows           | 
+[01:16:53]  | Compiler:    3.10.10 - Windows         | 
+[01:16:53]  | Codepage:    <none>                    | 
+[01:16:53]  | YSI:         5.06.1932                 | 
+[01:16:53]  | Started:     1680909413                | 
+[01:16:53]  | JIT:         <none>                    | 
+[01:16:53]  | Crashdetect: <found>                   | 
+[01:16:53]  |                                        | 
+[01:16:53]  ========================================== 
+[01:16:53]  
+[01:16:53]   Filterscript '../scriptfiles/callbackfix.amx' loaded.
+[01:16:53] *** YSI Info: YSI Script ID: 1
+[01:16:53]  
+[01:16:53] -                                     -
+[01:16:53]  Founder : Danis Cavalic (Slade)
+[01:16:53]  Monaco : v0.1
+[01:16:53]  Credits : realnaith (myserver) 
+[01:16:53] -                                     -
+[01:16:53] Number of vehicle models: 0
+[01:17:01] [connection] 127.0.0.1:50733 requests connection cookie.
+[01:17:02] [connection] incoming connection: 127.0.0.1:50733 id: 0
+[01:17:02] [join] Danis_Cavalic has joined the server (0:127.0.0.1)
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[01:20:57] filterscripts = ""  (string)
+[01:20:57] weburl = "www.sa-mp.com"  (string)
+[01:20:57] 
+[01:20:57] Server Plugins
+[01:20:57] --------------
+[01:20:57]  Loading plugin: crashdetect
+[01:20:57]   CrashDetect plugin 4.21
+[01:20:57]   Loaded.
+[01:20:57]  Loading plugin: sscanf
+[01:20:57] 
+[01:20:57]  ===============================
+[01:20:57] 
+[01:20:57]       sscanf plugin loaded.     
+[01:20:57] 
+[01:20:57]          Version: 2.13.1
+[01:20:57] 
+[01:20:57]    (c) 2022 Alex "Y_Less" Cole  
+[01:20:57] 
+[01:20:57]  ===============================
+[01:20:57] 
+[01:20:57]   Loaded.
+[01:20:57]  Loading plugin: streamer
+[01:20:57] 
+
+*** Streamer Plugin v2.9.5 by Incognito loaded ***
+
+[01:20:57]   Loaded.
+[01:20:57]  Loading plugin: mysql
+[01:20:57]  >> plugin.mysql: R41-4 successfully loaded.
+[01:20:57]   Loaded.
+[01:20:57]  Loaded 4 plugins.
+
+[01:20:57] 
+[01:20:57] Filterscripts
+[01:20:57] ---------------
+[01:20:57]   Loaded 0 filterscripts.
+
+[01:20:57]  
+[01:20:57]  
+[01:20:57]          ==============================================================
+[01:20:57]          |                                                            |
+[01:20:57]          |                                                            |
+[01:20:57]          |    YYYYYYY       YYYYYYY    SSSSSSSSSSSSSSS  IIIIIIIIII    |
+[01:20:57]          |    Y:::::Y       Y:::::Y  SS:::::::::::::::S I::::::::I    |
+[01:20:57]          |    Y:::::Y       Y:::::Y S:::::SSSSSS::::::S I::::::::I    |
+[01:20:57]          |    Y::::::Y     Y::::::Y S:::::S     SSSSSSS II::::::II    |
+[01:20:57]          |    YYY:::::Y   Y:::::YYY S:::::S               I::::I      |
+[01:20:57]          |       Y:::::Y Y:::::Y    S:::::S               I::::I      |
+[01:20:57]          |        Y:::::Y:::::Y      S::::SSSS            I::::I      |
+[01:20:57]          |         Y:::::::::Y        SS::::::SSSSS       I::::I      |
+[01:20:57]          |          Y:::::::Y           SSS::::::::SS     I::::I      |
+[01:20:57]          |           Y:::::Y               SSSSSS::::S    I::::I      |
+[01:20:57]          |           Y:::::Y                    S:::::S   I::::I      |
+[01:20:57]          |           Y:::::Y                    S:::::S   I::::I      |
+[01:20:57]          |           Y:::::Y        SSSSSSS     S:::::S II::::::II    |
+[01:20:57]          |        YYYY:::::YYYY     S::::::SSSSSS:::::S I::::::::I    |
+[01:20:57]          |        Y:::::::::::Y     S:::::::::::::::SS  I::::::::I    |
+[01:20:57]          |        YYYYYYYYYYYYY      SSSSSSSSSSSSSSS    IIIIIIIIII    |
+[01:20:57]          |                                                            |
+[01:20:57]          |                                                            |
+[01:20:57]          |                      (c) 2021 MPL v1.1                     |
+[01:20:57]          |            Alex "Y_Less" Cole and contributors.            |
+[01:20:57]          |                                                            |
+[01:20:57]          |                                                            |
+[01:20:57]          ==============================================================
+[01:20:57]  
+[01:20:57]  
+[01:20:57]  ========================================== 
+[01:20:57]  |                                        | 
+[01:20:57]  |  Missing YSI scriptfiles directories:  | 
+[01:20:57]  |                                        | 
+[01:20:57]  |      /scriptfiles/YSI/fixes/           | 
+[01:20:57]  |      /scriptfiles/YSI/temp/            | 
+[01:20:57]  |                                        | 
+[01:20:57]  ========================================== 
+[01:20:57]  |                                        | 
+[01:20:57]  |   Generating code, this may take a     | 
+[01:20:57]  |  little bit of time.  Note that this   | 
+[01:20:57]  |  code generation works best with the   | 
+[01:20:57]  |     JIT plugin, which you are not      | 
+[01:20:57]  |     currently using.  Get it here:     | 
+[01:20:57]  |                                        | 
+[01:20:57]  |       https://git.io/jit-plugin        | 
+[01:20:57]  |                                        | 
+[01:20:57]  |             Please wait...             | 
+[01:20:57] [debug] Long callback execution detected (hang or performance issue)
+[01:20:57] [debug] AMX backtrace:
+[01:20:57] [debug] #0 0000d3f4 in InitOpcodeTable () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\y_cgen\..\..\YSI_Core\y_core\..\..\amx\opcode.inc:755
+[01:20:57] [debug] #1 0000d478 in Opcode:RelocateOpcode (Opcode:opcode=134) at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\y_cgen\..\..\YSI_Core\y_core\..\..\amx\opcode.inc:765
+[01:20:57] [debug] #2 0001542c in CodeScanInit (scanner[CodeScanner:172]=@0286a2e8) at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\y_cgen\..\..\YSI_Core\y_core\..\..\amx\codescan.inc:1037
+[01:20:57] [debug] #3 00015aac in AddressofResolve () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\y_cgen\..\..\YSI_Core\y_core\..\..\amx\addressof_jit.inc:106
+[01:20:57] [debug] #4 00016ed8 in public AMX_OnCodeInit () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\y_cgen\..\..\YSI_Core\y_core\y_thirdpartyinclude.inc:380
+[01:20:57] [debug] #5 0000482c in public Debug_OnCodeInit () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\..\YSI_Core\y_core\y_amx_impl.inc:207
+[01:20:57] [debug] #6 00004124 in public ScriptInit_OnCodeInit () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\..\YSI_Core\y_core\y_debug_impl.inc:646
+[01:20:57] [debug] #7 00001dd0 in bool:ScriptInit_CallOnCodeInit (bool:jit=false, bool:fs=false) at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\..\YSI_Core\y_core\y_scriptinit_impl.inc:706
+[01:20:57] [debug] #8 00002d68 in public OnGameModeInit () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\..\YSI_Core\y_core\y_scriptinit_impl.inc:1105
+[01:20:58]  |                                        | 
+[01:20:58]  |                 Done!                  | 
+[01:20:58]  |                                        | 
+[01:20:58]  ========================================== 
+[01:20:58]  |                                        | 
+[01:20:58]  | Server:      0.3DL - Windows           | 
+[01:20:58]  | Compiler:    3.10.10 - Windows         | 
+[01:20:58]  | Codepage:    <none>                    | 
+[01:20:58]  | YSI:         5.06.1932                 | 
+[01:20:58]  | Started:     1680909657                | 
+[01:20:58]  | JIT:         <none>                    | 
+[01:20:58]  | Crashdetect: <found>                   | 
+[01:20:58]  |                                        | 
+[01:20:58]  ========================================== 
+[01:20:58]  
+[01:20:58]   Filterscript '../scriptfiles/callbackfix.amx' loaded.
+[01:20:58] *** YSI Info: YSI Script ID: 1
+[01:20:58]  
+[01:20:58] -                                     -
+[01:20:58]  Founder : Danis Cavalic (Slade)
+[01:20:58]  Monaco : v0.1
+[01:20:58]  Credits : realnaith (myserver) 
+[01:20:58] -                                     -
+[01:20:58] Number of vehicle models: 0
+[01:21:06] [connection] 127.0.0.1:63741 requests connection cookie.
+[01:21:07] [connection] incoming connection: 127.0.0.1:63741 id: 0
+[01:21:07] [join] Danis_Cavalic has joined the server (0:127.0.0.1)
+[01:22:52] [part] Danis_Cavalic has left the server (0:1)
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[01:23:25] filterscripts = ""  (string)
+[01:23:25] weburl = "www.sa-mp.com"  (string)
+[01:23:25] 
+[01:23:25] Server Plugins
+[01:23:25] --------------
+[01:23:25]  Loading plugin: crashdetect
+[01:23:25]   CrashDetect plugin 4.21
+[01:23:25]   Loaded.
+[01:23:25]  Loading plugin: sscanf
+[01:23:25] 
+[01:23:25]  ===============================
+[01:23:25] 
+[01:23:25]       sscanf plugin loaded.     
+[01:23:25] 
+[01:23:25]          Version: 2.13.1
+[01:23:25] 
+[01:23:25]    (c) 2022 Alex "Y_Less" Cole  
+[01:23:25] 
+[01:23:25]  ===============================
+[01:23:25] 
+[01:23:25]   Loaded.
+[01:23:25]  Loading plugin: streamer
+[01:23:25] 
+
+*** Streamer Plugin v2.9.5 by Incognito loaded ***
+
+[01:23:25]   Loaded.
+[01:23:25]  Loading plugin: mysql
+[01:23:25]  >> plugin.mysql: R41-4 successfully loaded.
+[01:23:25]   Loaded.
+[01:23:25]  Loaded 4 plugins.
+
+[01:23:25] 
+[01:23:25] Filterscripts
+[01:23:25] ---------------
+[01:23:25]   Loaded 0 filterscripts.
+
+[01:23:25]  
+[01:23:25]  
+[01:23:25]          ==============================================================
+[01:23:25]          |                                                            |
+[01:23:25]          |                                                            |
+[01:23:25]          |    YYYYYYY       YYYYYYY    SSSSSSSSSSSSSSS  IIIIIIIIII    |
+[01:23:25]          |    Y:::::Y       Y:::::Y  SS:::::::::::::::S I::::::::I    |
+[01:23:25]          |    Y:::::Y       Y:::::Y S:::::SSSSSS::::::S I::::::::I    |
+[01:23:25]          |    Y::::::Y     Y::::::Y S:::::S     SSSSSSS II::::::II    |
+[01:23:25]          |    YYY:::::Y   Y:::::YYY S:::::S               I::::I      |
+[01:23:25]          |       Y:::::Y Y:::::Y    S:::::S               I::::I      |
+[01:23:25]          |        Y:::::Y:::::Y      S::::SSSS            I::::I      |
+[01:23:25]          |         Y:::::::::Y        SS::::::SSSSS       I::::I      |
+[01:23:25]          |          Y:::::::Y           SSS::::::::SS     I::::I      |
+[01:23:25]          |           Y:::::Y               SSSSSS::::S    I::::I      |
+[01:23:25]          |           Y:::::Y                    S:::::S   I::::I      |
+[01:23:25]          |           Y:::::Y                    S:::::S   I::::I      |
+[01:23:25]          |           Y:::::Y        SSSSSSS     S:::::S II::::::II    |
+[01:23:25]          |        YYYY:::::YYYY     S::::::SSSSSS:::::S I::::::::I    |
+[01:23:25]          |        Y:::::::::::Y     S:::::::::::::::SS  I::::::::I    |
+[01:23:25]          |        YYYYYYYYYYYYY      SSSSSSSSSSSSSSS    IIIIIIIIII    |
+[01:23:25]          |                                                            |
+[01:23:25]          |                                                            |
+[01:23:25]          |                      (c) 2021 MPL v1.1                     |
+[01:23:25]          |            Alex "Y_Less" Cole and contributors.            |
+[01:23:25]          |                                                            |
+[01:23:25]          |                                                            |
+[01:23:25]          ==============================================================
+[01:23:25]  
+[01:23:25]  
+[01:23:25]  ========================================== 
+[01:23:25]  |                                        | 
+[01:23:25]  |  Missing YSI scriptfiles directories:  | 
+[01:23:25]  |                                        | 
+[01:23:25]  |      /scriptfiles/YSI/fixes/           | 
+[01:23:25]  |      /scriptfiles/YSI/temp/            | 
+[01:23:25]  |                                        | 
+[01:23:25]  ========================================== 
+[01:23:25]  |                                        | 
+[01:23:25]  |   Generating code, this may take a     | 
+[01:23:25]  |  little bit of time.  Note that this   | 
+[01:23:25]  |  code generation works best with the   | 
+[01:23:25]  |     JIT plugin, which you are not      | 
+[01:23:25]  |     currently using.  Get it here:     | 
+[01:23:25]  |                                        | 
+[01:23:25]  |       https://git.io/jit-plugin        | 
+[01:23:25]  |                                        | 
+[01:23:25]  |             Please wait...             | 
+[01:23:25] [debug] Long callback execution detected (hang or performance issue)
+[01:23:25] [debug] AMX backtrace:
+[01:23:25] [debug] #0 0000d3f4 in InitOpcodeTable () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\y_cgen\..\..\YSI_Core\y_core\..\..\amx\opcode.inc:755
+[01:23:25] [debug] #1 0000d478 in Opcode:RelocateOpcode (Opcode:opcode=134) at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\y_cgen\..\..\YSI_Core\y_core\..\..\amx\opcode.inc:765
+[01:23:25] [debug] #2 0001542c in CodeScanInit (scanner[CodeScanner:172]=@0286a2ec) at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\y_cgen\..\..\YSI_Core\y_core\..\..\amx\codescan.inc:1037
+[01:23:25] [debug] #3 00015aac in AddressofResolve () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\y_cgen\..\..\YSI_Core\y_core\..\..\amx\addressof_jit.inc:106
+[01:23:25] [debug] #4 00016ed8 in public AMX_OnCodeInit () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\y_cgen\..\..\YSI_Core\y_core\y_thirdpartyinclude.inc:380
+[01:23:25] [debug] #5 0000482c in public Debug_OnCodeInit () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\..\YSI_Core\y_core\y_amx_impl.inc:207
+[01:23:25] [debug] #6 00004124 in public ScriptInit_OnCodeInit () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\..\YSI_Core\y_core\y_debug_impl.inc:646
+[01:23:25] [debug] #7 00001dd0 in bool:ScriptInit_CallOnCodeInit (bool:jit=false, bool:fs=false) at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\..\YSI_Core\y_core\y_scriptinit_impl.inc:706
+[01:23:25] [debug] #8 00002d68 in public OnGameModeInit () at C:\Users\llc\Documents\monaco-rp\pawno\include\ysilib\YSI_Coding\y_hooks\..\..\YSI_Core\y_core\y_scriptinit_impl.inc:1105
+[01:23:26]  |                                        | 
+[01:23:26]  |                 Done!                  | 
+[01:23:26]  |                                        | 
+[01:23:26]  ========================================== 
+[01:23:26]  |                                        | 
+[01:23:26]  | Server:      0.3DL - Windows           | 
+[01:23:26]  | Compiler:    3.10.10 - Windows         | 
+[01:23:26]  | Codepage:    <none>                    | 
+[01:23:26]  | YSI:         5.06.1932                 | 
+[01:23:26]  | Started:     1680909805                | 
+[01:23:26]  | JIT:         <none>                    | 
+[01:23:26]  | Crashdetect: <found>                   | 
+[01:23:26]  |                                        | 
+[01:23:26]  ========================================== 
+[01:23:26]  
+[01:23:26]   Filterscript '../scriptfiles/callbackfix.amx' loaded.
+[01:23:26] *** YSI Info: YSI Script ID: 1
+[01:23:26]  
+[01:23:26] -                                     -
+[01:23:26]  Founder : Danis Cavalic (Slade)
+[01:23:26]  Monaco : v0.1
+[01:23:26]  Credits : realnaith (myserver) 
+[01:23:26] -                                     -
+[01:23:26] Number of vehicle models: 0
+[01:23:38] [connection] 127.0.0.1:63368 requests connection cookie.
+[01:23:39] [connection] incoming connection: 127.0.0.1:63368 id: 0
+[01:23:39] [join] Danis_Cavalic has joined the server (0:127.0.0.1)
+[01:24:05] [part] Danis_Cavalic has left the server (0:1)
