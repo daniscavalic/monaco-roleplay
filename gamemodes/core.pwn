@@ -1,53 +1,55 @@
-/**
-TODO:
- */
+// =======================================//
+/* 
 
-#define YSI_YES_HEAP_MALLOC
-
-#define CGEN_MEMORY 60000
-
-#include <a_samp>
-#include <a_actor>
-#include <a_objects>
-#include <a_players>
-#include <a_vehicles>
-#include <ysilib\YSI_Coding\y_hooks>
-#include <ysilib\YSI_Coding\y_va>
-#include <ysilib\YSI_Core\y_utils.inc>
-#include <ysilib\YSI_Storage\y_ini>
-#include <ysilib\YSI_Coding\y_timers>
-#include <ysilib\YSI_Visual\y_commands>
-#include <ysilib\YSI_Data\y_foreach>
-#include <ysilib\YSI_Data\y_iterate>
-#include <sscanf2>
-#include <streamer>
-#include <mapfix>
-#include <easyDialog>
-#include <formatex>
-#include <distance>
-
-// - assets
-#include "utils/main.pwn"
-#include "assets/stock.pwn"
-//-
-#include "assets/end/do-not-look"
-
-static stock const USER_PATH[64] = "/Users/%s.ini";
-
+    __  _______  _   _____   __________ 
+   /  |/  / __ \/ | / /   | / ____/ __ |
+  / /|_/ / / / /  |/ / /| |/ /   / / / /
+ / /  / / /_/ / /|  / ___ / /___/ /_/ / 
+/_/  /_/\____/_/ |_/_/  |_\____/\____/  
+                                        
+  ___  ___  _    ___ ___ _      ___   __
+ | _ \/ _ \| |  | __| _ \ |    /_\ \ / /
+ |   / (_) | |__| _||  _/ |__ / _ \ V / 
+ |_|_\\___/|____|___|_| |____/_/ \_\_|  
+                                        
+*/
+// =======================================//
+//			Main
+#define		YSI_YES_HEAP_MALLOC
+#define 	CGEN_MEMORY 60000
+//			Core Includes
+#include 	<a_samp>
+#include 	<a_actor>
+#include 	<a_objects>
+#include 	<a_players>
+#include 	<a_vehicles>
+#include 	<crashdetect>
+#include 	<ysilib\YSI_Coding\y_hooks>
+#include 	<ysilib\YSI_Coding\y_va>
+#include 	<ysilib\YSI_Core\y_utils.inc>
+#include 	<ysilib\YSI_Storage\y_ini>
+#include 	<ysilib\YSI_Coding\y_timers>
+#include 	<ysilib\YSI_Visual\y_commands>
+#include 	<ysilib\YSI_Data\y_foreach>
+#include 	<ysilib\YSI_Data\y_iterate>
+#include 	<sscanf2>
+#include 	<streamer>
+#include 	<mapfix>
+#include 	<easyDialog>
+#include 	<formatex>
+#include 	<distance>
+// --------------------------------------------------------------------//
+//          Assets
+#include 	"utils/main.pwn"
+// --------------------------------------------------------------------//
 #define	 	SECONDS_TO_LOGIN 		30
 #define 	DEFAULT_POS_X 			1958.3783
 #define 	DEFAULT_POS_Y 			1343.1572
 #define 	DEFAULT_POS_Z 			15.3746
 #define 	DEFAULT_POS_A 			270.1425
-const 		MAX_PASSWORD_LENGTH = 64;
-const 		MIN_PASSWORD_LENGTH = 6;
-const 		MAX_LOGIN_ATTEMPTS = 	3;
-
-enum
-{
-	e_SPAWN_TYPE_REGISTER = 1,
-    e_SPAWN_TYPE_LOGIN
-};
+const 		MAX_PASSWORD_LENGTH 	= 64;
+const 		MIN_PASSWORD_LENGTH 	= 6;
+const 		MAX_LOGIN_ATTEMPTS 		= 3;
 
 enum E_PLAYERS
 {
@@ -58,6 +60,8 @@ enum E_PLAYERS
 	Password[65],
 	Salt[17],
 	AdminLevel,
+	Skin,
+	Money,
 	Kills,
 	Deaths,
 	Float: X_Pos,
@@ -73,25 +77,33 @@ enum E_PLAYERS
 new Player[MAX_PLAYERS][E_PLAYERS],
 	g_MysqlRaceCheck[MAX_PLAYERS];
 
-static
-    player_Score[MAX_PLAYERS],
-	player_Skin[MAX_PLAYERS],
-    player_Money[MAX_PLAYERS],
-	player_Staff[MAX_PLAYERS];
+stock GetStaffRankName( rank_level ) {
+	new rank_name[15];
+	switch(rank_level) {
+		case 1: form:rank_name("Server Moderator");
+		case 2: form:rank_name("Administrator");
+		case 3: form:rank_name("Lead Administrator");
+		case 4: form:rank_name("Manager");
+	}
+	return rank_name;
+}
 
-new stfveh[MAX_PLAYERS] = { INVALID_VEHICLE_ID, ... };
+bool:Auth(playerid, level) {
+	if (Player[playerid][AdminLevel] >= level) return true;
+	else return false;
+}
+// --------------------------------------------------------------------//
+//			Backend
+#include 	"backend/vehicles_handler.pwn"
+// --------------------------------------------------------------------//
 
 main()
 {
     print("-                                     -");
-	print(" Founder : Nickname");
-	print(" Version : 1.0 - Naziv");
-	print(" Credits : realnaith for Scripting ");
-	print(" Frontend : ");
+	print(" Founder : Danis Cavalic (Slade)");
+	print(" "server_name" : "server_version"");
+	print(" Credits : realnaith (myserver) ");
 	print("-                                     -");
-	print("> Gamemode Starting...");
-	print(">> myproject Gamemode Started");
-    print("-                                     -");
 }
 
 #define PRESSED(%0) \
@@ -128,8 +140,6 @@ public OnPlayerConnect(playerid)
 	SetPlayerColor(playerid, x_white);
 	LoadPlayer(playerid);
 
-	stfveh[playerid] = INVALID_VEHICLE_ID;
-
 	return 1;
 }
 
@@ -150,6 +160,8 @@ LoadPlayer(playerid) {
 	orm_addvar_string(ormid, Player[playerid][Password], 65, "password");
 	orm_addvar_string(ormid, Player[playerid][Salt], 17, "salt");
 	orm_addvar_int(ormid, Player[playerid][AdminLevel], "admin");
+	orm_addvar_int(ormid, Player[playerid][Skin], "skin");
+	orm_addvar_int(ormid, Player[playerid][Money], "money");
 	orm_addvar_int(ormid, Player[playerid][Kills], "kills");
 	orm_addvar_int(ormid, Player[playerid][Deaths], "deaths");
 	orm_addvar_float(ormid, Player[playerid][X_Pos], "x");
@@ -166,9 +178,6 @@ LoadPlayer(playerid) {
 public OnPlayerDisconnect(playerid, reason)
 {
 	OnPlayerExitCleanup(playerid, reason);
-	DestroyVehicle(stfveh[playerid]);
-	stfveh[playerid] = INVALID_PLAYER_ID;
-
 	return 1;
 }
 
@@ -201,26 +210,30 @@ public OnPlayerDataLoaded(playerid, race_check)
 	*/
 	if (race_check != g_MysqlRaceCheck[playerid]) return Kick(playerid);
 
+	ClearChat(playerid, 50);
+
 	orm_setkey(Player[playerid][ORM_ID], "id");
 	switch (orm_errno(Player[playerid][ORM_ID]))
 	{
 		case ERROR_OK:
 		{
-			Dialog_Show(playerid, "dialog_login", DIALOG_STYLE_PASSWORD,
-				"Prijavljivanje",
-				"%s, unesite Vasu tacnu lozinku: ",
-				"Potvrdi", "Izlaz", ReturnPlayerName(playerid)
+			Dialog_Show(playerid, "dialog_login", DIALOG_STYLE_PASSWORD, server_dialog_header,
+				""c_torq"Dobrodosao %s nazad na "server_dialog_header" "c_torq"RolePlay.\n\n{FFFFFF}Unesite lozinku racuna za nastavak igre:",
+				"Prijava", "Izlaz", 
+				ReturnPlayerName(playerid)
 			);
 
-			// from now on, the player has 30 seconds to login
 			Player[playerid][LoginTimer] = SetTimerEx("OnLoginTimeout", SECONDS_TO_LOGIN * 1000, false, "d", playerid);
 		}
 		case ERROR_NO_DATA:
 		{
-			Dialog_Show(playerid, "dialog_regpassword", DIALOG_STYLE_INPUT,
-				"Registracija",
-				"%s, unesite Vasu zeljenu lozinku: ",
-				"Potvrdi", "Izlaz", ReturnPlayerName(playerid)
+			Dialog_Show(playerid, "dialog_regpassword", DIALOG_STYLE_INPUT, server_dialog_header,
+			//
+				""c_torq"Pozdrav %s, dobrodosli na "server_dialog_header" "c_torq"RolePlay.\n\n\
+				{FFFFFF}Za pocetak unesite lozinku koju cete koristiti za prijavljivanje:",
+			//
+				"Potvrdi", "Izlaz", 
+				ReturnPlayerName(playerid)
 			);
 		}
 	}
@@ -255,7 +268,7 @@ SetupPlayerTable()
 	return 1;
 }
 
-UpdatePlayerData(playerid, reason)
+UpdatePlayerData(playerid, reason = 1)
 {
 	if (Player[playerid][IsLoggedIn] == false) return 0;
 
@@ -309,9 +322,6 @@ public OnPlayerSpawn(playerid)
 
 public OnPlayerDeath(playerid, killerid, reason)
 {
-	DestroyVehicle(stfveh[playerid]);
-	stfveh[playerid] = INVALID_PLAYER_ID;
-
 	UpdatePlayerDeaths(playerid);
 	UpdatePlayerKills(killerid);
 
@@ -468,38 +478,6 @@ public OnPlayerClickPlayer(playerid, clickedplayerid, source)
 	return 1;
 }
 
-timer Spawn_Player[100](playerid, type)
-{
-	if (type == e_SPAWN_TYPE_REGISTER)
-		{
-			SendClientMessage(playerid, -1, ""c_server"myproject // "c_white"Uspesno ste se registrovali!");
-			SetSpawnInfo(playerid, 0, player_Skin[playerid],
-				154.2401,-1942.5531,3.7734,0.4520,
-				0, 0, 0, 0, 0, 0
-			);
-			SpawnPlayer(playerid);
-
-			SetPlayerScore(playerid, player_Score[playerid]);
-			GivePlayerMoney(playerid, player_Money[playerid]);
-			SetPlayerSkin(playerid, player_Skin[playerid]);
-		}
-
-		else if (type == e_SPAWN_TYPE_LOGIN)
-		{
-			SendClientMessage(playerid, x_server,"myproject // "c_white"Uspesno ste se prijavli!");
-			SetSpawnInfo(playerid, 0, player_Skin[playerid],
-				154.2401,-1942.5531,3.7734,0.4520,
-				0, 0, 0, 0, 0, 0
-			);
-			SpawnPlayer(playerid);
-
-			SetPlayerScore(playerid, player_Score[playerid]);
-			GivePlayerMoney(playerid, player_Money[playerid]);
-			SetPlayerSkin(playerid, player_Skin[playerid]);
-		}
-
-}
-
 forward OnPlayerRegister(playerid);
 public OnPlayerRegister(playerid)
 {
@@ -510,7 +488,14 @@ public OnPlayerRegister(playerid)
 	Player[playerid][Y_Pos] = DEFAULT_POS_Y;
 	Player[playerid][Z_Pos] = DEFAULT_POS_Z;
 	Player[playerid][A_Pos] = DEFAULT_POS_A;
-	defer Spawn_Player(playerid, e_SPAWN_TYPE_REGISTER);
+	Player[playerid][Skin] = 60;
+
+	SendClientMessage(playerid, -1, ""c_server"myproject // "c_white"Uspesno ste se registrovali!");
+	SetSpawnInfo(playerid, 0, Player[playerid][Skin],
+		154.2401,-1942.5531,3.7734,0.4520,
+		0, 0, 0, 0, 0, 0
+	);
+	SpawnPlayer(playerid);
 
 	//SetSpawnInfo(playerid, NO_TEAM, 0, Player[playerid][X_Pos], Player[playerid][Y_Pos], Player[playerid][Z_Pos], Player[playerid][A_Pos], 0, 0, 0, 0, 0, 0);
 	//SpawnPlayer(playerid);
@@ -548,47 +533,72 @@ Dialog: dialog_login(const playerid, response, listitem, string: inputtext[])
 	{
 		KillTimer(Player[playerid][LoginTimer]);
 		Player[playerid][LoginTimer] = 0;
-		Player[playerid][IsLoggedIn] = true;
-
-		// spawn the player to their last saved position after login
-		SetSpawnInfo(playerid, NO_TEAM, 0, Player[playerid][X_Pos], Player[playerid][Y_Pos], Player[playerid][Z_Pos], Player[playerid][A_Pos], 0, 0, 0, 0, 0, 0);
-		SpawnPlayer(playerid);
+		LogPlayer(playerid);
 	}
 	else
 	{
 		Player[playerid][LoginAttempts]++;
 
-		if (Player[playerid][LoginAttempts] >= 3)
-		{
-			DelayedKick(playerid);
-		}
-		else Dialog_Show(playerid, "dialog_login", DIALOG_STYLE_PASSWORD,
-				"Prijavljivanje",
-				"%s, unesite Vasu tacnu lozinku: ",
-				"Potvrdi", "Izlaz", ReturnPlayerName(playerid)
+		if (Player[playerid][LoginAttempts] >= 3) DelayedKick(playerid);
+		else Dialog_Show(playerid, "dialog_login", DIALOG_STYLE_PASSWORD, server_dialog_header,
+				""c_red"Niste unijeli ispravnu lozinku (%d/3) za racun %s.\n\n{FFFFFF}Unesite lozinku racuna za nastavak igre:",
+				"Prijava", "Izlaz", 
+				Player[playerid][LoginAttempts], ReturnPlayerName(playerid)
 			);
 	}
 
 	return 1;
 }
 
-stock Account_Path(const playerid)
-{
-	new tmp_fmt[64];
-	format(tmp_fmt, sizeof(tmp_fmt), USER_PATH, ReturnPlayerName(playerid));
+LogPlayer(playerid) {
+	// player init
+	Player[playerid][IsLoggedIn] = true;
+	GivePlayerMoney(playerid, Player[playerid][Money]);
+	SetPlayerSkin(playerid, Player[playerid][Skin]);
 
-	return tmp_fmt;
+	SetSpawnInfo(playerid, NO_TEAM, 0, Player[playerid][X_Pos], Player[playerid][Y_Pos], Player[playerid][Z_Pos], Player[playerid][A_Pos], 0, 0, 0, 0, 0, 0);
+	SpawnPlayer(playerid);
+
+	// notifications
+	Blue(playerid, "(prijava) Dobrodosao/la nazad na "server_dialog_header" "c_blue"RolePlay, %s.", ReturnPlayerName(playerid));
+	Blue(playerid, "(prijava) Vraceni ste na snimljenu poziciju prije posljednjeg izlaska sa servera.");
+	if (Auth(playerid, 1)) Server(playerid, "Prijavljeni ste kao %s.", GetStaffRankName(Player[playerid][AdminLevel]));
 }
 
-YCMD:help(playerid, params[], help)
+ClearChat(playerid, rows = 20) {
+	for(new cc; cc < rows; cc++)
+	{
+		SendClientMessage(playerid, 0x00000000, "");
+	}
+}
+
+public e_COMMAND_ERRORS:OnPlayerCommandReceived(playerid, cmdtext[], e_COMMAND_ERRORS:success)
+{
+	if(success != COMMAND_OK) {
+		Torq(playerid, "(komanda) Unesena komanda ne postoji, koristite '/help' za pomoc oko komandi.");
+		return COMMAND_OK;
+	}
+	return COMMAND_OK;
+}
+
+public e_COMMAND_ERRORS:OnPlayerCommandPerformed(playerid, cmdtext[], e_COMMAND_ERRORS:success)
+{
+	if(success != COMMAND_OK) {
+		Torq(playerid, "(komanda) Unesena komanda ne postoji, koristite '/help' za pomoc oko komandi.");
+		return COMMAND_OK;
+	}
+	return COMMAND_OK;
+}
+
+YCMD:cmdhelp(playerid, params[], help)
 {
 	if (help)
 	{
-		SendClientMessage(playerid, -1, "Use `/help <command>` to get information about the command.");
+		Usage(playerid, "Koristite `/cmdhelp [naziv komande]` da dobijete pomoc oko koristenja neke komande.");
 	}
 	else if (IsNull(params))
 	{
-		SendClientMessage(playerid, -1, "Please enter a command.");
+		Usage(playerid, "Koristite `/cmdhelp [naziv komande]` da dobijete pomoc oko koristenja neke komande.");
 	}
 	else
 	{
@@ -600,33 +610,27 @@ YCMD:help(playerid, params[], help)
 
 YCMD:staffcmd(playerid, const string: params[], help)
 {
-	if(help)
-    {
-        SendClientMessage(playerid, x_blue, "HELP >> "c_white"Komanda koja vam prikazuje sve Staff Komande.");
-        return 1;
-    }
-
-	if(!player_Staff[playerid])
-		return SendClientMessage(playerid, x_red, "myserver // "c_white"Samo staff moze ovo!");
+	if (!Auth(playerid, 1)) return Error(playerid, NO_AUTH);
+	if(help) return CommandHelp(playerid, "Komanda za pregled liste komandi za administratore.");
 
 	Dialog_Show(playerid, "dialog_staffcmd", DIALOG_STYLE_MSGBOX,
-	""c_server"myserver // "c_white"Staff Commands",
-	""c_white"%s, Vi ste deo naseg "c_server"staff "c_white"tima!\n\
-	"c_server"SLVL1 >> "c_white"/sduty\n\
-	"c_server"SLVL1 >> "c_white"/sc\n\
-	"c_server"SLVL1 >> "c_white"/staffcmd\n\
-	"c_server"SLVL1 >> "c_white"/sveh\n\
-	"c_server"SLVL1 >> "c_white"/goto\n\
-	"c_server"SLVL1 >> "c_white"/cc\n\
-	"c_server"SLVL1 >> "c_white"/fv\n\
-	"c_server"SLVL2 >> "c_white"/gethere\n\
-	"c_server"SLVL3 >> "c_white"/nitro\n\
-	"c_server"SLVL4 >> "c_white"/jetpack\n\
-	"c_server"SLVL4 >> "c_white"/setskin\n\
-	"c_server"SLVL4 >> "c_white"/xgoto\n\
-	"c_server"SLVL4 >> "c_white"/spanel\n\
-	"c_server"SLVL4 >> "c_white"/setstaff",
-	"U redu", "", ReturnPlayerName(playerid)
+		""c_server"myserver // "c_white"Staff Commands",
+		""c_white"%s, Vi ste deo naseg "c_server"staff "c_white"tima!\n\
+		"c_server"SLVL1 >> "c_white"/sduty\n\
+		"c_server"SLVL1 >> "c_white"/sc\n\
+		"c_server"SLVL1 >> "c_white"/staffcmd\n\
+		"c_server"SLVL1 >> "c_white"/sveh\n\
+		"c_server"SLVL1 >> "c_white"/goto\n\
+		"c_server"SLVL1 >> "c_white"/cc\n\
+		"c_server"SLVL1 >> "c_white"/fv\n\
+		"c_server"SLVL2 >> "c_white"/gethere\n\
+		"c_server"SLVL3 >> "c_white"/nitro\n\
+		"c_server"SLVL4 >> "c_white"/jetpack\n\
+		"c_server"SLVL4 >> "c_white"/setskin\n\
+		"c_server"SLVL4 >> "c_white"/xgoto\n\
+		"c_server"SLVL4 >> "c_white"/spanel\n\
+		"c_server"SLVL4 >> "c_white"/setstaff",
+		"U redu", "", ReturnPlayerName(playerid)
 	);
 
     return 1;
@@ -634,92 +638,29 @@ YCMD:staffcmd(playerid, const string: params[], help)
 
 YCMD:sc(playerid, const string: params[], help)
 {
-	if(help)
-    {
-        SendClientMessage(playerid, x_blue, "HELP >> "c_white"Komanda koja vam omogucava da pisete u Staff Chat.");
-        return 1;
-    }
+	if (!Auth(playerid, 1)) return Error(playerid, NO_AUTH);
 
-	if (player_Staff[playerid] < 1)
-		return SendClientMessage(playerid, -1, ""c_server"myproject // "c_white"Samo staff moze ovo!");
+	if(help) return CommandHelp(playerid, "Komunikacija izmedju pripadnika administracije servera.");
 
-	if (isnull(params))
-		return SendClientMessage(playerid, -1, ""c_server"myproject // "c_white"/sc [text]");
+	if (isnull(params)) return SendClientMessage(playerid, -1, ""c_server"myproject // "c_white"/sc [text]");
 
 	static tmp_str[128];
 
 	format(tmp_str, sizeof(tmp_str), "Staff - %s(%d): "c_white"%s", ReturnPlayerName(playerid), playerid, params);
 
 	foreach (new i: Player)
-		if (player_Staff[i])
+		if (Auth(i, 1))
 			SendClientMessage(i, x_ltblue, tmp_str);
-	
-    return 1;
-}
-
-YCMD:sveh(playerid, params[], help)
-{
-	if(help)
-    {
-        SendClientMessage(playerid, x_blue, "HELP >> "c_white"Komanda koja vam Kreira Staff Vozilo.");
-        return 1;
-    }
-
-	if (player_Staff[playerid] < 1)
-		return SendClientMessage(playerid, -1, ""c_server"myproject // "c_white"Samo staff moze ovo!");
-
-	new Float:x, Float:y, Float:z;
-
-	GetPlayerPos(playerid, x, y, z);
-
-	if (stfveh[playerid] == INVALID_VEHICLE_ID) 
-	{
-		if (isnull(params))
-			return SendClientMessage(playerid, -1, ""c_server"myproject // "c_white"/sveh [Model ID]");
-
-		new modelid = strval(params);
-
-		if (400 > modelid > 611)
-			return SendClientMessage(playerid, -1, ""c_server"myproject // "c_white"* Validni modeli su od 400 do 611.");
-
-		new vehicleid = stfveh[playerid] = CreateVehicle(modelid, x, y, z, 0.0, 1, 0, -1);
-
-		SetVehicleNumberPlate(vehicleid, "STAFF");
-		PutPlayerInVehicle(playerid, vehicleid, 0);
-		
-	    new engine, lights, alarm, doors, bonnet, boot, objective;
-	    GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
-
-	    if (IsVehicleBicycle(GetVehicleModel(vehicleid)))
-	    {
-	        SetVehicleParamsEx(vehicleid, 1, 0, 0, doors, bonnet, boot, objective);
-	    }
-	    else
-	    {
-	        SetVehicleParamsEx(vehicleid, 0, 0, 0, doors, bonnet, boot, objective);
-	    }
-		SendClientMessage(playerid, -1, ""c_server"myproject // "c_white"Stvorili ste vozilo, da ga unistite kucajte '/sveh'.");
-	}
-	else 
-	{
-		DestroyVehicle(stfveh[playerid]);
-		stfveh[playerid] = INVALID_PLAYER_ID;
-		SendClientMessage(playerid, -1, ""c_server"myproject // "c_white"Unistili ste vozilo, da ga stvorite kucajte '/veh [Model ID]'.");
-	}
 	
     return 1;
 }
 
 YCMD:goto(playerid, params[],help)
 {
-	if(help)
-    {
-        SendClientMessage(playerid, x_blue, "HELP >> "c_white"Komanda koja vam omogucava da odete do odredjenog igraca.");
-        return 1;
-    }
+	if (!Auth(playerid, 1))
+		return Error(playerid, NO_AUTH);
 
-	if (player_Staff[playerid] < 1)
-		return SendClientMessage(playerid, -1, ""c_server"myproject // "c_white"Samo staff moze ovo!");
+	if(help) return CommandHelp(playerid, "Pomocu ove komande se mozete teleportirati do drugog logiranog igraca.");
 
 	new giveplayerid, giveplayer[MAX_PLAYER_NAME];
 
@@ -747,39 +688,27 @@ YCMD:goto(playerid, params[],help)
 
 YCMD:cc(playerid, params[], help)
 {
-	if(help)
-    {
-        SendClientMessage(playerid, x_blue, "HELP >> "c_white"Komanda koja ce Ocistiti Chat svim igracima.");
-        return 1;
-    }
+	if (!Auth(playerid, 1))
+		return Error(playerid, NO_AUTH);
 
-	if (player_Staff[playerid] < 1)
-		return SendClientMessage(playerid, -1, ""c_server"myproject // "c_white"Samo staff moze ovo!");
+	if(help) return CommandHelp(playerid, "Brisanje kompletnog chata svim aktivnim igracima.");
 
 	for(new cc; cc < 110; cc++)
 	{
 		SendClientMessageToAll(-1, "");
 	}
-
-	if(player_Staff[playerid] < 1)
-	{
-		static fmt_string[120];
-		format(fmt_string, sizeof(fmt_string), ""c_server"myproject // "c_white"chat je ocistio"c_server" %s", ReturnPlayerName(playerid));
-		SendClientMessageToAll(-1, fmt_string);
-	}
+	static fmt_string[120];
+	format(fmt_string, sizeof(fmt_string), ""c_server"myproject // "c_white"chat je ocistio"c_server" %s", ReturnPlayerName(playerid));
+	SendClientMessageToAll(-1, fmt_string);
     return 1;
 }
 
 YCMD:fv(playerid, params[], help)
 {
-	if(help)
-    {
-        SendClientMessage(playerid, x_blue, "HELP >> "c_white"Komanda koja vam Popravlja Vozilo.");
-        return 1;
-    }
+	if (!Auth(playerid, 1))
+		return Error(playerid, NO_AUTH);
 
-	if (player_Staff[playerid] < 1)
-		return SendClientMessage(playerid, -1, ""c_server"myproject // "c_white"Samo staff moze ovo!");
+	if(help) return CommandHelp(playerid, "Pomocu ove komande popravljate vozilo unutar kojeg se nalazite.");
 
 	new vehicleid = GetPlayerVehicleID(playerid);
 
@@ -793,14 +722,10 @@ YCMD:fv(playerid, params[], help)
 }
 YCMD:gethere(playerid, const params[], help)
 {
-	if(help)
-    {
-        SendClientMessage(playerid, x_blue, "HELP >> "c_white"Komanda koja teleportuje igraca do vas.");
-        return 1;
-    }
+	if (!Auth(playerid, 1))
+		return Error(playerid, NO_AUTH);
 
-	if (player_Staff[playerid] < 1)
-		return SendClientMessage(playerid, -1, ""c_server"myproject // "c_white"Samo staff moze ovo!");
+	if(help) return CommandHelp(playerid, "Pomocu ove komande mozete prebaciti logiranog igraca do sebe.");
 
 	new targetid = INVALID_PLAYER_ID;
 
@@ -834,88 +759,12 @@ YCMD:gethere(playerid, const params[], help)
     return 1;
 }
 
-YCMD:nitro(playerid, params[], help)
-{
-	if(help)
-    {
-		SendClientMessage(playerid, x_blue, "HELP >> "c_white"Komanda koja vam daje Nitro.");
-        return 1;
-    }
-
-	if (player_Staff[playerid] < 1)
-		return SendClientMessage(playerid, -1, ""c_server"myproject // "c_white"Samo staff moze ovo!");
-
-	AddVehicleComponent(GetPlayerVehicleID(playerid), 1010);
-
-	SendClientMessage(playerid, -1, ""c_server"myproject // "c_white"Ugradili ste nitro u vase vozilo.");
-
-	return 1;
-}
-
-YCMD:jetpack(playerid, params[], help)
-{
-	if(help)
-    {
-		SendClientMessage(playerid, x_blue, "HELP >> "c_white"Komanda koja vam daje Jetpack.");
-        return 1;
-    }
-
-	if (player_Staff[playerid] < 1)
-		return SendClientMessage(playerid, -1, ""c_server"myproject // "c_white"Samo staff moze ovo!");
-
-	SetPlayerSpecialAction(playerid, SPECIAL_ACTION_USEJETPACK);
-
-	SendClientMessage(playerid, -1, ""c_server"myproject // "c_white"Uzeli ste Jetpack.");
-
-	return 1;
-}
-
-YCMD:setskin(playerid, const string: params[], help)
-{
-	if(help)
-    {
-		SendClientMessage(playerid, x_blue, "HELP >> "c_white"Komanda koja vam omogucava da postavite odredjeni skin od 1 do 311.");
-        return 1;
-    }
-
-	if (player_Staff[playerid] < 1)
-		return SendClientMessage(playerid, -1, ""c_server"myproject // "c_white"Samo staff moze ovo!");
-
-	static
-		targetid,
-		skinid;
-
-	if (sscanf(params, "ri", targetid, skinid))
-		return SendClientMessage(playerid, -1, ""c_server"myproject // "c_white"/setskin [targetid] [skinid]");
-
-	if (!(1 <= skinid <= 311))
-		return SendClientMessage(playerid, -1, ""c_server"myproject // "c_white"Pogresan ID skina!");
-
-	if (GetPlayerSkin(targetid) == skinid)
-		return SendClientMessage(playerid, -1, ""c_server"myproject // "c_white"Taj igrac vec ima taj skin!");
-
-	SetPlayerSkin(targetid, skinid);
-
-	player_Skin[targetid] = skinid;
-
-    new INI:File = INI_Open(Account_Path(playerid));
-	INI_SetTag( File, "data" );
-    INI_WriteInt(File, "Skin", GetPlayerSkin(playerid));
-	INI_Close( File );
-
-    return 1;
-}
-
 YCMD:xgoto(playerid, params[], help)
 {
-	if(help)
-    {
-		SendClientMessage(playerid, x_blue, "HELP >> "c_white"Komanda koja vam pruza mogucnost teleportiranja na odredjene koordinate.");
-        return 1;
-    }
+	if (!Auth(playerid, 1))
+		return Error(playerid, NO_AUTH);
 
-	if (Player[playerid][AdminLevel] < 1)
-		return Error(playerid, "Nemate ovlasti za upotrebu ove komande!");
+	if(help) return CommandHelp(playerid, "Pomocu ove komande se mozete teleportirati na unesene koordinate.");
 
 	new Float:x, Float:y, Float:z;
 
@@ -938,15 +787,49 @@ YCMD:xgoto(playerid, params[], help)
  	return 1;
 }
 
+YCMD:setadminlvl(playerid, params[], help)
+{
+	if (!Auth(playerid, 4) || !IsPlayerAdmin(playerid)) return Error(playerid, NO_AUTH);
+	if (help) return Usage(playerid, "Komanda za operiranje nad administratorskim levelom igraca.");
+	new user, level;
+	if (sscanf(params, "ui", user, level)) Usage(playerid, "/setadminlvl [ID / Dio Imena] [Admin Level]");
+	else {
+		Player[user][AdminLevel] = level;
+		Server(user, "Administrator %s vam je postavio admin level na %d.", ReturnPlayerName(playerid), level);
+		Server(playerid, "Postavili ste %s admin level na %d.", ReturnPlayerName(playerid), level);
+	}
+ 	return 1;
+}
+
+YCMD:createvehicle(playerid, params[], help)
+{
+	if (!Auth(playerid, 4) || !IsPlayerAdmin(playerid)) return Error(playerid, NO_AUTH);
+	if (help) Usage(playerid, "Pretvara administratorsko vozilo u server vozilo datog tipa.");
+	if (!IsPlayerInAnyVehicle(playerid)) return Error(playerid, "Niste u vozilu jednokratne upotrebe.");
+	if (!IsPlayerInVehicle(playerid, AdminVozilo[playerid])) return Error(playerid, "Niste u vozilu jednokratne upotrebe.");
+	new boja;
+	if (sscanf(params, "i", boja)) Usage(playerid, "/createvehicle [Boja]");
+	else {
+		new Float:pozicijeVozila[4], vehicleid = GetPlayerVehicleID(playerid), owner[30];
+		GetVehiclePos(vehicleid, pozicijeVozila[0], pozicijeVozila[1], pozicijeVozila[2]);
+		GetVehicleZAngle(vehicleid, pozicijeVozila[3]);
+		form:owner("Drzava");
+		CreateNewVehicle(
+				GetVehicleModel(vehicleid), boja, E_VEHICLE_TYPE_UNDEFINED, 
+				pozicijeVozila[0], pozicijeVozila[1], pozicijeVozila[2], pozicijeVozila[3],
+				-1, owner
+			);
+		//
+		if(AdminVozilo[playerid] != INVALID_VEHICLE_ID) {
+			DestroyVehicle(AdminVozilo[playerid]);
+			AdminVozilo[playerid] = INVALID_VEHICLE_ID;
+		}
+	}
+	return 1;
+}
+
 stock SendClientMessageEx(id, color, const fmt[], va_args<>) {
 	new str[128]; 
 	va_format(str, sizeof str, fmt, va_start<3>); 
 	return SendClientMessage(id, color, str); 
 }
-
-//- backend
-#include "backend/vehicle.pwn"
-
-//- test
-//-
-//#include "test/"

@@ -11,7 +11,8 @@
         "-Dgamemodes",
         "-;+",
         "-(+",
-        "-d3"
+        "-d3",
+        "-Z"
       ],
       "group": {
         "kind": "build",

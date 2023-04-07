@@ -17,7 +17,7 @@
 	#define 				MYSQL_DATABASE    						 	"monaco"
 #endif
 
-new DB_Query[2048], MySQL: Database;
+new MySQL: Database;
 
 hook OnGameModeInit()
 {
