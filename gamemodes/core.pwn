@@ -57,10 +57,13 @@ enum E_PLAYERS
 
 	ID,
 	Name[MAX_PLAYER_NAME],
+	Registered,
 	Password[65],
 	Salt[17],
 	AdminLevel,
+	CharGender,
 	Skin,
+	FightStyle,
 	Money,
 	Kills,
 	Deaths,
@@ -148,20 +151,21 @@ public OnPlayerConnect(playerid)
 LoadPlayer(playerid) {
 	g_MysqlRaceCheck[playerid]++;
 
-	// reset player data
 	static const empty_player[E_PLAYERS];
 	Player[playerid] = empty_player;
 
 	GetPlayerName(playerid, Player[playerid][Name], MAX_PLAYER_NAME);
 
-	// create orm instance and register all needed variables
 	new ORM: ormid = Player[playerid][ORM_ID] = orm_create("players", Database);
 
 	orm_addvar_int(ormid, Player[playerid][ID], "id");
 	orm_addvar_string(ormid, Player[playerid][Name], MAX_PLAYER_NAME, "username");
 	orm_addvar_string(ormid, Player[playerid][Password], 65, "password");
 	orm_addvar_string(ormid, Player[playerid][Salt], 17, "salt");
+	orm_addvar_int(ormid, Player[playerid][Registered], "registered");
 	orm_addvar_int(ormid, Player[playerid][AdminLevel], "admin");
+	orm_addvar_int(ormid, Player[playerid][CharGender], "chargender");
+	orm_addvar_int(ormid, Player[playerid][FightStyle], "fightstyle");
 	orm_addvar_int(ormid, Player[playerid][Skin], "skin");
 	orm_addvar_int(ormid, Player[playerid][Money], "money");
 	orm_addvar_int(ormid, Player[playerid][Kills], "kills");
@@ -173,7 +177,6 @@ LoadPlayer(playerid) {
 	orm_addvar_int(ormid, Player[playerid][Interior], "interior");
 	orm_setkey(ormid, "username");
 
-	// tell the orm system to load all data, assign it to our variables and call our callback when ready
 	orm_load(ormid, "OnPlayerDataLoaded", "dd", playerid, g_MysqlRaceCheck[playerid]);
 }
 
@@ -491,15 +494,20 @@ Dialog: dialog_regpassword(playerid, response, listitem, string: inputtext[])
 {
 	if (!response) return Kick(playerid);
 
-	if (strlen(inputtext) <= 5) return Dialog_Show(playerid, "dialog_regpassword", DIALOG_STYLE_INPUT,
-											"Registracija",
-											"%s, unesite Vasu zeljenu lozinku: ",
-											"Potvrdi", "Izlaz", ReturnPlayerName(playerid)
+	if (strlen(inputtext) <= 5) return Dialog_Show(playerid, "dialog_regpassword", DIALOG_STYLE_INPUT, server_dialog_header,
+										//
+											""c_torq"Pozdrav %s, dobrodosli na "server_dialog_header" "c_torq"RolePlay.\n\n\
+											{FFFFFF}Za pocetak unesite lozinku koju cete koristiti za prijavljivanje:",
+										//
+											"Potvrdi", "Izlaz", 
+											ReturnPlayerName(playerid)
 										);
 
 	// 16 random characters from 33 to 126 (in ASCII) for the salt
 	for (new i = 0; i < 16; i++) Player[playerid][Salt][i] = random(94) + 33;
 	SHA256_PassHash(inputtext, Player[playerid][Salt], Player[playerid][Password], 65);
+
+	Player[playerid][Registered] = 0;
 
 	// sends an INSERT query
 	orm_save(Player[playerid][ORM_ID], "OnPlayerRegister", "d", playerid);
@@ -518,7 +526,8 @@ Dialog: dialog_login(const playerid, response, listitem, string: inputtext[])
 	{
 		KillTimer(Player[playerid][LoginTimer]);
 		Player[playerid][LoginTimer] = 0;
-		LogPlayer(playerid);
+		if(Player[playerid][Registered] == 1) LogPlayer(playerid);
+		else StartCharacterRegistration(playerid);
 	}
 	else
 	{
@@ -540,6 +549,7 @@ LogPlayer(playerid) {
 	Player[playerid][IsLoggedIn] = true;
 	GivePlayerMoney(playerid, Player[playerid][Money]);
 	SetPlayerSkin(playerid, Player[playerid][Skin]);
+	SetPlayerFightingStyle(playerid, Player[playerid][FightStyle]);
 
 	SetSpawnInfo(playerid, NO_TEAM, 0, Player[playerid][X_Pos], Player[playerid][Y_Pos], Player[playerid][Z_Pos], Player[playerid][A_Pos], 0, 0, 0, 0, 0, 0);
 	SpawnPlayer(playerid);

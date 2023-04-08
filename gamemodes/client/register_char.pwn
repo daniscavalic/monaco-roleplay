@@ -72,7 +72,11 @@ new
     char_Operations_Tick[MAX_PLAYERS];
 
 StartCharacterRegistration(playerid) {
+    //
     ClearChat(playerid, 50);
+    Torq(playerid, "(karakter) Sada odaberite postavke vezane za vas karakter.");
+    ClearChat(playerid, 3);
+    //
     TogglePlayerSpectating(playerid, true);
     ToggleCharacterRegistrationGUI(playerid, true);
     char_Register_Pol[playerid] = 0;
@@ -195,22 +199,51 @@ CompleteRegistration(playerid) {
     new fightstyle = char_Register_Fight_Index[playerid];
     new history = char_Register_Historija[playerid];
     new skinid = (gender == 0) ? Male_Skins_Data[skin][skin_id] : Female_Skins_Data[skin][skin_id];
+    //
+    for(new i; i < sizeof(Char_Histories); i++) {
+        if(char_Register_Actor[playerid][i] != -1) DestroyDynamicActor(char_Register_Actor[playerid][i]);
+        char_Register_Actor[playerid][i] = -1;
+    }
 
+    //
+    Player[playerid][Registered] = 1;
     Player[playerid][IsLoggedIn] = true;
 	Player[playerid][X_Pos] = Char_Histories[history][history_char_pos][0];
 	Player[playerid][Y_Pos] = Char_Histories[history][history_char_pos][1];
 	Player[playerid][Z_Pos] = Char_Histories[history][history_char_pos][2];
 	Player[playerid][A_Pos] = Char_Histories[history][history_char_pos][3];
 	Player[playerid][Skin] = skinid;
-    Player[playerid][Skin] = skinid;
+    Player[playerid][CharGender] = Fight_Styles[fightstyle][fight_style_id];
+    Player[playerid][FightStyle] = Fight_Styles[fightstyle][fight_style_id];
 
-	//SendClientMessage(playerid, -1, ""c_server"myproject // "c_white"Uspesno ste se registrovali!");
+    //
+    ClearChat(playerid, 20);
+	Torq(playerid, "(racun) Dobrodosao/la na "server_dialog_header" "c_torq"RolePlay, %s.", ReturnPlayerName(playerid));
+    Torq(playerid, "(racun) Vas racun je uspjesno registriran,", ReturnPlayerName(playerid));
+
+    //
+    TogglePlayerSpectating(playerid, false);
 	SetSpawnInfo(playerid, 0, Player[playerid][Skin],
 		Player[playerid][X_Pos], Player[playerid][Y_Pos], Player[playerid][Z_Pos], Player[playerid][A_Pos],
 		0, 0, 0, 0, 0, 0
 	);
 	SpawnPlayer(playerid);
-    SetPlayerFightingStyle(playerid, Fight_Styles[fightstyle][fight_style_id]);
+    SetPlayerFightingStyle(playerid, Player[playerid][FightStyle]);
+    SetPlayerInterior(playerid, 0);
+    SetPlayerVirtualWorld(playerid, 0);
+}
+
+hook OnPlayerConnect(playerid) {
+    for(new i; i < sizeof(Char_Histories); i++) {
+        char_Register_Actor[playerid][i] = -1;
+    }
+}
+
+hook OnPlayerDisconnect(playerid, reason) {
+    for(new i; i < sizeof(Char_Histories); i++) {
+        if(char_Register_Actor[playerid][i] != -1) DestroyDynamicActor(char_Register_Actor[playerid][i]);
+        char_Register_Actor[playerid][i] = -1;
+    }
 }
 
 hook OnGameModeInit() {
