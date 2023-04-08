@@ -12,6 +12,11 @@
  |   / (_) | |__| _||  _/ |__ / _ \ V / 
  |_|_\\___/|____|___|_| |____/_/ \_\_|  
                                         
+
+		Developed by Danis Čavalić (Slade).
+		Credits: 
+			- realnaith (core - myserver)
+			- developers of includes (Y_Less, samp-incognito...)
 */
 // =======================================//
 //			Main
@@ -60,6 +65,7 @@ enum E_PLAYERS
 	Registered,
 	Password[65],
 	Salt[17],
+	Email[50],
 	AdminLevel,
 	CharGender,
 	Skin,
@@ -97,9 +103,11 @@ bool:Auth(playerid, level) {
 }
 // --------------------------------------------------------------------//
 //			Backend
-#include 	"backend/vehicles_handler.pwn"
+#include 	"backend/vehicles/vehicles_handler.pwn"
 //			Frontend
-#include 	"client/register_char.pwn"
+#include 	"client/account/register_char.pwn"
+//			Frontend (UI)
+#include 	"client/ui/login_gui.pwn"
 // --------------------------------------------------------------------//
 
 main()
@@ -162,6 +170,7 @@ LoadPlayer(playerid) {
 	orm_addvar_string(ormid, Player[playerid][Name], MAX_PLAYER_NAME, "username");
 	orm_addvar_string(ormid, Player[playerid][Password], 65, "password");
 	orm_addvar_string(ormid, Player[playerid][Salt], 17, "salt");
+	orm_addvar_string(ormid, Player[playerid][Email], 50, "email");
 	orm_addvar_int(ormid, Player[playerid][Registered], "registered");
 	orm_addvar_int(ormid, Player[playerid][AdminLevel], "admin");
 	orm_addvar_int(ormid, Player[playerid][CharGender], "chargender");
@@ -203,16 +212,6 @@ OnPlayerExitCleanup(playerid, reason) {
 forward OnPlayerDataLoaded(playerid, race_check);
 public OnPlayerDataLoaded(playerid, race_check)
 {
-	/*	race condition check:
-		player A connects -> SELECT query is fired -> this query takes very long
-		while the query is still processing, player A with playerid 2 disconnects
-		player B joins now with playerid 2 -> our laggy SELECT query is finally finished, but for the wrong player
-		what do we do against it?
-		we create a connection count for each playerid and increase it everytime the playerid connects or disconnects
-		we also pass the current value of the connection count to our OnPlayerDataLoaded callback
-		then we check if current connection count is the same as connection count we passed to the callback
-		if yes, everything is okay, if not, we just kick the player
-	*/
 	if (race_check != g_MysqlRaceCheck[playerid]) return Kick(playerid);
 
 	ClearChat(playerid, 50);
@@ -220,26 +219,44 @@ public OnPlayerDataLoaded(playerid, race_check)
 	orm_setkey(Player[playerid][ORM_ID], "id");
 	switch (orm_errno(Player[playerid][ORM_ID]))
 	{
+		// login - account postoji
 		case ERROR_OK:
 		{
+			TogglePlayerSpectating(playerid, true);
+			InterpolateCameraPos(playerid, 1175.634521, -1394.490844, 194.949890, 1425.817138, -1619.597900, 128.609146, 30000);
+			InterpolateCameraLookAt(playerid, 1177.622558, -1390.000000, 194.011642, 1430.231689, -1621.545532, 127.297996, 30000);
+			ToggleWrapperGUI(playerid, true);
+
 			Dialog_Show(playerid, "dialog_login", DIALOG_STYLE_PASSWORD, server_dialog_header,
 				""c_torq"Dobrodosao %s nazad na "server_dialog_header" "c_torq"RolePlay.\n\n{FFFFFF}Unesite lozinku racuna za nastavak igre:",
 				"Prijava", "Izlaz", 
-				ReturnPlayerName(playerid)
+				PlayerNameEx(playerid)
 			);
 
 			Player[playerid][LoginTimer] = SetTimerEx("OnLoginTimeout", SECONDS_TO_LOGIN * 1000, false, "d", playerid);
 		}
+		// register - account ne postoji
 		case ERROR_NO_DATA:
 		{
-			Dialog_Show(playerid, "dialog_regpassword", DIALOG_STYLE_INPUT, server_dialog_header,
-			//
-				""c_torq"Pozdrav %s, dobrodosli na "server_dialog_header" "c_torq"RolePlay.\n\n\
-				{FFFFFF}Za pocetak unesite lozinku koju cete koristiti za prijavljivanje:",
-			//
-				"Potvrdi", "Izlaz", 
-				ReturnPlayerName(playerid)
-			);
+			if (!IsValidRolePlayName(ReturnPlayerName(playerid))) {
+				Server(playerid, "Greska u povezivanju: Vase ime nije u RolePlay formatu.");
+				DelayedKick(playerid);
+			}
+			else {
+				TogglePlayerSpectating(playerid, true);
+				InterpolateCameraPos(playerid, 2510.893554, -1438.940917, 38.034278, 2513.375000, -1244.077636, 47.519313, 30000);
+				InterpolateCameraLookAt(playerid, 2510.830078, -1443.934570, 37.791206, 2513.311523, -1249.071289, 47.276241, 30000);
+				ToggleWrapperGUI(playerid, true);
+
+				Dialog_Show(playerid, "dialog_regpassword", DIALOG_STYLE_INPUT, server_dialog_header,
+				//
+					""c_torq"Pozdrav %s, dobrodosli na "server_dialog_header" "c_torq"RolePlay.\n\n\
+					{FFFFFF}Za pocetak unesite lozinku koju cete koristiti za prijavljivanje:",
+				//
+					"Potvrdi", "Izlaz", 
+					PlayerNameEx(playerid)
+				);
+			}
 		}
 	}
 	return 1;
@@ -333,159 +350,10 @@ public OnPlayerDeath(playerid, killerid, reason)
 	return 1;
 }
 
-public OnVehicleSpawn(vehicleid)
-{
-	return 1;
-}
-
-public OnVehicleDeath(vehicleid, killerid)
-{
-	return 1;
-}
-
-public OnPlayerText(playerid, text[])
-{
-	return 1;
-}
-
-public OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
-{
-	return 1;
-}
-
-public OnPlayerExitVehicle(playerid, vehicleid)
-{
-	return 1;
-}
-
-public OnPlayerStateChange(playerid, newstate, oldstate)
-{
-	return 1;
-}
-
-public OnPlayerEnterCheckpoint(playerid)
-{
-	return 1;
-}
-
-public OnPlayerLeaveCheckpoint(playerid)
-{
-	return 1;
-}
-
-public OnPlayerEnterRaceCheckpoint(playerid)
-{
-	return 1;
-}
-
-public OnPlayerLeaveRaceCheckpoint(playerid)
-{
-	return 1;
-}
-
-public OnRconCommand(cmd[])
-{
-	return 1;
-}
-
-public OnPlayerRequestSpawn(playerid)
-{
-	return 1;
-}
-
-public OnObjectMoved(objectid)
-{
-	return 1;
-}
-
-public OnPlayerObjectMoved(playerid, objectid)
-{
-	return 1;
-}
-
-public OnPlayerPickUpPickup(playerid, pickupid)
-{
-	return 1;
-}
-
-public OnVehicleMod(playerid, vehicleid, componentid)
-{
-	return 1;
-}
-
-public OnVehiclePaintjob(playerid, vehicleid, paintjobid)
-{
-	return 1;
-}
-
-public OnVehicleRespray(playerid, vehicleid, color1, color2)
-{
-	return 1;
-}
-
-public OnPlayerSelectedMenuRow(playerid, row)
-{
-	return 1;
-}
-
-public OnPlayerExitedMenu(playerid)
-{
-	return 1;
-}
-
-public OnPlayerInteriorChange(playerid, newinteriorid, oldinteriorid)
-{
-	return 1;
-}
-
-public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
-{
-	return 1;
-}
-
-public OnRconLoginAttempt(ip[], password[], success)
-{
-	return 1;
-}
-
-public OnPlayerUpdate(playerid)
-{
-	return 1;
-}
-
-public OnPlayerStreamIn(playerid, forplayerid)
-{
-	return 1;
-}
-
-public OnPlayerStreamOut(playerid, forplayerid)
-{
-	return 1;
-}
-
-public OnVehicleStreamIn(vehicleid, forplayerid)
-{
-	return 1;
-}
-
-public OnVehicleStreamOut(vehicleid, forplayerid)
-{
-	return 1;
-}
-
-public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
-{
-	return 1;
-}
-
-public OnPlayerClickPlayer(playerid, clickedplayerid, source)
-{
-	return 1;
-}
-
 forward OnPlayerRegister(playerid);
 public OnPlayerRegister(playerid)
 {
+	ToggleWrapperGUI(playerid, false);
 	StartCharacterRegistration(playerid);
 	return 1;
 }
@@ -500,16 +368,53 @@ Dialog: dialog_regpassword(playerid, response, listitem, string: inputtext[])
 											{FFFFFF}Za pocetak unesite lozinku koju cete koristiti za prijavljivanje:",
 										//
 											"Potvrdi", "Izlaz", 
-											ReturnPlayerName(playerid)
+											PlayerNameEx(playerid)
 										);
 
-	// 16 random characters from 33 to 126 (in ASCII) for the salt
 	for (new i = 0; i < 16; i++) Player[playerid][Salt][i] = random(94) + 33;
 	SHA256_PassHash(inputtext, Player[playerid][Salt], Player[playerid][Password], 65);
 
 	Player[playerid][Registered] = 0;
 
-	// sends an INSERT query
+	Dialog_Show(playerid, "dialog_regmail", DIALOG_STYLE_INPUT, server_dialog_header,
+	//
+		""c_torq"Odlicno %s, vas racun je registriran sa unesenom lozinkom.\n\
+		Koristite ovo ime kako biste se logirali na vas racun u buducnosti.\n\n\
+		{FFFFFF}Sada unesite validnu e-mail adresu koju ce koristiti vas racun:",
+	//
+		"Potvrdi", "Izlaz", 
+		PlayerNameEx(playerid)
+	);
+
+	return 1;
+}
+
+Dialog: dialog_regmail(playerid, response, listitem, string: inputtext[])
+{
+	if (!response) return Kick(playerid);
+
+	if (strlen(inputtext) <= 5) return Dialog_Show(playerid, "dialog_regmail", DIALOG_STYLE_INPUT, server_dialog_header,
+										//
+											""c_red"Unesena e-mail adresa nije validnog formata.\n\
+											Za validaciju racuna, kao i za resetiranje postavki potrebno je podesiti ispravnu adresu.\n\n\
+											{FFFFFF}Unesite ispravnu e-mail adresu:",
+										//
+											"Potvrdi", "Izlaz"
+										);
+
+	if (!IsValidEmail(inputtext)) return Dialog_Show(playerid, "dialog_regmail", DIALOG_STYLE_INPUT, server_dialog_header,
+										//
+											""c_red"Unesena e-mail adresa nije validnog formata.\n\
+											Za validaciju racuna, kao i za resetiranje postavki potrebno je podesiti ispravnu adresu.\n\n\
+											{FFFFFF}Unesite ispravnu e-mail adresu:",
+										//
+											"Potvrdi", "Izlaz"
+										);
+
+	// EMAIL setter
+	format(Player[playerid][Email], _, "%s", inputtext);
+
+	// INSERT korisnika
 	orm_save(Player[playerid][ORM_ID], "OnPlayerRegister", "d", playerid);
 
 	return 1;
@@ -524,6 +429,7 @@ Dialog: dialog_login(const playerid, response, listitem, string: inputtext[])
 
 	if (strcmp(hashed_pass, Player[playerid][Password]) == 0)
 	{
+		ToggleWrapperGUI(playerid, false);
 		KillTimer(Player[playerid][LoginTimer]);
 		Player[playerid][LoginTimer] = 0;
 		if(Player[playerid][Registered] == 1) LogPlayer(playerid);
@@ -537,7 +443,7 @@ Dialog: dialog_login(const playerid, response, listitem, string: inputtext[])
 		else Dialog_Show(playerid, "dialog_login", DIALOG_STYLE_PASSWORD, server_dialog_header,
 				""c_red"Niste unijeli ispravnu lozinku (%d/3) za racun %s.\n\n{FFFFFF}Unesite lozinku racuna za nastavak igre:",
 				"Prijava", "Izlaz", 
-				Player[playerid][LoginAttempts], ReturnPlayerName(playerid)
+				Player[playerid][LoginAttempts], PlayerNameEx(playerid)
 			);
 	}
 
@@ -546,18 +452,70 @@ Dialog: dialog_login(const playerid, response, listitem, string: inputtext[])
 
 LogPlayer(playerid) {
 	// player init
+	TogglePlayerSpectating(playerid, false);
 	Player[playerid][IsLoggedIn] = true;
+	SetSpawnInfo(playerid, NO_TEAM, Player[playerid][Skin], Player[playerid][X_Pos], Player[playerid][Y_Pos], Player[playerid][Z_Pos], Player[playerid][A_Pos], 0, 0, 0, 0, 0, 0);
+	SpawnPlayer(playerid);
+
+	// set values
 	GivePlayerMoney(playerid, Player[playerid][Money]);
 	SetPlayerSkin(playerid, Player[playerid][Skin]);
 	SetPlayerFightingStyle(playerid, Player[playerid][FightStyle]);
 
-	SetSpawnInfo(playerid, NO_TEAM, 0, Player[playerid][X_Pos], Player[playerid][Y_Pos], Player[playerid][Z_Pos], Player[playerid][A_Pos], 0, 0, 0, 0, 0, 0);
-	SpawnPlayer(playerid);
-
 	// notifications
-	Blue(playerid, "(prijava) Dobrodosao/la nazad na "server_dialog_header" "c_blue"RolePlay, %s.", ReturnPlayerName(playerid));
+	Blue(playerid, "(prijava) Dobrodosao/la nazad na "server_dialog_header" "c_blue"RolePlay, %s.", PlayerNameEx(playerid));
 	Blue(playerid, "(prijava) Vraceni ste na snimljenu poziciju prije posljednjeg izlaska sa servera.");
 	if (Auth(playerid, 1)) Server(playerid, "Prijavljeni ste kao %s.", GetStaffRankName(Player[playerid][AdminLevel]));
+}
+
+stock IsValidEmail(const email[])
+{
+	// Email validator: Validira prisutnost tačke i @ simbola.
+    new atpos = -1, dotpos = -1;
+    for (new i = 0; i < strlen(email); i++)
+    {
+        if (email[i] == '@')
+        {
+            atpos = i;
+        }
+        else if (email[i] == '.' && atpos != -1)
+        {
+            dotpos = i;
+        }
+    }
+    return (atpos > 0 && dotpos > atpos && dotpos < strlen(email) - 1);
+}
+
+stock IsValidRolePlayName(const name[])
+{
+    new separator_pos = -1;
+    for (new i = 0; i < strlen(name); i++)
+    {
+        if (name[i] == '_')
+        {
+            separator_pos = i;
+            break;
+        }
+    }
+    return (separator_pos > 0 && separator_pos < strlen(name) - 1);
+}
+
+stock PlayerNameEx(playerid)
+{
+	new source[MAX_PLAYER_NAME];
+	GetPlayerName(playerid, source, sizeof(source));
+    new source_len = strlen(source);
+    new target[32];
+    new target_pos = 0;
+    for (new i = 0; i < source_len && target_pos < sizeof(target) - 1; i++)
+    {
+        if (source[i] != '_')
+        {
+            target[target_pos++] = source[i];
+        }
+    }
+    target[target_pos] = EOS;
+    return target;
 }
 
 ClearChat(playerid, rows = 20) {
@@ -796,8 +754,8 @@ YCMD:setadminlvl(playerid, params[], help)
 	if (sscanf(params, "ui", user, level)) Usage(playerid, "/setadminlvl [ID / Dio Imena] [Admin Level]");
 	else {
 		Player[user][AdminLevel] = level;
-		Server(user, "Administrator %s vam je postavio admin level na %d.", ReturnPlayerName(playerid), level);
-		Server(playerid, "Postavili ste %s admin level na %d.", ReturnPlayerName(playerid), level);
+		Server(user, "Administrator %s vam je postavio admin level na %d.", PlayerNameEx(playerid), level);
+		Server(playerid, "Postavili ste %s admin level na %d.", PlayerNameEx(playerid), level);
 	}
  	return 1;
 }
