@@ -74,7 +74,7 @@ new Char_Histories[][E_REG_CHAR_HISTORY] = {
 
 new 
     Text:Register_Char_Global[22],
-    PlayerText:Register_Char_Player[MAX_PLAYERS][4]= {PlayerText:INVALID_TEXT_DRAW, ...},
+    PlayerText:Register_Char_Player[MAX_PLAYERS][4] = {PlayerText:INVALID_TEXT_DRAW, ...},
     char_Register_Pol[MAX_PLAYERS], 
     char_Register_Skin_Index[MAX_PLAYERS],
     char_Register_Fight_Index[MAX_PLAYERS],
@@ -257,6 +257,7 @@ hook OnPlayerDisconnect(playerid, reason) {
         if(char_Register_Actor[playerid][i] != -1) DestroyDynamicActor(char_Register_Actor[playerid][i]);
         char_Register_Actor[playerid][i] = -1;
     }
+    ToggleCharacterRegistrationGUI(playerid, false);
 }
 
 hook OnGameModeInit() {

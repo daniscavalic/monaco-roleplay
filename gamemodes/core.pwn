@@ -71,6 +71,7 @@ enum E_PLAYERS
 	Skin,
 	FightStyle,
 	Money,
+	BankMoney,
 	Kills,
 	Deaths,
 	Float: X_Pos,
@@ -177,6 +178,7 @@ LoadPlayer(playerid) {
 	orm_addvar_int(ormid, Player[playerid][FightStyle], "fightstyle");
 	orm_addvar_int(ormid, Player[playerid][Skin], "skin");
 	orm_addvar_int(ormid, Player[playerid][Money], "money");
+	orm_addvar_int(ormid, Player[playerid][BankMoney], "bankmoney");
 	orm_addvar_int(ormid, Player[playerid][Kills], "kills");
 	orm_addvar_int(ormid, Player[playerid][Deaths], "deaths");
 	orm_addvar_float(ormid, Player[playerid][X_Pos], "x");
