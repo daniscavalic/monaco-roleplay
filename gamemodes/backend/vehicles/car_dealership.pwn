@@ -23,7 +23,8 @@ new // ui
     dealer_Player_VehIndex[MAX_PLAYERS],
     dealer_Player_FuelIndex[MAX_PLAYERS],
     dealer_Player_ColIndex[MAX_PLAYERS],
-    dealer_Player_WheelIndex[MAX_PLAYERS];
+    dealer_Player_WheelIndex[MAX_PLAYERS],
+    dealer_Player_PayType[MAX_PLAYERS];
 
 enum    E_DEALERSHIP_VEH_COLORS
 {
@@ -88,6 +89,36 @@ new Dealership[][E_DEALERSHIP_DATA] = {
     }
 };
 
+OperateDealershipContract(playerid) {
+
+    new 
+        veh_index = dealer_Player_VehIndex[playerid],
+        fuel_index = dealer_Player_FuelIndex[playerid],
+        col_index = dealer_Player_ColIndex[playerid],
+        wheel_index = dealer_Player_WheelIndex[playerid],
+        id = dealer_Player_Dealership[playerid];
+    dealer_Player_PayType[playerid] = 0;
+    // toggle ui
+    ToggleContractUI(playerid, true);
+
+    // update ui
+    new ui_operate_string[180];
+    PlayerTextDrawSetString(playerid, Contract_PTD[playerid][0], Dealership[id][dship_name]);
+    form:ui_operate_string("Ugovor o kupovini: %s", GetVehicleNameEx(Dealership[id][dship_veh_models][veh_index]));
+    PlayerTextDrawSetString(playerid, Contract_PTD[playerid][1], ui_operate_string);
+    form:ui_operate_string("Vozilo: %s~n~Boja: %s~n~Felge: %s~n~Cijena: $%d", 
+                      GetVehicleNameEx(Dealership[id][dship_veh_models][veh_index]),
+                      VehicleColors[col_index][color_name],
+                      VehicleWheels[wheel_index][wheel_name],
+                      VehPrice[ Dealership[id][dship_veh_models][veh_index]-400 ][ 1 ]);
+    PlayerTextDrawSetString(playerid, Contract_PTD[playerid][2], ui_operate_string);
+    PlayerTextDrawSetString(playerid, Contract_PTD[playerid][3], (dealer_Player_PayType[playerid] == 0) ? ("Bankovni transfer") : ("Cash"));
+    form:ui_operate_string("%s Dealership", Dealership[id][dship_name]);
+    PlayerTextDrawSetString(playerid, Contract_PTD[playerid][4], ui_operate_string);
+    form:ui_operate_string("Potvrdi: ~g~$%d", VehPrice[ Dealership[id][dship_veh_models][veh_index]-400 ][ 1 ])
+    PlayerTextDrawSetString(playerid, Contract_PTD[playerid][6], ui_operate_string);
+}
+
 OperateDealership(playerid) {
     if(GetClosestDealershipID(playerid) != -1) {
         new id = GetClosestDealershipID(playerid);
@@ -106,6 +137,28 @@ OperateDealership(playerid) {
         dealer_Player_Dealership[playerid] = id;
         dealer_Player_VehIndex[playerid] = dealer_Player_FuelIndex[playerid] = dealer_Player_ColIndex[playerid] = dealer_Player_WheelIndex[playerid] = 0;
         
+        ToggleDealershipUI(playerid, true);
+        UpdateDealershipParams(playerid, false);
+    }
+}
+
+OnPlayerClickTextDraw(playerid, Text:clickedid) {
+    // model
+    if(clickedid == Dealership_GlobalTD[5]) {
+        new index_size = MAX_DEALERSHIP_MODELS;
+        if(dealer_Player_VehIndex[playerid] == 0) dealer_Player_VehIndex[playerid] = index_size - 1;
+        else dealer_Player_VehIndex[playerid]--;
+        UpdateDealershipParams(playerid, true);
+    }
+    else if(clickedid == Dealership_GlobalTD[6]) {
+        new index_size = MAX_DEALERSHIP_MODELS;
+        if(dealer_Player_VehIndex[playerid] == index_size - 1) dealer_Player_VehIndex[playerid] = 0;
+        else dealer_Player_VehIndex[playerid]++;
+        UpdateDealershipParams(playerid, true);
+    }
+    // gorivo
+    else if(clickedid == Dealership_GlobalTD[8] || clickedid == Dealership_GlobalTD[9]) {
+        dealer_Player_FuelIndex[playerid] = (dealer_Player_FuelIndex[playerid] == 0) ? 1 : 0;
         UpdateDealershipParams(playerid, false);
     }
 }
@@ -145,8 +198,13 @@ UpdateDealershipParams(playerid, bool: updatecar = false) {
     PlayerTextDrawShow(playerid, Dealership_PTD[playerid][4]);
     PlayerTextDrawSetString(playerid, Dealership_PTD[playerid][5], VehicleColors[col_index][color_name]);
     PlayerTextDrawSetString(playerid, Dealership_PTD[playerid][6], VehicleWheels[wheel_index][wheel_name]);
-    PlayerTextDrawSetString(playerid, Dealership_PTD[playerid][7], "Ugovor tekst");
-    PlayerTextDrawSetString(playerid, Dealership_PTD[playerid][8], "Pregled ugovora");
+    new ugovor_text[180], pregled_text[35];
+    form:ugovor_text("Nakon odabira zeljenog modela, tipa pogonskog goriva, te specifikacija vezanih za samo vozilo \
+                      biti ce vam prikazan salonski ugovor, cijim potpisom osiguravate kupovinu vozila. Nakon potpisa \
+                      vozilo ce vam biti dostavljeno ispred salona. Vrijednost ugovora je: ~g~$%d", VehPrice[ Dealership[id][dship_veh_models][veh_index]-400 ][ 1 ]);
+    PlayerTextDrawSetString(playerid, Dealership_PTD[playerid][7], ugovor_text);
+    form:pregled_text("Pregledaj ugovor: ~g~$%d", VehPrice[ Dealership[id][dship_veh_models][veh_index]-400 ][ 1 ])
+    PlayerTextDrawSetString(playerid, Dealership_PTD[playerid][8], pregled_text);
 }
 
 GetClosestDealershipID(playerid, Float: range = 5.0) 
@@ -345,6 +403,13 @@ stock ToggleDealershipUI(playerid, bool:toggle = true) {
 
 stock ToggleContractUI(playerid, bool:toggle = true) {
     if (toggle) {
+        new 
+            veh_index = dealer_Player_VehIndex[playerid],
+            fuel_index = dealer_Player_FuelIndex[playerid],
+            col_index = dealer_Player_ColIndex[playerid],
+            wheel_index = dealer_Player_WheelIndex[playerid],
+            id = dealer_Player_Dealership[playerid];
+
         Contract_PTD[playerid][0] = CreatePlayerTextDraw(playerid, 316.000000, 104.000000, "Ottos Autos");
         PlayerTextDrawFont(playerid, Contract_PTD[playerid][0], 2);
         PlayerTextDrawLetterSize(playerid, Contract_PTD[playerid][0], 0.266666, 1.250000);
@@ -415,7 +480,7 @@ stock ToggleContractUI(playerid, bool:toggle = true) {
         PlayerTextDrawSetProportional(playerid, Contract_PTD[playerid][4], 1);
         PlayerTextDrawSetSelectable(playerid, Contract_PTD[playerid][4], 0);
 
-        Contract_PTD[playerid][5] = CreatePlayerTextDraw(playerid, 385.000000, 313.000000, "Danis_Cavalic");
+        Contract_PTD[playerid][5] = CreatePlayerTextDraw(playerid, 385.000000, 313.000000, ReturnPlayerName(playerid));
         PlayerTextDrawFont(playerid, Contract_PTD[playerid][5], 1);
         PlayerTextDrawLetterSize(playerid, Contract_PTD[playerid][5], 0.170833, 0.750000);
         PlayerTextDrawTextSize(playerid, Contract_PTD[playerid][5], 400.000000, 197.000000);
