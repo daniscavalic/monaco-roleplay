@@ -21,7 +21,8 @@
 // =======================================//
 //			Main
 #define		YSI_YES_HEAP_MALLOC
-#define 	CGEN_MEMORY 60000
+#define 	CGEN_MEMORY 		60000
+#pragma 	warning disable 	214
 //			Core Includes
 #include 	<a_samp>
 #include 	<a_actor>
@@ -56,6 +57,17 @@ const 		MAX_PASSWORD_LENGTH 	= 64;
 const 		MIN_PASSWORD_LENGTH 	= 6;
 const 		MAX_LOGIN_ATTEMPTS 		= 3;
 
+enum    E_PLAYER_PAY_TYPES
+{
+	pay_type_name[33],
+	bool:pay_type_credit
+}
+new PayTypes[][E_PLAYER_PAY_TYPES] = {
+	{"Cash", 				false},
+	{"Bankovni transfer", 	false},
+	{"Kredit", 				true}
+};
+
 enum E_PLAYERS
 {
 	ORM: ORM_ID,
@@ -79,6 +91,7 @@ enum E_PLAYERS
 	Float: Z_Pos,
 	Float: A_Pos,
 	Interior,
+	VirtualWorld,
 
 	bool: IsLoggedIn,
 	LoginAttempts,
@@ -86,6 +99,11 @@ enum E_PLAYERS
 };
 new Player[MAX_PLAYERS][E_PLAYERS],
 	g_MysqlRaceCheck[MAX_PLAYERS];
+
+stock GetPlayerMoneyEx(playerid, pay_type = 0) {
+	if(type == 0) return Player[playerid][Money];
+	else return Player[playerid][BankMoney];
+}
 
 stock GetStaffRankName( rank_level ) {
 	new rank_name[15];
@@ -105,6 +123,7 @@ bool:Auth(playerid, level) {
 // --------------------------------------------------------------------//
 //			Backend
 #include 	"backend/vehicles/vehicles_handler.pwn"
+#include 	"backend/vehicles/car_dealership.pwn"
 //			Frontend
 #include 	"client/account/register_char.pwn"
 //			Frontend (UI)
@@ -144,8 +163,11 @@ public OnGameModeExit()
 
 public OnPlayerRequestClass(playerid, classid)
 {
-
 	return 1;
+}
+
+public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid) {
+	DS_OnPlayerClickPlayerTextDraw(playerid, playertextid);
 }
 
 public OnPlayerConnect(playerid)
@@ -186,6 +208,7 @@ LoadPlayer(playerid) {
 	orm_addvar_float(ormid, Player[playerid][Z_Pos], "z");
 	orm_addvar_float(ormid, Player[playerid][A_Pos], "angle");
 	orm_addvar_int(ormid, Player[playerid][Interior], "interior");
+	orm_addvar_int(ormid, Player[playerid][VirtualWorld], "virtualworld");
 	orm_setkey(ormid, "username");
 
 	orm_load(ormid, "OnPlayerDataLoaded", "dd", playerid, g_MysqlRaceCheck[playerid]);
@@ -306,6 +329,7 @@ UpdatePlayerData(playerid, reason = 1)
 
 	// it is important to store everything in the variables registered in ORM instance
 	Player[playerid][Interior] = GetPlayerInterior(playerid);
+	Player[playerid][VirtualWorld] = GetPlayerVirtualWorld(playerid);
 
 	// orm_save sends an UPDATE query
 	orm_save(Player[playerid][ORM_ID]);
@@ -463,6 +487,8 @@ LogPlayer(playerid) {
 	GivePlayerMoney(playerid, Player[playerid][Money]);
 	SetPlayerSkin(playerid, Player[playerid][Skin]);
 	SetPlayerFightingStyle(playerid, Player[playerid][FightStyle]);
+	SetPlayerInterior(playerid, Player[playerid][Interior]);
+	SetPlayerVirtualWorld(playerid, Player[playerid][VirtualWorld]);
 
 	// notifications
 	Blue(playerid, "(prijava) Dobrodosao/la nazad na "server_dialog_header" "c_blue"RolePlay, %s.", PlayerNameEx(playerid));
@@ -504,20 +530,13 @@ stock IsValidRolePlayName(const name[])
 
 stock PlayerNameEx(playerid)
 {
-	new source[MAX_PLAYER_NAME];
-	GetPlayerName(playerid, source, sizeof(source));
-    new source_len = strlen(source);
-    new target[32];
-    new target_pos = 0;
-    for (new i = 0; i < source_len && target_pos < sizeof(target) - 1; i++)
-    {
-        if (source[i] != '_')
-        {
-            target[target_pos++] = source[i];
-        }
-    }
-    target[target_pos] = EOS;
-    return target;
+	new Ime[MAX_PLAYER_NAME];
+    GetPlayerName(playerid, Ime, sizeof(Ime));
+	for(new x = 0; x < sizeof(Ime); x++)
+	{
+		if(Ime[x] == '_') Ime[x] = ' ';
+	}
+	return Ime;
 }
 
 ClearChat(playerid, rows = 20) {
@@ -748,6 +767,34 @@ YCMD:xgoto(playerid, params[], help)
  	return 1;
 }
 
+YCMD:setint(playerid, params[], help)
+{
+	if (!Auth(playerid, 2)) return Error(playerid, NO_AUTH);
+	if (help) return Usage(playerid, "Komanda za operiranje nad interior id-om igraca.");
+	new user, value;
+	if (sscanf(params, "ui", user, value)) Usage(playerid, "/setint [ID / Dio Imena] [Interior ID]");
+	else {
+		SetPlayerInterior(user, value);
+		Server(user, "Administrator %s vam je postavio interior na %d.", PlayerNameEx(playerid), value);
+		Server(playerid, "Postavili ste %s interior na %d.", PlayerNameEx(playerid), value);
+	}
+ 	return 1;
+}
+
+YCMD:setvw(playerid, params[], help)
+{
+	if (!Auth(playerid, 2)) return Error(playerid, NO_AUTH);
+	if (help) return Usage(playerid, "Komanda za operiranje nad virtual worldom igraca.");
+	new user, value;
+	if (sscanf(params, "ui", user, value)) Usage(playerid, "/setvw [ID / Dio Imena] [Virtual World ID]");
+	else {
+		SetPlayerVirtualWorld(user, value);
+		Server(user, "Administrator %s vam je postavio virtual world na %d.", PlayerNameEx(playerid), value);
+		Server(playerid, "Postavili ste %s virtual world na %d.", PlayerNameEx(playerid), value);
+	}
+ 	return 1;
+}
+
 YCMD:setadminlvl(playerid, params[], help)
 {
 	if (!Auth(playerid, 4) || !IsPlayerAdmin(playerid)) return Error(playerid, NO_AUTH);
@@ -794,3 +841,8 @@ stock SendClientMessageEx(id, color, const fmt[], va_args<>) {
 	va_format(str, sizeof str, fmt, va_start<3>); 
 	return SendClientMessage(id, color, str); 
 }
+
+//==============================================================================================//
+//								MAPS															//
+#include 						"maps/grotti_dealership.pwn"
+//==============================================================================================//				

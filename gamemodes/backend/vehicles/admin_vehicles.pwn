@@ -51,6 +51,8 @@ YCMD:avozilo(playerid, params[], help)
             if (IsVehicleBicycle(GetVehicleModel(vehicleid))) SetVehicleParamsEx(vehicleid, 1, 0, 0, doors, bonnet, boot, objective);
             else SetVehicleParamsEx(vehicleid, 0, 0, 0, doors, bonnet, boot, objective);
             Server(playerid, "Uspjesno ste stvorili vozilo jednokratne upotrebe, model: %d, boja %d.", modelid, boja);
+            LinkVehicleToInterior(vehicleid, GetPlayerInterior(playerid));
+            SetVehicleVirtualWorld(vehicleid, GetPlayerVirtualWorld(playerid));
         }
     }
     return 1;

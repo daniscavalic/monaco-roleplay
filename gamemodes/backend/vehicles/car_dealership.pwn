@@ -70,22 +70,29 @@ enum    E_DEALERSHIP_DATA
 	dship_name[20],
     Float:dship_cam_pos[6],
     Float:dship_cam_look_pos[6],
-    dship_pos[3],
-    dship_vehicle_pos[4],
-    dship_vehicle_buy_pos[4],
+    Float:dship_pos[3],
+    Float:dship_vehicle_pos[4],
+    Float:dship_vehicle_buy_pos[4],
     dship_veh_models[MAX_DEALERSHIP_MODELS],
+    dship_int,
+    dship_vw,
 
-    dship_vehicle_id
+    dship_vehicle_id,
+    Text3D:dship_label,
+    dship_pickup,
+    dship_player_id
 }
 new Dealership[][E_DEALERSHIP_DATA] = {
 	{
-        /* naziv salona */ "Ottos Cars",
-        /* camera pos */ {0, 0, 0, 0, 0, 0},
-        /* camera look at */ {0, 0, 0, 0, 0, 0},
-        /* pozicija za kupovinu */ {0, 0, 0},
-        /* izlozbeni primjerak */ {0, 0, 0, 0},
-        /* parking ispred salona */ {0, 0, 0, 0},
-        /* dostupni modeli vozila */ {411, 560, 400, 541, 451, 581, 408, 522}
+        /* naziv salona */ "Grotti Cars",
+        /* camera pos */ {1401.918090, -24.882469, 1003.693115, 1401.918090, -24.882469, 1003.693115},
+        /* camera look at */ {1405.063842, -28.588148, 1002.521606, 1405.063842, -28.588148, 1002.521606},
+        /* pozicija za kupovinu */ {1391.8030, -27.7318, 1000.8630},
+        /* izlozbeni primjerak */ {1406.0607, -32.8932, 1002.6105, 64.3434},
+        /* parking ispred salona */ {0.0, 0.0, 0.0, 0.0},
+        /* dostupni modeli vozila */ {411, 560, 400, 541, 451, 581, 408, 522},
+        /* interior id */ 1,
+        /* virtual world */ 333
     }
 };
 
@@ -93,13 +100,15 @@ OperateDealershipContract(playerid) {
 
     new 
         veh_index = dealer_Player_VehIndex[playerid],
-        fuel_index = dealer_Player_FuelIndex[playerid],
         col_index = dealer_Player_ColIndex[playerid],
         wheel_index = dealer_Player_WheelIndex[playerid],
         id = dealer_Player_Dealership[playerid];
     dealer_Player_PayType[playerid] = 0;
+
     // toggle ui
+    ToggleDealershipUI(playerid, false);
     ToggleContractUI(playerid, true);
+    SetCameraBehindPlayer(playerid);
 
     // update ui
     new ui_operate_string[180];
@@ -112,16 +121,16 @@ OperateDealershipContract(playerid) {
                       VehicleWheels[wheel_index][wheel_name],
                       VehPrice[ Dealership[id][dship_veh_models][veh_index]-400 ][ 1 ]);
     PlayerTextDrawSetString(playerid, Contract_PTD[playerid][2], ui_operate_string);
-    PlayerTextDrawSetString(playerid, Contract_PTD[playerid][3], (dealer_Player_PayType[playerid] == 0) ? ("Bankovni transfer") : ("Cash"));
+    PlayerTextDrawSetString(playerid, Contract_PTD[playerid][3], PayTypes[dealer_Player_PayType[playerid]][pay_type_name]);
     form:ui_operate_string("%s Dealership", Dealership[id][dship_name]);
     PlayerTextDrawSetString(playerid, Contract_PTD[playerid][4], ui_operate_string);
-    form:ui_operate_string("Potvrdi: ~g~$%d", VehPrice[ Dealership[id][dship_veh_models][veh_index]-400 ][ 1 ])
+    form:ui_operate_string("Potvrdi: ~g~$%d", VehPrice[ Dealership[id][dship_veh_models][veh_index]-400 ][ 1 ]);
     PlayerTextDrawSetString(playerid, Contract_PTD[playerid][6], ui_operate_string);
 }
 
-OperateDealership(playerid) {
-    if(GetClosestDealershipID(playerid) != -1) {
-        new id = GetClosestDealershipID(playerid);
+stock OperateDealership(playerid) {
+    new id = GetClosestDealershipID(playerid);
+    if(id != -1 && Dealership[id][dship_player_id] == -1) {
         InterpolateCameraPos(
             playerid, 
             Dealership[id][dship_cam_pos][0], Dealership[id][dship_cam_pos][1], Dealership[id][dship_cam_pos][2],
@@ -130,19 +139,51 @@ OperateDealership(playerid) {
         );
         InterpolateCameraLookAt(
             playerid, 
-            Dealership[id][dship_cam_pos][0], Dealership[id][dship_cam_pos][1], Dealership[id][dship_cam_pos][2],
-            Dealership[id][dship_cam_pos][3], Dealership[id][dship_cam_pos][4], Dealership[id][dship_cam_pos][5],
+            Dealership[id][dship_cam_look_pos][0], Dealership[id][dship_cam_look_pos][1], Dealership[id][dship_cam_look_pos][2],
+            Dealership[id][dship_cam_look_pos][3], Dealership[id][dship_cam_look_pos][4], Dealership[id][dship_cam_look_pos][5],
             1000
         );
         dealer_Player_Dealership[playerid] = id;
         dealer_Player_VehIndex[playerid] = dealer_Player_FuelIndex[playerid] = dealer_Player_ColIndex[playerid] = dealer_Player_WheelIndex[playerid] = 0;
-        
+        Dealership[id][dship_player_id] = playerid;
+
         ToggleDealershipUI(playerid, true);
-        UpdateDealershipParams(playerid, false);
+        UpdateDealershipParams(playerid, true);
     }
 }
 
-OnPlayerClickTextDraw(playerid, Text:clickedid) {
+DS_OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid) {
+    // dealership > ugovor
+    if(playertextid == Dealership_PTD[playerid][8]) {
+        OperateDealershipContract(playerid);
+    }
+    // potpis ugovora
+    else if(playertextid == Contract_PTD[playerid][6]) {
+        //SendClientMessage(playerid, -1, "TBD");
+    }
+}
+
+hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
+    if(GetPlayerState(playerid) == PLAYER_STATE_ONFOOT) {
+        if(newkeys & KEY_SECONDARY_ATTACK) {
+            OperateDealership(playerid);
+        }
+    }
+}
+
+hook OnPlayerClickTextDraw(playerid, Text:clickedid) {
+    // hide cursor
+    /*if(clickedid == Text:INVALID_TEXT_DRAW)
+    {
+        for(new i; i < sizeof(Dealership); i++) {
+            if(Dealership[i][dship_player_id] == playerid) {
+                Dealership[i][dship_player_id] = -1;
+            }
+        }
+        ToggleDealershipUI(playerid, false);
+        ToggleContractUI(playerid, false);
+        SetCameraBehindPlayer(playerid);
+    }*/
     // model
     if(clickedid == Dealership_GlobalTD[5]) {
         new index_size = MAX_DEALERSHIP_MODELS;
@@ -161,6 +202,45 @@ OnPlayerClickTextDraw(playerid, Text:clickedid) {
         dealer_Player_FuelIndex[playerid] = (dealer_Player_FuelIndex[playerid] == 0) ? 1 : 0;
         UpdateDealershipParams(playerid, false);
     }
+    // boja
+    else if(clickedid == Dealership_GlobalTD[12]) {
+        new index_size = sizeof(VehicleColors);
+        if(dealer_Player_ColIndex[playerid] == 0) dealer_Player_ColIndex[playerid] = index_size - 1;
+        else dealer_Player_ColIndex[playerid]--;
+        UpdateDealershipParams(playerid, false);
+    }
+    else if(clickedid == Dealership_GlobalTD[13]) {
+        new index_size = sizeof(VehicleColors);
+        if(dealer_Player_ColIndex[playerid] == index_size - 1) dealer_Player_ColIndex[playerid] = 0;
+        else dealer_Player_ColIndex[playerid]++;
+        UpdateDealershipParams(playerid, false);
+    }
+    // felge
+    else if(clickedid == Dealership_GlobalTD[14]) {
+        new index_size = sizeof(VehicleWheels);
+        if(dealer_Player_WheelIndex[playerid] == 0) dealer_Player_WheelIndex[playerid] = index_size - 1;
+        else dealer_Player_WheelIndex[playerid]--;
+        UpdateDealershipParams(playerid, false);
+    }
+    else if(clickedid == Dealership_GlobalTD[15]) {
+        new index_size = sizeof(VehicleWheels);
+        if(dealer_Player_WheelIndex[playerid] == index_size - 1) dealer_Player_WheelIndex[playerid] = 0;
+        else dealer_Player_WheelIndex[playerid]++;
+        UpdateDealershipParams(playerid, false);
+    }
+    // contract: vrsta placanja
+    else if(clickedid == Contract_GlobalTD[5]) {
+        new index_size = sizeof(PayTypes);
+        if(dealer_Player_PayType[playerid] == 0) dealer_Player_PayType[playerid] = index_size - 1;
+        else dealer_Player_PayType[playerid]--;
+        PlayerTextDrawSetString(playerid, Contract_PTD[playerid][3], PayTypes[dealer_Player_PayType[playerid]][pay_type_name]);
+    }
+    else if(clickedid == Contract_GlobalTD[6]) {
+        new index_size = sizeof(PayTypes);
+        if(dealer_Player_PayType[playerid] == index_size - 1) dealer_Player_PayType[playerid] = 0;
+        else dealer_Player_PayType[playerid]++;
+        PlayerTextDrawSetString(playerid, Contract_PTD[playerid][3], PayTypes[dealer_Player_PayType[playerid]][pay_type_name]);
+    }
 }
 
 UpdateDealershipParams(playerid, bool: updatecar = false) {
@@ -177,10 +257,12 @@ UpdateDealershipParams(playerid, bool: updatecar = false) {
         DestroyVehicle(Dealership[id][dship_vehicle_id]);
         Dealership[id][dship_vehicle_id] = CreateVehicle(
                 Dealership[id][dship_veh_models][veh_index], 
-                Dealership[id][dship_vehicle_pos][0], Dealership[id][dship_vehicle_pos][1], Dealership[id][dship_vehicle_pos][2], Dealership[id][dship_vehicle_pos][2], 
+                Dealership[id][dship_vehicle_pos][0], Dealership[id][dship_vehicle_pos][1], Dealership[id][dship_vehicle_pos][2], Dealership[id][dship_vehicle_pos][3], 
                 VehicleColors[col_index][color_code], VehicleColors[col_index][color_code], 
                 -1
             );
+        LinkVehicleToInterior(Dealership[id][dship_vehicle_id], Dealership[id][dship_int]);
+        SetVehicleVirtualWorld(Dealership[id][dship_vehicle_id], Dealership[id][dship_vw]);
     }
     AddVehicleComponent(Dealership[id][dship_vehicle_id], VehicleWheels[wheel_index][wheel_comp_id]);
     ChangeVehicleColor(Dealership[id][dship_vehicle_id], VehicleColors[col_index][color_code], VehicleColors[col_index][color_code]);
@@ -197,17 +279,19 @@ UpdateDealershipParams(playerid, bool: updatecar = false) {
     PlayerTextDrawSetPreviewModel(playerid, Dealership_PTD[playerid][4], VehicleWheels[wheel_index][wheel_comp_id]);
     PlayerTextDrawShow(playerid, Dealership_PTD[playerid][4]);
     PlayerTextDrawSetString(playerid, Dealership_PTD[playerid][5], VehicleColors[col_index][color_name]);
+    PlayerTextDrawColor(playerid, Dealership_PTD[playerid][5], HexToInt(temporary_string));
+    PlayerTextDrawShow(playerid, Dealership_PTD[playerid][5]);
     PlayerTextDrawSetString(playerid, Dealership_PTD[playerid][6], VehicleWheels[wheel_index][wheel_name]);
     new ugovor_text[180], pregled_text[35];
     form:ugovor_text("Nakon odabira zeljenog modela, tipa pogonskog goriva, te specifikacija vezanih za samo vozilo \
                       biti ce vam prikazan salonski ugovor, cijim potpisom osiguravate kupovinu vozila. Nakon potpisa \
                       vozilo ce vam biti dostavljeno ispred salona. Vrijednost ugovora je: ~g~$%d", VehPrice[ Dealership[id][dship_veh_models][veh_index]-400 ][ 1 ]);
     PlayerTextDrawSetString(playerid, Dealership_PTD[playerid][7], ugovor_text);
-    form:pregled_text("Pregledaj ugovor: ~g~$%d", VehPrice[ Dealership[id][dship_veh_models][veh_index]-400 ][ 1 ])
+    form:pregled_text("Pregledaj ugovor: ~g~$%d", VehPrice[ Dealership[id][dship_veh_models][veh_index]-400 ][ 1 ]);
     PlayerTextDrawSetString(playerid, Dealership_PTD[playerid][8], pregled_text);
 }
 
-GetClosestDealershipID(playerid, Float: range = 5.0) 
+stock GetClosestDealershipID(playerid, Float: range = 5.0) 
 {
     new Float:x, Float:y, Float:z;
 
@@ -218,10 +302,10 @@ GetClosestDealershipID(playerid, Float: range = 5.0)
 
 	new Float:distance = FLOAT_INFINITY, closestid = -1, Float:distance2;
 
-    for(int i; i < sizeof(Dealership); i++) 
+    for(new i; i < sizeof(Dealership); i++) 
     {
         distance2 = VectorSize(x - Dealership[i][dship_pos][0], y - Dealership[i][dship_pos][1], z - Dealership[i][dship_pos][2]);
-        if (distance2 < distance && distance2 <= 5.0)
+        if (distance2 < distance && distance2 <= range)
         {
             distance = distance2;
             closestid = i;
@@ -232,18 +316,33 @@ GetClosestDealershipID(playerid, Float: range = 5.0)
 }
 
 hook OnPlayerDisconnect(playerid, reason) {
+    for(new i; i < sizeof(Dealership); i++) {
+        if(Dealership[i][dship_player_id] == playerid) {
+            Dealership[i][dship_player_id] = -1;
+        }
+    }
     ToggleDealershipUI(playerid, false);
     ToggleContractUI(playerid, false);
 }
 
-stock HexToInt(string[]) // By DracoBlue
+hook OnPlayerDeath(playerid, killerid, reason) {
+    for(new i; i < sizeof(Dealership); i++) {
+        if(Dealership[i][dship_player_id] == playerid) {
+            Dealership[i][dship_player_id] = -1;
+        }
+    }
+    ToggleDealershipUI(playerid, false);
+    ToggleContractUI(playerid, false);
+}
+
+stock HexToInt(value[]) // By DracoBlue
 {
-    if (string[0]==0) return 0;
+    if (value[0]==0) return 0;
     new i;
     new cur=1;
     new res=0;
-    for (i=strlen(string);i>0;i--) {
-        if (string[i-1]<58) res=res+cur*(string[i-1]-48); else res=res+cur*(string[i-1]-65+10);
+    for (i=strlen(value);i>0;i--) {
+        if (value[i-1]<58) res=res+cur*(value[i-1]-48); else res=res+cur*(value[i-1]-65+10);
         cur=cur*16;
     }
     return res;
@@ -400,15 +499,10 @@ stock ToggleDealershipUI(playerid, bool:toggle = true) {
         }
         CancelSelectTextDraw(playerid);
     }
+}
 
 stock ToggleContractUI(playerid, bool:toggle = true) {
     if (toggle) {
-        new 
-            veh_index = dealer_Player_VehIndex[playerid],
-            fuel_index = dealer_Player_FuelIndex[playerid],
-            col_index = dealer_Player_ColIndex[playerid],
-            wheel_index = dealer_Player_WheelIndex[playerid],
-            id = dealer_Player_Dealership[playerid];
 
         Contract_PTD[playerid][0] = CreatePlayerTextDraw(playerid, 316.000000, 104.000000, "Ottos Autos");
         PlayerTextDrawFont(playerid, Contract_PTD[playerid][0], 2);
@@ -531,6 +625,29 @@ stock ToggleContractUI(playerid, bool:toggle = true) {
 }
 
 hook OnGameModeInit() {
+    DS_LoadDealershipsData();
+    DS_LoadGlobalTextDraws();
+}
+
+DS_LoadDealershipsData() {
+    new format_string[220];
+    for(new i; i < sizeof(Dealership); i++) {
+        form:format_string(""c_blue"°°°°°°°°°°°°°°°°°°°°\nDealership\n{FFFFFF}%s\n\n"c_blue"Katalog salona: {FFFFFF}/katalog\n"c_blue"Brza tipka: {FFFFFF}F\n"c_blue"°°°°°°°°°°°°°°°°°°°°", Dealership[i][dship_name]);
+        Dealership[i][dship_label] = CreateDynamic3DTextLabel(format_string, 0xFFFFFFFF, Dealership[i][dship_pos][0], Dealership[i][dship_pos][1], Dealership[i][dship_pos][2] + 1, 15.0, .interiorid = Dealership[i][dship_int], .worldid = Dealership[i][dship_vw], .testlos = 1);
+        Dealership[i][dship_pickup] = CreateDynamicPickup(1272, 1, Dealership[i][dship_pos][0], Dealership[i][dship_pos][1], Dealership[i][dship_pos][2], .interiorid = Dealership[i][dship_int], .worldid = Dealership[i][dship_vw]);
+        Dealership[i][dship_vehicle_id] = CreateVehicle(
+                Dealership[i][dship_veh_models][0], 
+                Dealership[i][dship_vehicle_pos][0], Dealership[i][dship_vehicle_pos][1], Dealership[i][dship_vehicle_pos][2], 
+                Dealership[i][dship_vehicle_pos][3], 
+                1, 1, -1
+            );
+        LinkVehicleToInterior(Dealership[i][dship_vehicle_id], Dealership[i][dship_int]);
+        SetVehicleVirtualWorld(Dealership[i][dship_vehicle_id], Dealership[i][dship_vw]);
+        Dealership[i][dship_player_id] = -1;
+    }
+}
+
+DS_LoadGlobalTextDraws() {
     // Dealership
     Dealership_GlobalTD[0] = TextDrawCreate(124.000000, 137.000000, "_");
     TextDrawFont(Dealership_GlobalTD[0], 1);

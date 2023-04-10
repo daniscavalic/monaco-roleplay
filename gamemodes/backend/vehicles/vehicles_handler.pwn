@@ -13,8 +13,6 @@
 #include 	"backend/vehicles/utilities.pwn"
 //          Admin Vehicles
 #include 	"backend/vehicles/admin_vehicles.pwn"
-//          Vehicle Dealerships
-#include 	"backend/vehicles/car_dealership.pwn"
 
 enum {
 	E_VEHICLE_TYPE_PRIVATE,
