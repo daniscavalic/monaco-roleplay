@@ -211,7 +211,7 @@ LoadPlayer(playerid) {
 	orm_addvar_int(ormid, Player[playerid][VirtualWorld], "virtualworld");
 	orm_setkey(ormid, "username");
 
-	orm_load(ormid, "OnPlayerDataLoaded", "dd", playerid, g_MysqlRaceCheck[playerid]);
+	orm_load(ormid, "OnAccountLoad", "dd", playerid, g_MysqlRaceCheck[playerid]);
 }
 
 public OnPlayerDisconnect(playerid, reason)
@@ -234,8 +234,8 @@ OnPlayerExitCleanup(playerid, reason) {
 	Player[playerid][IsLogged] = false;
 }
 
-forward OnPlayerDataLoaded(playerid, race_check);
-public OnPlayerDataLoaded(playerid, race_check)
+forward OnAccountLoad(playerid, race_check);
+public OnAccountLoad(playerid, race_check)
 {
 	if (race_check != g_MysqlRaceCheck[playerid]) return Kick(playerid);
 
@@ -337,7 +337,6 @@ UpdatePlayerDeaths(playerid)
 
 UpdatePlayerKills(killerid)
 {
-	// we must check before if the killer wasn't valid (connected) player to avoid run time error 4
 	if (killerid == INVALID_PLAYER_ID) return 0;
 	if (Player[killerid][IsLogged] == false) return 0;
 
