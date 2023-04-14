@@ -220,7 +220,7 @@ CompleteRegistration(playerid) {
 
     //
     Player[playerid][Registered] = 1;
-    Player[playerid][IsLoggedIn] = true;
+    Player[playerid][IsLogged] = true;
 	Player[playerid][X_Pos] = Char_Histories[history][history_char_pos][0];
 	Player[playerid][Y_Pos] = Char_Histories[history][history_char_pos][1];
 	Player[playerid][Z_Pos] = Char_Histories[history][history_char_pos][2];

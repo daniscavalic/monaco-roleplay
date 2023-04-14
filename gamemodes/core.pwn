@@ -93,7 +93,7 @@ enum E_PLAYERS
 	Interior,
 	VirtualWorld,
 
-	bool: IsLoggedIn,
+	bool: IsLogged,
 	LoginAttempts,
 	LoginTimer
 };
@@ -133,7 +133,7 @@ bool:Auth(playerid, level) {
 main()
 {
     print("-                                     -");
-	print(" Founder : Danis Cavalic (Slade)");
+	print(" Scripter : Danis Cavalic (Slade)");
 	print(" "server_name" : "server_version"");
 	print(" Credits : realnaith (myserver) ");
 	print("-                                     -");
@@ -231,7 +231,7 @@ OnPlayerExitCleanup(playerid, reason) {
 		KillTimer(Player[playerid][LoginTimer]);
 		Player[playerid][LoginTimer] = 0;
 	}
-	Player[playerid][IsLoggedIn] = false;
+	Player[playerid][IsLogged] = false;
 }
 
 forward OnPlayerDataLoaded(playerid, race_check);
@@ -290,14 +290,13 @@ public OnPlayerDataLoaded(playerid, race_check)
 forward OnLoginTimeout(playerid);
 public OnLoginTimeout(playerid)
 {
-	// reset the variable that stores the timerid
 	Player[playerid][LoginTimer] = 0;
 	DelayedKick(playerid);
 	return 1;
 }
 
-forward _KickPlayerDelayed(playerid);
-public _KickPlayerDelayed(playerid)
+forward KickEx(playerid);
+public KickEx(playerid)
 {
 	Kick(playerid);
 	return 1;
@@ -305,33 +304,22 @@ public _KickPlayerDelayed(playerid)
 
 DelayedKick(playerid, time = 500)
 {
-	SetTimerEx("_KickPlayerDelayed", time, false, "d", playerid);
-	return 1;
-}
-
-SetupPlayerTable()
-{
-	mysql_tquery(Database, "CREATE TABLE IF NOT EXISTS `players` (`id` int(11) NOT NULL AUTO_INCREMENT,`username` varchar(24) NOT NULL,`password` char(64) NOT NULL,`salt` char(16) NOT NULL,`kills` mediumint(8) NOT NULL DEFAULT '0',`deaths` mediumint(8) NOT NULL DEFAULT '0',`x` float NOT NULL DEFAULT '0',`y` float NOT NULL DEFAULT '0',`z` float NOT NULL DEFAULT '0',`angle` float NOT NULL DEFAULT '0',`interior` tinyint(3) NOT NULL DEFAULT '0', PRIMARY KEY (`id`), UNIQUE KEY `username` (`username`))");
+	SetTimerEx("KickEx", time, false, "d", playerid);
 	return 1;
 }
 
 UpdatePlayerData(playerid, reason = 1)
 {
-	if (Player[playerid][IsLoggedIn] == false) return 0;
+	if (Player[playerid][IsLogged] == false) return 0;
 
-	// if the client crashed, it's not possible to get the player's position in OnPlayerDisconnect callback
-	// so we will use the last saved position (in case of a player who registered and crashed/kicked, the position will be the default spawn point)
-	if (reason == 1)
-	{
+	if (reason == 1) {
 		GetPlayerPos(playerid, Player[playerid][X_Pos], Player[playerid][Y_Pos], Player[playerid][Z_Pos]);
 		GetPlayerFacingAngle(playerid, Player[playerid][A_Pos]);
 	}
 
-	// it is important to store everything in the variables registered in ORM instance
 	Player[playerid][Interior] = GetPlayerInterior(playerid);
 	Player[playerid][VirtualWorld] = GetPlayerVirtualWorld(playerid);
 
-	// orm_save sends an UPDATE query
 	orm_save(Player[playerid][ORM_ID]);
 	orm_destroy(Player[playerid][ORM_ID]);
 	return 1;
@@ -339,7 +327,7 @@ UpdatePlayerData(playerid, reason = 1)
 
 UpdatePlayerDeaths(playerid)
 {
-	if (Player[playerid][IsLoggedIn] == false) return 0;
+	if (Player[playerid][IsLogged] == false) return 0;
 
 	Player[playerid][Deaths]++;
 
@@ -351,7 +339,7 @@ UpdatePlayerKills(killerid)
 {
 	// we must check before if the killer wasn't valid (connected) player to avoid run time error 4
 	if (killerid == INVALID_PLAYER_ID) return 0;
-	if (Player[killerid][IsLoggedIn] == false) return 0;
+	if (Player[killerid][IsLogged] == false) return 0;
 
 	Player[killerid][Kills]++;
 
@@ -479,7 +467,7 @@ Dialog: dialog_login(const playerid, response, listitem, string: inputtext[])
 LogPlayer(playerid) {
 	// player init
 	TogglePlayerSpectating(playerid, false);
-	Player[playerid][IsLoggedIn] = true;
+	Player[playerid][IsLogged] = true;
 	SetSpawnInfo(playerid, NO_TEAM, Player[playerid][Skin], Player[playerid][X_Pos], Player[playerid][Y_Pos], Player[playerid][Z_Pos], Player[playerid][A_Pos], 0, 0, 0, 0, 0, 0);
 	SpawnPlayer(playerid);
 
@@ -516,6 +504,7 @@ stock IsValidEmail(const email[])
 
 stock IsValidRolePlayName(const name[])
 {
+	// Nick validator: Validira prisutnost donje crtice.
     new separator_pos = -1;
     for (new i = 0; i < strlen(name); i++)
     {
@@ -564,12 +553,6 @@ public e_COMMAND_ERRORS:OnPlayerCommandPerformed(playerid, cmdtext[], e_COMMAND_
 	return COMMAND_OK;
 }
 
-YCMD:test(playerid, params[], help) 
-{
-	StartCharacterRegistration(playerid);
-	return 1;
-}
-
 YCMD:cmdhelp(playerid, params[], help)
 {
 	if (help)
@@ -585,158 +568,6 @@ YCMD:cmdhelp(playerid, params[], help)
 		Command_ReProcess(playerid, params, true);
 	}
 	return 1;
-}
-
-
-YCMD:staffcmd(playerid, const string: params[], help)
-{
-	if (!Auth(playerid, 1)) return Error(playerid, NO_AUTH);
-	if(help) return CommandHelp(playerid, "Komanda za pregled liste komandi za administratore.");
-
-	Dialog_Show(playerid, "dialog_staffcmd", DIALOG_STYLE_MSGBOX,
-		""c_server"myserver // "c_white"Staff Commands",
-		""c_white"%s, Vi ste deo naseg "c_server"staff "c_white"tima!\n\
-		"c_server"SLVL1 >> "c_white"/sduty\n\
-		"c_server"SLVL1 >> "c_white"/sc\n\
-		"c_server"SLVL1 >> "c_white"/staffcmd\n\
-		"c_server"SLVL1 >> "c_white"/sveh\n\
-		"c_server"SLVL1 >> "c_white"/goto\n\
-		"c_server"SLVL1 >> "c_white"/cc\n\
-		"c_server"SLVL1 >> "c_white"/fv\n\
-		"c_server"SLVL2 >> "c_white"/gethere\n\
-		"c_server"SLVL3 >> "c_white"/nitro\n\
-		"c_server"SLVL4 >> "c_white"/jetpack\n\
-		"c_server"SLVL4 >> "c_white"/setskin\n\
-		"c_server"SLVL4 >> "c_white"/xgoto\n\
-		"c_server"SLVL4 >> "c_white"/spanel\n\
-		"c_server"SLVL4 >> "c_white"/setstaff",
-		"U redu", "", ReturnPlayerName(playerid)
-	);
-
-    return 1;
-}
-
-YCMD:sc(playerid, const string: params[], help)
-{
-	if (!Auth(playerid, 1)) return Error(playerid, NO_AUTH);
-
-	if(help) return CommandHelp(playerid, "Komunikacija izmedju pripadnika administracije servera.");
-
-	if (isnull(params)) return SendClientMessage(playerid, -1, ""c_server"myproject // "c_white"/sc [text]");
-
-	static tmp_str[128];
-
-	format(tmp_str, sizeof(tmp_str), "Staff - %s(%d): "c_white"%s", ReturnPlayerName(playerid), playerid, params);
-
-	foreach (new i: Player)
-		if (Auth(i, 1))
-			SendClientMessage(i, x_ltblue, tmp_str);
-	
-    return 1;
-}
-
-YCMD:goto(playerid, params[],help)
-{
-	if (!Auth(playerid, 1))
-		return Error(playerid, NO_AUTH);
-
-	if(help) return CommandHelp(playerid, "Pomocu ove komande se mozete teleportirati do drugog logiranog igraca.");
-
-	new giveplayerid, giveplayer[MAX_PLAYER_NAME];
-
-	new Float:plx,Float:ply,Float:plz;
-
-	GetPlayerName(giveplayerid, giveplayer, sizeof(giveplayer));
-
-	if(!sscanf(params, "u", giveplayerid))
-	{	
-		GetPlayerPos(giveplayerid, plx, ply, plz);
-			
-		if (GetPlayerState(playerid) == 2)
-		{
-			new tmpcar = GetPlayerVehicleID(playerid);
-			SetVehiclePos(tmpcar, plx, ply+4, plz);
-		}
-		else
-		{
-			SetPlayerPos(playerid,plx,ply+2, plz);
-		}
-		SetPlayerInterior(playerid, GetPlayerInterior(giveplayerid));
-	}
-    return 1;
-}
-
-YCMD:cc(playerid, params[], help)
-{
-	if (!Auth(playerid, 1))
-		return Error(playerid, NO_AUTH);
-
-	if(help) return CommandHelp(playerid, "Brisanje kompletnog chata svim aktivnim igracima.");
-
-	for(new cc; cc < 110; cc++)
-	{
-		SendClientMessageToAll(-1, "");
-	}
-	static fmt_string[120];
-	format(fmt_string, sizeof(fmt_string), ""c_server"myproject // "c_white"chat je ocistio"c_server" %s", ReturnPlayerName(playerid));
-	SendClientMessageToAll(-1, fmt_string);
-    return 1;
-}
-
-YCMD:fv(playerid, params[], help)
-{
-	if (!Auth(playerid, 1))
-		return Error(playerid, NO_AUTH);
-
-	if(help) return CommandHelp(playerid, "Pomocu ove komande popravljate vozilo unutar kojeg se nalazite.");
-
-	new vehicleid = GetPlayerVehicleID(playerid);
-
-	if(!IsPlayerInAnyVehicle(playerid)) return SendClientMessage(playerid, -1, ""c_server"myproject // "c_white"Niste u vozilu!");
-
-	RepairVehicle(vehicleid);
-
-	SetVehicleHealth(vehicleid, 999.0);
-
-	return 1;
-}
-YCMD:gethere(playerid, const params[], help)
-{
-	if (!Auth(playerid, 1))
-		return Error(playerid, NO_AUTH);
-
-	if(help) return CommandHelp(playerid, "Pomocu ove komande mozete prebaciti logiranog igraca do sebe.");
-
-	new targetid = INVALID_PLAYER_ID;
-
-	if(sscanf(params, "u", targetid)) return SendClientMessage(playerid, -1, ""c_server"myproject // "c_white"/gethere [id]");
-
-	if(targetid == INVALID_PLAYER_ID) return SendClientMessage(playerid, x_server, "myproject // "c_white"Taj ID nije konektovan.");
-
-	new Float:x, Float:y, Float:z;
-
-	GetPlayerPos(playerid, x, y, z);
-
-	SetPlayerPos(targetid, x+1, y, z+1);
-
-	SetPlayerInterior(targetid, GetPlayerInterior(playerid));
-
-	SetPlayerVirtualWorld(targetid, GetPlayerVirtualWorld(playerid));
-
-	new name[MAX_PLAYER_NAME];
-	GetPlayerName(targetid, name, sizeof(name));
-
-	static fmt_string[60];
-
-	format(fmt_string, sizeof(fmt_string),""c_server"myproject // "c_white"Teleportovali ste igraca %s do sebe.", name);
-	SendClientMessage(playerid, -1, fmt_string);
-
-	GetPlayerName(playerid, name, sizeof(name));
-
-	format(fmt_string, sizeof(fmt_string), ""c_server"myproject // "c_white"Staff %s vas je teleportovao do sebe.", name);
-	SendClientMessage(targetid, -1, fmt_string);
-
-    return 1;
 }
 
 YCMD:xgoto(playerid, params[], help)

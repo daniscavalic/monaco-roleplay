@@ -28,12 +28,6 @@ hook OnGameModeInit()
         SendRconCommand("exit");
         return 1;
     }
-
-    DatabaseInit();
     
     return Y_HOOKS_CONTINUE_RETURN_1;
-}
-
-DatabaseInit() {
-    SetupPlayerTable();
 }
