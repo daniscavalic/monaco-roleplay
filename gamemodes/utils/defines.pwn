@@ -1,5 +1,4 @@
 #include <ysilib\YSI_Coding\y_hooks>
-
 #define     server_name                 "Monaco"
 #define     server_version              "v0.1"
 #define     server_dialog_header        "{F81414}Mon{FFFFFF}aco"

@@ -158,6 +158,14 @@ public OnPlayerRequestClass(playerid, classid)
 	return 1;
 }
 
+public OnPlayerText(playerid, text[])
+{
+    new format_text[144];
+    form:format_text("%s: %s", ReturnPlayerNameEx(playerid), text);
+	SendCloseMessage(playerid, format_text, 15.0);
+    return 0;
+}
+
 public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid) {
 	DS_OnPlayerClickPlayerTextDraw(playerid, playertextid);
 }
@@ -535,15 +543,6 @@ public e_COMMAND_ERRORS:OnPlayerCommandReceived(playerid, cmdtext[], e_COMMAND_E
 	return COMMAND_OK;
 }
 
-public e_COMMAND_ERRORS:OnPlayerCommandPerformed(playerid, cmdtext[], e_COMMAND_ERRORS:success)
-{
-	if(success != COMMAND_OK) {
-		Torq(playerid, "(komanda) Unesena komanda ne postoji, koristite '/help' za pomoc oko komandi.");
-		return COMMAND_OK;
-	}
-	return COMMAND_OK;
-}
-
 YCMD:cmdhelp(playerid, params[], help)
 {
 	if (help)
@@ -656,6 +655,36 @@ YCMD:createvehicle(playerid, params[], help)
 		}
 	}
 	return 1;
+}
+
+//==============================================================================================//
+
+stock RGB(red, green, blue)
+{
+    return ((red & 0xFF) << 16) | ((green & 0xFF) << 8) | (blue & 0xFF);
+}
+
+stock SendCloseMessage(playerid, message[], Float: range = 10.0)
+{
+    new Float:playerpos[3], Float:otherpos[3], Float:distance, Float:alpha, color;
+    GetPlayerPos(playerid, playerpos[0], playerpos[1], playerpos[2]);
+    
+    for(new i = 0; i < MAX_PLAYERS; i++)
+    {
+        if (!IsPlayerConnected(i)) continue;
+        
+        GetPlayerPos(i, otherpos[0], otherpos[1], otherpos[2]);
+        distance = VectorSize(playerpos[0] - otherpos[0], playerpos[1] - otherpos[1], playerpos[2] - otherpos[2]);
+        
+        if (distance <= range)
+        {
+            alpha = (1.0 - (distance / range) < 0.5) ? 0.5 : 1.0 - (distance / range);
+			color = RGB(floatround((1.0 - (distance / range))) * 205 + 50, floatround((1.0 - (distance / range))) * 205 + 50, floatround((1.0 - (distance / range))) * 205 + 50);
+			color |= (floatround(alpha * 255) << 24);
+            SendClientMessage(i, color, message);
+        }
+    }
+    return 1;
 }
 
 stock SendClientMessageEx(id, color, const fmt[], va_args<>) {
