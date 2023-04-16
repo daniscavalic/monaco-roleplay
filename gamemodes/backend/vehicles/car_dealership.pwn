@@ -13,7 +13,7 @@
 
 #define     MAX_DEALERSHIP_MODELS   8
 
-new // ui
+static // ui
     Text:Dealership_GlobalTD[17],
     PlayerText:Dealership_PTD[MAX_PLAYERS][9] = {PlayerText:INVALID_TEXT_DRAW, ...},
     Text:Contract_GlobalTD[13],
@@ -26,13 +26,25 @@ new // ui
     dealer_Player_WheelIndex[MAX_PLAYERS],
     dealer_Player_PayType[MAX_PLAYERS];
 
+enum    E_DLS_PLAYER_PAY_TYPES
+{
+	pay_type_name[33],
+    e_PAY_TYPE:pay_type,
+	bool:pay_type_credit
+}
+static PayTypes[][E_DLS_PLAYER_PAY_TYPES] = {
+	{"Cash", 				PAY_TYPE_POCKET,    false},
+	{"Bankovni transfer", 	PAY_TYPE_BANK,      false},
+	{"Kredit", 				PAY_TYPE_CREDIT,    true}
+};
+
 enum    E_DEALERSHIP_VEH_COLORS
 {
 	color_name[33],
 	color_code,
 	color_hex[10]
 }
-new VehicleColors[][E_DEALERSHIP_VEH_COLORS] = {
+static VehicleColors[][E_DEALERSHIP_VEH_COLORS] = {
 	{"Bijela", 				1, 		"FFFFFF"},
 	{"Crna", 				0, 		"000000"},
 	{"Plava", 				2, 		"00C0FF"},
@@ -50,7 +62,7 @@ enum    E_DEALERSHIP_VEH_WHEELS
 	wheel_name[33],
 	wheel_comp_id
 }
-new VehicleWheels[][E_DEALERSHIP_VEH_WHEELS] = {
+static VehicleWheels[][E_DEALERSHIP_VEH_WHEELS] = {
 	{"Shadow", 		1073},
 	{"Mega", 		1074},
 	{"Rimshine", 	1075},
@@ -82,7 +94,7 @@ enum    E_DEALERSHIP_DATA
     dship_pickup,
     dship_player_id
 }
-new Dealership[][E_DEALERSHIP_DATA] = {
+static Dealership[][E_DEALERSHIP_DATA] = {
 	{
         /* naziv salona */ "Grotti Cars",
         /* camera pos */ {1401.918090, -24.882469, 1003.693115, 1401.918090, -24.882469, 1003.693115},

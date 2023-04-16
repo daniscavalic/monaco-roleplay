@@ -57,17 +57,6 @@ const 		MAX_PASSWORD_LENGTH 	= 64;
 const 		MIN_PASSWORD_LENGTH 	= 6;
 const 		MAX_LOGIN_ATTEMPTS 		= 3;
 
-enum    E_PLAYER_PAY_TYPES
-{
-	pay_type_name[33],
-	bool:pay_type_credit
-}
-new PayTypes[][E_PLAYER_PAY_TYPES] = {
-	{"Cash", 				false},
-	{"Bankovni transfer", 	false},
-	{"Kredit", 				true}
-};
-
 enum E_PLAYERS
 {
 	ORM: ORM_ID,
@@ -100,8 +89,15 @@ enum E_PLAYERS
 new Player[MAX_PLAYERS][E_PLAYERS],
 	g_MysqlRaceCheck[MAX_PLAYERS];
 
-stock GetPlayerMoneyEx(playerid, pay_type = 0) {
-	if(type == 0) return Player[playerid][Money];
+enum e_PAY_TYPE {
+	PAY_TYPE_POCKET,
+	PAY_TYPE_BANK,
+	PAY_TYPE_CREDIT
+};
+
+stock GetPlayerMoneyEx(playerid, e_PAY_TYPE:pay_type = PAY_TYPE_POCKET) {
+	// to do: PAY_TYPE_CREDIT
+	if(pay_type == PAY_TYPE_POCKET) return Player[playerid][Money];
 	else return Player[playerid][BankMoney];
 }
 
@@ -116,9 +112,8 @@ stock GetStaffRankName( rank_level ) {
 	return rank_name;
 }
 
-bool:Auth(playerid, level) {
-	if (Player[playerid][AdminLevel] >= level) return true;
-	else return false;
+bool:IsPlayerAuthorized(playerid, adminLevel) {
+	return (Player[playerid][AdminLevel] >= adminLevel);
 }
 // --------------------------------------------------------------------//
 //			Backend
@@ -138,9 +133,6 @@ main()
 	print(" Credits : realnaith (myserver) ");
 	print("-                                     -");
 }
-
-#define PRESSED(%0) \
-    ( newkeys & %0 == %0 && oldkeys & %0 != %0 )
 
 public OnGameModeInit()
 {
@@ -255,7 +247,7 @@ public OnAccountLoad(playerid, race_check)
 			Dialog_Show(playerid, "dialog_login", DIALOG_STYLE_PASSWORD, server_dialog_header,
 				""c_torq"Dobrodosao %s nazad na "server_dialog_header" "c_torq"RolePlay.\n\n{FFFFFF}Unesite lozinku racuna za nastavak igre:",
 				"Prijava", "Izlaz", 
-				PlayerNameEx(playerid)
+				ReturnPlayerNameEx(playerid)
 			);
 
 			Player[playerid][LoginTimer] = SetTimerEx("OnLoginTimeout", SECONDS_TO_LOGIN * 1000, false, "d", playerid);
@@ -279,7 +271,7 @@ public OnAccountLoad(playerid, race_check)
 					{FFFFFF}Za pocetak unesite lozinku koju cete koristiti za prijavljivanje:",
 				//
 					"Potvrdi", "Izlaz", 
-					PlayerNameEx(playerid)
+					ReturnPlayerNameEx(playerid)
 				);
 			}
 		}
@@ -381,7 +373,7 @@ Dialog: dialog_regpassword(playerid, response, listitem, string: inputtext[])
 											{FFFFFF}Za pocetak unesite lozinku koju cete koristiti za prijavljivanje:",
 										//
 											"Potvrdi", "Izlaz", 
-											PlayerNameEx(playerid)
+											ReturnPlayerNameEx(playerid)
 										);
 
 	for (new i = 0; i < 16; i++) Player[playerid][Salt][i] = random(94) + 33;
@@ -396,7 +388,7 @@ Dialog: dialog_regpassword(playerid, response, listitem, string: inputtext[])
 		{FFFFFF}Sada unesite validnu e-mail adresu koju ce koristiti vas racun:",
 	//
 		"Potvrdi", "Izlaz", 
-		PlayerNameEx(playerid)
+		ReturnPlayerNameEx(playerid)
 	);
 
 	return 1;
@@ -456,7 +448,7 @@ Dialog: dialog_login(const playerid, response, listitem, string: inputtext[])
 		else Dialog_Show(playerid, "dialog_login", DIALOG_STYLE_PASSWORD, server_dialog_header,
 				""c_red"Niste unijeli ispravnu lozinku (%d/3) za racun %s.\n\n{FFFFFF}Unesite lozinku racuna za nastavak igre:",
 				"Prijava", "Izlaz", 
-				Player[playerid][LoginAttempts], PlayerNameEx(playerid)
+				Player[playerid][LoginAttempts], ReturnPlayerNameEx(playerid)
 			);
 	}
 
@@ -478,9 +470,9 @@ LogPlayer(playerid) {
 	SetPlayerVirtualWorld(playerid, Player[playerid][VirtualWorld]);
 
 	// notifications
-	Blue(playerid, "(prijava) Dobrodosao/la nazad na "server_dialog_header" "c_blue"RolePlay, %s.", PlayerNameEx(playerid));
+	Blue(playerid, "(prijava) Dobrodosao/la nazad na "server_dialog_header" "c_blue"RolePlay, %s.", ReturnPlayerNameEx(playerid));
 	Blue(playerid, "(prijava) Vraceni ste na snimljenu poziciju prije posljednjeg izlaska sa servera.");
-	if (Auth(playerid, 1)) Server(playerid, "Prijavljeni ste kao %s.", GetStaffRankName(Player[playerid][AdminLevel]));
+	if (IsPlayerAuthorized(playerid, 1)) Server(playerid, "Prijavljeni ste kao %s.", GetStaffRankName(Player[playerid][AdminLevel]));
 }
 
 stock IsValidEmail(const email[])
@@ -516,7 +508,7 @@ stock IsValidRolePlayName(const name[])
     return (separator_pos > 0 && separator_pos < strlen(name) - 1);
 }
 
-stock PlayerNameEx(playerid)
+stock ReturnPlayerNameEx(playerid)
 {
 	new Ime[MAX_PLAYER_NAME];
     GetPlayerName(playerid, Ime, sizeof(Ime));
@@ -571,7 +563,7 @@ YCMD:cmdhelp(playerid, params[], help)
 
 YCMD:xgoto(playerid, params[], help)
 {
-	if (!Auth(playerid, 1))
+	if (!IsPlayerAuthorized(playerid, 1))
 		return Error(playerid, NO_AUTH);
 
 	if(help) return CommandHelp(playerid, "Pomocu ove komande se mozete teleportirati na unesene koordinate.");
@@ -599,52 +591,52 @@ YCMD:xgoto(playerid, params[], help)
 
 YCMD:setint(playerid, params[], help)
 {
-	if (!Auth(playerid, 2)) return Error(playerid, NO_AUTH);
+	if (!IsPlayerAuthorized(playerid, 2)) return Error(playerid, NO_AUTH);
 	if (help) return Usage(playerid, "Komanda za operiranje nad interior id-om igraca.");
 	new user, value;
 	if (sscanf(params, "ui", user, value)) Usage(playerid, "/setint [ID / Dio Imena] [Interior ID]");
 	else {
 		SetPlayerInterior(user, value);
-		Server(user, "Administrator %s vam je postavio interior na %d.", PlayerNameEx(playerid), value);
-		Server(playerid, "Postavili ste %s interior na %d.", PlayerNameEx(playerid), value);
+		Server(user, "Administrator %s vam je postavio interior na %d.", ReturnPlayerNameEx(playerid), value);
+		Server(playerid, "Postavili ste %s interior na %d.", ReturnPlayerNameEx(playerid), value);
 	}
  	return 1;
 }
 
 YCMD:setvw(playerid, params[], help)
 {
-	if (!Auth(playerid, 2)) return Error(playerid, NO_AUTH);
+	if (!IsPlayerAuthorized(playerid, 2)) return Error(playerid, NO_AUTH);
 	if (help) return Usage(playerid, "Komanda za operiranje nad virtual worldom igraca.");
 	new user, value;
 	if (sscanf(params, "ui", user, value)) Usage(playerid, "/setvw [ID / Dio Imena] [Virtual World ID]");
 	else {
 		SetPlayerVirtualWorld(user, value);
-		Server(user, "Administrator %s vam je postavio virtual world na %d.", PlayerNameEx(playerid), value);
-		Server(playerid, "Postavili ste %s virtual world na %d.", PlayerNameEx(playerid), value);
+		Server(user, "Administrator %s vam je postavio virtual world na %d.", ReturnPlayerNameEx(playerid), value);
+		Server(playerid, "Postavili ste %s virtual world na %d.", ReturnPlayerNameEx(playerid), value);
 	}
  	return 1;
 }
 
 YCMD:setadminlvl(playerid, params[], help)
 {
-	if (!Auth(playerid, 4) || !IsPlayerAdmin(playerid)) return Error(playerid, NO_AUTH);
+	if (!IsPlayerAuthorized(playerid, 4) || !IsPlayerAdmin(playerid)) return Error(playerid, NO_AUTH);
 	if (help) return Usage(playerid, "Komanda za operiranje nad administratorskim levelom igraca.");
 	new user, level;
 	if (sscanf(params, "ui", user, level)) Usage(playerid, "/setadminlvl [ID / Dio Imena] [Admin Level]");
 	else {
 		Player[user][AdminLevel] = level;
-		Server(user, "Administrator %s vam je postavio admin level na %d.", PlayerNameEx(playerid), level);
-		Server(playerid, "Postavili ste %s admin level na %d.", PlayerNameEx(playerid), level);
+		Server(user, "Administrator %s vam je postavio admin level na %d.", ReturnPlayerNameEx(playerid), level);
+		Server(playerid, "Postavili ste %s admin level na %d.", ReturnPlayerNameEx(playerid), level);
 	}
  	return 1;
 }
 
 YCMD:createvehicle(playerid, params[], help)
 {
-	if (!Auth(playerid, 4) || !IsPlayerAdmin(playerid)) return Error(playerid, NO_AUTH);
+	if (!IsPlayerAuthorized(playerid, 4) || !IsPlayerAdmin(playerid)) return Error(playerid, NO_AUTH);
 	if (help) Usage(playerid, "Pretvara administratorsko vozilo u server vozilo datog tipa.");
 	if (!IsPlayerInAnyVehicle(playerid)) return Error(playerid, "Niste u vozilu jednokratne upotrebe.");
-	if (!IsPlayerInVehicle(playerid, AdminVozilo[playerid])) return Error(playerid, "Niste u vozilu jednokratne upotrebe.");
+	if (!IsPlayerInVehicle(playerid, GetAdminVehicle(playerid))) return Error(playerid, "Niste u vozilu jednokratne upotrebe.");
 	new boja;
 	if (sscanf(params, "i", boja)) Usage(playerid, "/createvehicle [Boja]");
 	else {
@@ -658,9 +650,9 @@ YCMD:createvehicle(playerid, params[], help)
 				-1, owner
 			);
 		//
-		if(AdminVozilo[playerid] != INVALID_VEHICLE_ID) {
-			DestroyVehicle(AdminVozilo[playerid]);
-			AdminVozilo[playerid] = INVALID_VEHICLE_ID;
+		if(GetAdminVehicle(playerid) != INVALID_VEHICLE_ID) {
+			DestroyVehicle(GetAdminVehicle(playerid));
+			SetAdminVehicle(playerid, INVALID_VEHICLE_ID);
 		}
 	}
 	return 1;

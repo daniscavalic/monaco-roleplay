@@ -14,7 +14,7 @@
 //          Admin Vehicles
 #include 	"backend/vehicles/admin_vehicles.pwn"
 
-enum {
+enum e_VEHICLE_TYPES {
 	E_VEHICLE_TYPE_PRIVATE,
 	E_VEHICLE_TYPE_ADMIN,
 	E_VEHICLE_TYPE_JOB,
@@ -29,7 +29,7 @@ enum E_VEHICLE_DATA {
 	v_Model,
 	Float:v_Position[4],
 	v_Color[2],
-	v_Usage,
+	e_VEHICLE_TYPES:v_Usage,
 	v_OwnerID,
 	v_Owner[30],
 
@@ -53,7 +53,7 @@ stock RemoveVehicle(vehicleid) {
     }
 }
 
-stock CreateNewVehicle(model, color, usage, Float:posX, Float:posY, Float:posZ, Float:posA, owner_id, owner_name[]) 
+stock CreateNewVehicle(model, color, e_VEHICLE_TYPES:usage, Float:posX, Float:posY, Float:posZ, Float:posA, owner_id, owner_name[]) 
 {
 	new vehicleid = Iter_Free(ServerVehicles);
 	if (vehicleid != -1) 

@@ -10,8 +10,16 @@
 #include    <ysilib\YSI_Coding\y_hooks>
 #include 	"backend/vehicles/vehicles_data/utilities.pwn"
 
-new 
+static 
 	AdminVozilo[MAX_PLAYERS];
+
+stock GetAdminVehicle(playerid) {
+    return AdminVozilo[playerid];
+}
+
+stock SetAdminVehicle(playerid, vehicleid) {
+    return AdminVozilo[playerid] = vehicleid;
+}
 
 hook OnPlayerConnect(playerid) {
     AdminVozilo[playerid] = INVALID_VEHICLE_ID;
@@ -26,7 +34,7 @@ hook OnPlayerDisconnect(playerid, reason) {
 
 YCMD:avozilo(playerid, params[], help) 
 {
-    if (!Auth(playerid, 1)) return Error(playerid, NO_AUTH);
+    if (!IsPlayerAuthorized(playerid, 1)) return Error(playerid, NO_AUTH);
 	if (help) Usage(playerid, "Kreira administratorsko vozilo");
 	if(AdminVozilo[playerid] != INVALID_VEHICLE_ID) {
         DestroyVehicle(AdminVozilo[playerid]);

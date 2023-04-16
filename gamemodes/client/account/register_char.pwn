@@ -16,14 +16,14 @@ enum    E_REG_CHAR_SKIN_DATA
 	skin_desc_name[20],
 	skin_id
 }
-new Male_Skins_Data[][E_REG_CHAR_SKIN_DATA] = {
+static Male_Skins_Data[][E_REG_CHAR_SKIN_DATA] = {
 	{"Konobar", 	20},
 	{"Deejay", 		19},
 	{"Kapuljaca", 	29},
 	{"Starac", 		43},
 	{"Biker", 	    67}
 };
-new Female_Skins_Data[][E_REG_CHAR_SKIN_DATA] = {
+static Female_Skins_Data[][E_REG_CHAR_SKIN_DATA] = {
 	{"Direktorica", 9},
 	{"Baba", 		10},
 	{"Hostesa", 	12},
@@ -36,7 +36,7 @@ enum    E_REG_CHAR_FIGHT_STYLES
 	fight_style_name[15],
 	fight_style_id
 }
-new Fight_Styles[][E_REG_CHAR_FIGHT_STYLES] = {
+static Fight_Styles[][E_REG_CHAR_FIGHT_STYLES] = {
 	{"Normalno", 	        4},
 	{"Boks", 		        5},
 	{"Kung-Fu", 	        6},
@@ -51,7 +51,7 @@ enum    E_REG_CHAR_HISTORY
     Float:history_cam_look_pos[6],
     Float:history_char_pos[4]
 }
-new Char_Histories[][E_REG_CHAR_HISTORY] = {
+static Char_Histories[][E_REG_CHAR_HISTORY] = {
 	{   
         "Turista", 
         {1632.648681, -2325.904541, 14.549610, 1632.648681, -2325.904541, 14.549610}, 
@@ -72,7 +72,7 @@ new Char_Histories[][E_REG_CHAR_HISTORY] = {
     }
 };
 
-new 
+static 
     Text:Register_Char_Global[22],
     PlayerText:Register_Char_Player[MAX_PLAYERS][4] = {PlayerText:INVALID_TEXT_DRAW, ...},
     char_Register_Pol[MAX_PLAYERS], 
