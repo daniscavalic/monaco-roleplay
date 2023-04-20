@@ -347,7 +347,7 @@ hook OnPlayerDeath(playerid, killerid, reason) {
     ToggleContractUI(playerid, false);
 }
 
-stock HexToInt(value[]) // By DracoBlue
+stock HexToInt(const value[]) // By DracoBlue
 {
     if (value[0]==0) return 0;
     new i;

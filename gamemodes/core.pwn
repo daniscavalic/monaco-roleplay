@@ -22,7 +22,6 @@
 //			Main
 #define		YSI_YES_HEAP_MALLOC
 #define 	CGEN_MEMORY 		60000
-#pragma 	warning disable 	214
 //			Core Includes
 #include 	<a_samp>
 #include 	<a_actor>
@@ -664,7 +663,7 @@ stock RGB(red, green, blue)
     return ((red & 0xFF) << 16) | ((green & 0xFF) << 8) | (blue & 0xFF);
 }
 
-stock SendCloseMessage(playerid, message[], Float: range = 10.0)
+stock SendCloseMessage(playerid, const message[], Float: range = 10.0)
 {
     new Float:playerpos[3], Float:otherpos[3], Float:distance, Float:alpha, color;
     GetPlayerPos(playerid, playerpos[0], playerpos[1], playerpos[2]);
