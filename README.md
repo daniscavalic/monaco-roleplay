@@ -1,4 +1,4 @@
-# Monaco: SA-MP RolePlay Script for Beginners
+# Monaco: SA-MP RolePlay Script
 Welcome to the Monaco: SA-MP RolePlay Script for Beginners! This is a custom role-playing script that has been designed specifically for new players who are just starting out with SA-MP. The script comes with a variety of features, including a character registration system in textdraws and car ownership with a dealership (that is currently work in progress).
 
 # Features
