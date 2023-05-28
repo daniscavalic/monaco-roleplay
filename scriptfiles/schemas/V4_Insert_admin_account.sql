@@ -1,0 +1,2 @@
+INSERT INTO `players` (`id`, `username`, `registered`, `password`, `salt`, `email`, `admin`, `skin`, `chargender`, `fightstyle`, `money`, `bankmoney`, `kills`, `deaths`, `x`, `y`, `z`, `angle`, `interior`, `virtualworld`) VALUES
+(5, 'Danis_Cavalic', 1, 'DB04EDA1CC3AA2AE15C0B67FE6CDDB5BD066181BD6C063E3907C96ED7DB742D8', '[tw4gqv}}(]hu%0m', 'danis@gmail.com', 0, 20, 4, 4, 0, 0, 0, 0, 1551.89, -2335.2, 14.034, 111.992, 0, 0);
