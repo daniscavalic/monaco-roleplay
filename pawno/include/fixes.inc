@@ -584,11 +584,11 @@ _FIXES_FUNC_PAWNDOC(CONST_PAWNDOC(const symbol[] = 0));
  * attached to it.  This seems to be the best way to prevent the documentation
  * from appearing in XML (<c>-r</c>) output - even conditional compilation
  * doesn't work on comments.  Used internally as <c>_FIXES_HIDE_PAWNDOC</c>.
- * <p />
+ * <p/>
  * The input should have some unique name, so when using it within an ifdef
  * block, don't use the same name as the tested symbol, because the the
  * replacement in question will be applied to the hidden variable as well.
- * <p />
+ * <p/>
  * This should also be a globally unique symbol name, because this only works
  * with `<c>const</c>`, not `<c>static const</c>`.
  * </remarks>
@@ -7554,6 +7554,40 @@ _FIXES_FUNC_PAWNDOC(_FIXES_IS_UNSET(const symbol[]));
 	#define FIX_memcpy                           (0)
 #endif
 
+/**
+ * <library>fixes.inc</library>
+ * <fix name="SHA256">
+ *     <problem>
+ *         Is not good for using for passwords.
+ *     </problem>
+ *     <solution>
+ *         Deprecate it.
+ *     </solution>
+ *     <see>FIXES_SHA256</see>
+ *     <author href="https://github.com/Y-Less/">Y_Less</author>
+ * </fix>
+ */
+
+#if !defined FIX_SHA256
+	#define _FIXES_WARNING 144
+	#tryinclude "_fixes_options"
+	#undef _FIXES_WARNING
+	static _FIXES_OPTION FIX_SHA256 = _FIXES_DEFAULT;
+	#define FIX_SHA256                           _FIXES_DEFAULT
+#elseif _FIXES_IS_UNSET(FIX_SHA256)
+	#undef FIX_SHA256
+	static stock FIX_SHA256 = 2;
+	#define FIX_SHA256                           (2)
+#elseif FIX_SHA256
+	#undef FIX_SHA256
+	static stock FIX_SHA256 = 1;
+	#define FIX_SHA256                           (1)
+#else
+	#undef FIX_SHA256
+	static stock FIX_SHA256 = 0;
+	#define FIX_SHA256                           (0)
+#endif
+
 /*
 
     88b           d88
@@ -7593,6 +7627,27 @@ _FIXES_FUNC_PAWNDOC(_FIXES_IS_UNSET(const symbol[]));
 
 #if FIX_Pawndoc
 	#define ENUM_PAWNDOC _FIXES_ENUM_PAWNDOC
+#endif
+
+/**
+ * <library>fixes.inc</library>
+ * <remarks>
+ * Mark all natives as const-correct in an a_samp-compatible way.
+ * </remarks>
+ */
+
+// Just in case the define already exists, don't break the documentation.
+#if defined SAMP_CONST_CORRECT
+	#undef SAMP_CONST_CORRECT
+	_FIXES_CONST_PAWNDOC(SAMP_CONST_CORRECT = 1);
+	#define SAMP_CONST_CORRECT
+#else
+	_FIXES_CONST_PAWNDOC(SAMP_CONST_CORRECT = 1);
+#endif
+
+// And redefine it either way.
+#if FIX_const
+	#define SAMP_CONST_CORRECT
 #endif
 
 /**
@@ -8356,7 +8411,7 @@ const Text:INVALID_TEXT_DRAW__ = Text:INVALID_TEXT_DRAW;
  * <library>fixes.inc</library>
  * <remarks>
  * Future-compatible tag definitions.  <c>VEHICLE_PARAMS:</c> is defined as
- * <c>_:</c> when enhanced tags are disabled, and <c>E_VEHICLE_PARAMS:</c> when
+ * <c>_:</c> when enhanced tags are disabled, and <c>T_VEHICLE_PARAMS:</c> when
  * they are enabled.
  * </remarks>
  */
@@ -8376,7 +8431,7 @@ const Text:INVALID_TEXT_DRAW__ = Text:INVALID_TEXT_DRAW;
  * <library>fixes.inc</library>
  * <remarks>
  * Future-compatible tag definitions.  <c>PLAYER_STATE:</c> is defined as
- * <c>_:</c> when enhanced tags are disabled, and <c>E_PLAYER_STATE:</c> when
+ * <c>_:</c> when enhanced tags are disabled, and <c>T_PLAYER_STATE:</c> when
  * they are enabled.
  * </remarks>
  */
@@ -8395,8 +8450,47 @@ const Text:INVALID_TEXT_DRAW__ = Text:INVALID_TEXT_DRAW;
 /**
  * <library>fixes.inc</library>
  * <remarks>
+ * Future-compatible tag definitions.  <c>WEAPON_SLOT:</c> is defined as
+ * <c>_:</c> when enhanced tags are disabled, and <c>T_WEAPON_SLOT:</c> when
+ * they are enabled.
+ * </remarks>
+ */
+
+#if defined WEAPON_SLOT
+	_FIXES_HIDE_PAWNDOC(FIXES_WEAPON_SLOT_);
+#else
+	_FIXES_CONST_PAWNDOC(WEAPON_SLOT = cellmin);
+	#if defined __TAG
+		#define WEAPON_SLOT: __TAG(WEAPON_SLOT):
+	#else
+		#define WEAPON_SLOT: _:
+	#endif
+#endif
+
+/**
+ * <library>fixes.inc</library>
+ * <remarks>
+ * Future-compatible tag definitions.  <c>CP_TYPE:</c> is defined as <c>_:</c>
+ * when enhanced tags are disabled, and <c>T_CP_TYPE:</c> when they are enabled.
+ * </remarks>
+ */
+
+#if defined CP_TYPE
+	_FIXES_HIDE_PAWNDOC(FIXES_CP_TYPE_);
+#else
+	_FIXES_CONST_PAWNDOC(CP_TYPE = cellmin);
+	#if defined __TAG
+		#define CP_TYPE: __TAG(CP_TYPE):
+	#else
+		#define CP_TYPE: _:
+	#endif
+#endif
+
+/**
+ * <library>fixes.inc</library>
+ * <remarks>
  * Future-compatible tag definitions.  <c>SPECIAL_ACTION:</c> is defined as
- * <c>_:</c> when enhanced tags are disabled, and <c>E_SPECIAL_ACTION:</c> when
+ * <c>_:</c> when enhanced tags are disabled, and <c>T_SPECIAL_ACTION:</c> when
  * they are enabled.
  * </remarks>
  */
@@ -8416,7 +8510,7 @@ const Text:INVALID_TEXT_DRAW__ = Text:INVALID_TEXT_DRAW;
  * <library>fixes.inc</library>
  * <remarks>
  * Future-compatible tag definitions.  <c>PLAYER_VARTYPE:</c> is defined as
- * <c>_:</c> when enhanced tags are disabled, and <c>E_PLAYER_VARTYPE:</c> when
+ * <c>_:</c> when enhanced tags are disabled, and <c>T_PLAYER_VARTYPE:</c> when
  * they are enabled.
  * </remarks>
  */
@@ -8436,7 +8530,7 @@ const Text:INVALID_TEXT_DRAW__ = Text:INVALID_TEXT_DRAW;
  * <library>fixes.inc</library>
  * <remarks>
  * Future-compatible tag definitions.  <c>BODY_PART:</c> is defined as <c>_:</c>
- * when enhanced tags are disabled, and <c>E_BODY_PART:</c> when they are
+ * when enhanced tags are disabled, and <c>T_BODY_PART:</c> when they are
  * enabled.
  * </remarks>
  */
@@ -8456,7 +8550,7 @@ const Text:INVALID_TEXT_DRAW__ = Text:INVALID_TEXT_DRAW;
  * <library>fixes.inc</library>
  * <remarks>
  * Future-compatible tag definitions.  <c>CAM_MODE:</c> is defined as <c>_:</c>
- * when enhanced tags are disabled, and <c>E_CAM_MODE:</c> when they are
+ * when enhanced tags are disabled, and <c>T_CAM_MODE:</c> when they are
  * enabled.
  * </remarks>
  */
@@ -8476,7 +8570,7 @@ const Text:INVALID_TEXT_DRAW__ = Text:INVALID_TEXT_DRAW;
  * <library>fixes.inc</library>
  * <remarks>
  * Future-compatible tag definitions.  <c>VEHICLE:</c> is defined as <c>_:</c>
- * when enhanced tags are disabled, and <c>E_VEHICLE:</c> when they are enabled.
+ * when enhanced tags are disabled, and <c>T_VEHICLE:</c> when they are enabled.
  * </remarks>
  */
 
@@ -8496,7 +8590,7 @@ const Text:INVALID_TEXT_DRAW__ = Text:INVALID_TEXT_DRAW;
  * <library>fixes.inc</library>
  * <remarks>
  * Future-compatible tag definitions.  <c>CARMODTYPE:</c> is defined as
- * <c>_:</c> when enhanced tags are disabled, and <c>E_CARMODTYPE:</c> when they
+ * <c>_:</c> when enhanced tags are disabled, and <c>T_CARMODTYPE:</c> when they
  * are enabled.
  * </remarks>
  */
@@ -8516,7 +8610,7 @@ const Text:INVALID_TEXT_DRAW__ = Text:INVALID_TEXT_DRAW;
  * <library>fixes.inc</library>
  * <remarks>
  * Future-compatible tag definitions.  <c>WEAPON:</c> is defined as <c>_:</c>
- * when enhanced tags are disabled, and <c>E_WEAPON:</c> when they
+ * when enhanced tags are disabled, and <c>T_WEAPON:</c> when they
  * are enabled.
  * </remarks>
  */
@@ -8536,7 +8630,7 @@ const Text:INVALID_TEXT_DRAW__ = Text:INVALID_TEXT_DRAW;
  * <library>fixes.inc</library>
  * <remarks>
  * Future-compatible tag definitions.  <c>MAPICON:</c> is defined as <c>_:</c>
- * when enhanced tags are disabled, and <c>E_MAPICON:</c> when they
+ * when enhanced tags are disabled, and <c>T_MAPICON:</c> when they
  * are enabled.
  * </remarks>
  */
@@ -8556,7 +8650,7 @@ const Text:INVALID_TEXT_DRAW__ = Text:INVALID_TEXT_DRAW;
  * <library>fixes.inc</library>
  * <remarks>
  * Future-compatible tag definitions.  <c>CAM_MOVE:</c> is defined as
- * <c>_:</c> when enhanced tags are disabled, and <c>E_CAMERA:</c> when they
+ * <c>_:</c> when enhanced tags are disabled, and <c>T_CAMERA:</c> when they
  * are enabled.
  * </remarks>
  */
@@ -8576,7 +8670,7 @@ const Text:INVALID_TEXT_DRAW__ = Text:INVALID_TEXT_DRAW;
  * <library>fixes.inc</library>
  * <remarks>
  * Future-compatible tag definitions.  <c>SPECTATE_MODE:</c> is defined as
- * <c>_:</c> when enhanced tags are disabled, and <c>E_SPECTATE_MODE:</c> when
+ * <c>_:</c> when enhanced tags are disabled, and <c>T_SPECTATE_MODE:</c> when
  * they are enabled.
  * </remarks>
  */
@@ -8597,7 +8691,7 @@ const Text:INVALID_TEXT_DRAW__ = Text:INVALID_TEXT_DRAW;
  * <remarks>
  * Future-compatible tag definitions.  <c>PLAYER_RECORDING_TYPE:</c> is defined
  * as <c>_:</c> when enhanced tags are disabled, and
- * <c>E_PLAYER_RECORDING_TYPE:</c> when they are enabled.
+ * <c>T_PLAYER_RECORDING_TYPE:</c> when they are enabled.
  * </remarks>
  */
 
@@ -8616,7 +8710,7 @@ const Text:INVALID_TEXT_DRAW__ = Text:INVALID_TEXT_DRAW;
  * <library>fixes.inc</library>
  * <remarks>
  * Future-compatible tag definitions.  <c>VEHICLE_MODEL_INFO:</c> is defined as
- * <c>_:</c> when enhanced tags are disabled, and <c>E_VEHICLE_MODEL_INFO:</c>
+ * <c>_:</c> when enhanced tags are disabled, and <c>T_VEHICLE_MODEL_INFO:</c>
  * when they are enabled.
  * </remarks>
  */
@@ -8637,7 +8731,7 @@ const Text:INVALID_TEXT_DRAW__ = Text:INVALID_TEXT_DRAW;
  * <remarks>
  * Future-compatible tag definitions.  <c>OBJECT_MATERIAL_SIZE:</c> is defined
  * as <c>_:</c> when enhanced tags are disabled, and
- * <c>E_OBJECT_MATERIAL_SIZE:</c> when they are enabled.
+ * <c>T_OBJECT_MATERIAL_SIZE:</c> when they are enabled.
  * </remarks>
  */
 
@@ -8657,7 +8751,7 @@ const Text:INVALID_TEXT_DRAW__ = Text:INVALID_TEXT_DRAW;
  * <remarks>
  * Future-compatible tag definitions.  <c>OBJECT_MATERIAL_TEXT_ALIGN:</c> is
  * defined as <c>_:</c> when enhanced tags are disabled, and
- * <c>E_OBJECT_MATERIAL_TEXT_ALIGN:</c> when they are enabled.
+ * <c>T_OBJECT_MATERIAL_TEXT_ALIGN:</c> when they are enabled.
  * </remarks>
  */
 
@@ -8676,7 +8770,7 @@ const Text:INVALID_TEXT_DRAW__ = Text:INVALID_TEXT_DRAW;
  * <library>fixes.inc</library>
  * <remarks>
  * Future-compatible tag definitions.  <c>HTTP_METHOD:</c> is defined as
- * <c>_:</c> when enhanced tags are disabled, and <c>E_HTTP_METHOD:</c> when
+ * <c>_:</c> when enhanced tags are disabled, and <c>T_HTTP_METHOD:</c> when
  * they are enabled.
  * </remarks>
  */
@@ -8696,7 +8790,7 @@ const Text:INVALID_TEXT_DRAW__ = Text:INVALID_TEXT_DRAW;
  * <library>fixes.inc</library>
  * <remarks>
  * Future-compatible tag definitions.  <c>HTTP_ERROR:</c> is defined as
- * <c>_:</c> when enhanced tags are disabled, and <c>E_HTTP_ERROR:</c> when
+ * <c>_:</c> when enhanced tags are disabled, and <c>T_HTTP_ERROR:</c> when
  * they are enabled.
  * </remarks>
  */
@@ -8716,7 +8810,7 @@ const Text:INVALID_TEXT_DRAW__ = Text:INVALID_TEXT_DRAW;
  * <library>fixes.inc</library>
  * <remarks>
  * Future-compatible tag definitions.  <c>FIGHT_STYLE:</c> is defined as
- * <c>_:</c> when enhanced tags are disabled, and <c>E_FIGHT_STYLE:</c> when
+ * <c>_:</c> when enhanced tags are disabled, and <c>T_FIGHT_STYLE:</c> when
  * they are enabled.
  * </remarks>
  */
@@ -8736,7 +8830,7 @@ const Text:INVALID_TEXT_DRAW__ = Text:INVALID_TEXT_DRAW;
  * <library>fixes.inc</library>
  * <remarks>
  * Future-compatible tag definitions.  <c>WEAPONSKILL:</c> is defined as
- * <c>_:</c> when enhanced tags are disabled, and <c>E_WEAPONSKILL:</c> when
+ * <c>_:</c> when enhanced tags are disabled, and <c>T_WEAPONSKILL:</c> when
  * they are enabled.
  * </remarks>
  */
@@ -8756,7 +8850,7 @@ const Text:INVALID_TEXT_DRAW__ = Text:INVALID_TEXT_DRAW;
  * <library>fixes.inc</library>
  * <remarks>
  * Future-compatible tag definitions.  <c>WEAPONSTATE:</c> is defined as
- * <c>_:</c> when enhanced tags are disabled, and <c>E_WEAPONSTATE:</c> when
+ * <c>_:</c> when enhanced tags are disabled, and <c>T_WEAPONSTATE:</c> when
  * they are enabled.
  * </remarks>
  */
@@ -8776,7 +8870,7 @@ const Text:INVALID_TEXT_DRAW__ = Text:INVALID_TEXT_DRAW;
  * <library>fixes.inc</library>
  * <remarks>
  * Future-compatible tag definitions.  <c>SELECT_OBJECT:</c> is defined as
- * <c>_:</c> when enhanced tags are disabled, and <c>E_SELECT_OBJECT:</c> when
+ * <c>_:</c> when enhanced tags are disabled, and <c>T_SELECT_OBJECT:</c> when
  * they are enabled.
  * </remarks>
  */
@@ -8796,7 +8890,7 @@ const Text:INVALID_TEXT_DRAW__ = Text:INVALID_TEXT_DRAW;
  * <library>fixes.inc</library>
  * <remarks>
  * Future-compatible tag definitions.  <c>BULLET_HIT_TYPE:</c> is defined as
- * <c>_:</c> when enhanced tags are disabled, and <c>E_BULLET_HIT_TYPE:</c> when
+ * <c>_:</c> when enhanced tags are disabled, and <c>T_BULLET_HIT_TYPE:</c> when
  * they are enabled.
  * </remarks>
  */
@@ -8816,7 +8910,7 @@ const Text:INVALID_TEXT_DRAW__ = Text:INVALID_TEXT_DRAW;
  * <library>fixes.inc</library>
  * <remarks>
  * Future-compatible tag definitions.  <c>DOWNLOAD_REQUEST:</c> is defined as
- * <c>_:</c> when enhanced tags are disabled, and <c>E_DOWNLOAD_REQUEST:</c>
+ * <c>_:</c> when enhanced tags are disabled, and <c>T_DOWNLOAD_REQUEST:</c>
  * when they are enabled.
  * </remarks>
  */
@@ -8836,7 +8930,7 @@ const Text:INVALID_TEXT_DRAW__ = Text:INVALID_TEXT_DRAW;
  * <library>fixes.inc</library>
  * <remarks>
  * Future-compatible tag definitions.  <c>CLICK_SOURCE:</c> is defined as
- * <c>_:</c> when enhanced tags are disabled, and <c>E_CLICK_SOURCE:</c> when
+ * <c>_:</c> when enhanced tags are disabled, and <c>T_CLICK_SOURCE:</c> when
  * they are enabled.
  * </remarks>
  */
@@ -8856,7 +8950,7 @@ const Text:INVALID_TEXT_DRAW__ = Text:INVALID_TEXT_DRAW;
  * <library>fixes.inc</library>
  * <remarks>
  * Future-compatible tag definitions.  <c>EDIT_RESPONSE:</c> is defined as
- * <c>_:</c> when enhanced tags are disabled, and <c>E_EDIT_RESPONSE:</c> when
+ * <c>_:</c> when enhanced tags are disabled, and <c>T_EDIT_RESPONSE:</c> when
  * they are enabled.
  * </remarks>
  */
@@ -8876,7 +8970,7 @@ const Text:INVALID_TEXT_DRAW__ = Text:INVALID_TEXT_DRAW;
  * <library>fixes.inc</library>
  * <remarks>
  * Future-compatible tag definitions.  <c>DIALOG_STYLE:</c> is defined as
- * <c>_:</c> when enhanced tags are disabled, and <c>E_DIALOG_STYLE:</c> when
+ * <c>_:</c> when enhanced tags are disabled, and <c>T_DIALOG_STYLE:</c> when
  * they are enabled.
  * </remarks>
  */
@@ -8896,7 +8990,7 @@ const Text:INVALID_TEXT_DRAW__ = Text:INVALID_TEXT_DRAW;
  * <library>fixes.inc</library>
  * <remarks>
  * Future-compatible tag definitions.  <c>TEXT_DRAW_FONT:</c> is defined as
- * <c>_:</c> when enhanced tags are disabled, and <c>E_TEXT_DRAW_FONT:</c> when
+ * <c>_:</c> when enhanced tags are disabled, and <c>T_TEXT_DRAW_FONT:</c> when
  * they are enabled.
  * </remarks>
  */
@@ -8916,7 +9010,7 @@ const Text:INVALID_TEXT_DRAW__ = Text:INVALID_TEXT_DRAW;
  * <library>fixes.inc</library>
  * <remarks>
  * Future-compatible tag definitions.  <c>TEXT_DRAW_ALIGN:</c> is defined as
- * <c>_:</c> when enhanced tags are disabled, and <c>E_TEXT_DRAW_ALIGN:</c> when
+ * <c>_:</c> when enhanced tags are disabled, and <c>T_TEXT_DRAW_ALIGN:</c> when
  * they are enabled.
  * </remarks>
  */
@@ -8936,7 +9030,7 @@ const Text:INVALID_TEXT_DRAW__ = Text:INVALID_TEXT_DRAW;
  * <library>fixes.inc</library>
  * <remarks>
  * Future-compatible tag definitions.  <c>SERVER_VARTYPE:</c> is defined as
- * <c>_:</c> when enhanced tags are disabled, and <c>E_SERVER_VARTYPE:</c> when
+ * <c>_:</c> when enhanced tags are disabled, and <c>T_SERVER_VARTYPE:</c> when
  * they are enabled.
  * </remarks>
  */
@@ -8956,7 +9050,7 @@ const Text:INVALID_TEXT_DRAW__ = Text:INVALID_TEXT_DRAW;
  * <library>fixes.inc</library>
  * <remarks>
  * Future-compatible tag definitions.  <c>FORCE_SYNC:</c> is defined as
- * <c>_:</c> when enhanced tags are disabled, and <c>E_FORCE_SYNC:</c> when they
+ * <c>_:</c> when enhanced tags are disabled, and <c>T_FORCE_SYNC:</c> when they
  * are enabled.
  * </remarks>
  */
@@ -10593,13 +10687,13 @@ _FIXES_STATIC_STOCK
 	 * <remarks>
 	 * All data for players on where their worldbounds are and where they last
 	 * were before they went through the bounds by crouching.
-	 * <p />
+	 * <p/>
 	 * <ul>
 	 * <li>P = Previous.</li>
 	 * <li>L = Lower.</li>
 	 * <li>U = Upper.</li>
 	 * </ul>
-	 * <p />
+	 * <p/>
 	 * Why is this not an enum?  Simple - multiple arrays are better.  A 2d enum
 	 * array takes up more space because it needs the array header, and takes
 	 * more code to access, because it needs to look up offsets.
@@ -10617,13 +10711,13 @@ _FIXES_STATIC_STOCK
 	 * <remarks>
 	 * All data for players on where their worldbounds are and where they last
 	 * were before they went through the bounds by crouching.
-	 * <p />
+	 * <p/>
 	 * <ul>
 	 * <li>P = Previous.</li>
 	 * <li>L = Lower.</li>
 	 * <li>U = Upper.</li>
 	 * </ul>
-	 * <p />
+	 * <p/>
 	 * Why is this not an enum?  Simple - multiple arrays are better.  A 2d enum
 	 * array takes up more space because it needs the array header, and takes
 	 * more code to access, because it needs to look up offsets.
@@ -10641,13 +10735,13 @@ _FIXES_STATIC_STOCK
 	 * <remarks>
 	 * All data for players on where their worldbounds are and where they last
 	 * were before they went through the bounds by crouching.
-	 * <p />
+	 * <p/>
 	 * <ul>
 	 * <li>P = Previous.</li>
 	 * <li>L = Lower.</li>
 	 * <li>U = Upper.</li>
 	 * </ul>
-	 * <p />
+	 * <p/>
 	 * Why is this not an enum?  Simple - multiple arrays are better.  A 2d enum
 	 * array takes up more space because it needs the array header, and takes
 	 * more code to access, because it needs to look up offsets.
@@ -10665,13 +10759,13 @@ _FIXES_STATIC_STOCK
 	 * <remarks>
 	 * All data for players on where their worldbounds are and where they last
 	 * were before they went through the bounds by crouching.
-	 * <p />
+	 * <p/>
 	 * <ul>
 	 * <li>P = Previous.</li>
 	 * <li>L = Lower.</li>
 	 * <li>U = Upper.</li>
 	 * </ul>
-	 * <p />
+	 * <p/>
 	 * Why is this not an enum?  Simple - multiple arrays are better.  A 2d enum
 	 * array takes up more space because it needs the array header, and takes
 	 * more code to access, because it needs to look up offsets.
@@ -10689,13 +10783,13 @@ _FIXES_STATIC_STOCK
 	 * <remarks>
 	 * All data for players on where their worldbounds are and where they last
 	 * were before they went through the bounds by crouching.
-	 * <p />
+	 * <p/>
 	 * <ul>
 	 * <li>P = Previous.</li>
 	 * <li>L = Lower.</li>
 	 * <li>U = Upper.</li>
 	 * </ul>
-	 * <p />
+	 * <p/>
 	 * Why is this not an enum?  Simple - multiple arrays are better.  A 2d enum
 	 * array takes up more space because it needs the array header, and takes
 	 * more code to access, because it needs to look up offsets.
@@ -10713,13 +10807,13 @@ _FIXES_STATIC_STOCK
 	 * <remarks>
 	 * All data for players on where their worldbounds are and where they last
 	 * were before they went through the bounds by crouching.
-	 * <p />
+	 * <p/>
 	 * <ul>
 	 * <li>P = Previous.</li>
 	 * <li>L = Lower.</li>
 	 * <li>U = Upper.</li>
 	 * </ul>
-	 * <p />
+	 * <p/>
 	 * Why is this not an enum?  Simple - multiple arrays are better.  A 2d enum
 	 * array takes up more space because it needs the array header, and takes
 	 * more code to access, because it needs to look up offsets.
@@ -10737,13 +10831,13 @@ _FIXES_STATIC_STOCK
 	 * <remarks>
 	 * All data for players on where their worldbounds are and where they last
 	 * were before they went through the bounds by crouching.
-	 * <p />
+	 * <p/>
 	 * <ul>
 	 * <li>P = Previous.</li>
 	 * <li>L = Lower.</li>
 	 * <li>U = Upper.</li>
 	 * </ul>
-	 * <p />
+	 * <p/>
 	 * Why is this not an enum?  Simple - multiple arrays are better.  A 2d enum
 	 * array takes up more space because it needs the array header, and takes
 	 * more code to access, because it needs to look up offsets.
@@ -13288,11 +13382,15 @@ native BAD_gpci(playerid, serial[], len) = gpci;
 			#error _ALS_SHA256_PassHash defined /// <p/>
 		#endif /// <p/>
 		#if FIX_defaults /// <p/>
-			#pragma deprecated Use BCrypt or better for hashing passwords. /// <p/>
+			#if FIX_SHA256 /// <p/>
+				#pragma deprecated Use BCrypt or better for hashing passwords. /// <p/>
+			#endif /// <p/>
 			/// <library>fixes.inc</library>
 			native CST_SHA256_PassHash(const password[], const salt[], output[], len = sizeof (output)) = SHA256_PassHash; /// <p/>
 		#else /// <p/>
-			#pragma deprecated Use BCrypt or better for hashing passwords. /// <p/>
+			#if FIX_SHA256 /// <p/>
+				#pragma deprecated Use BCrypt or better for hashing passwords. /// <p/>
+			#endif /// <p/>
 			/// <library>fixes.inc</library>
 			native CST_SHA256_PassHash(const password[], const salt[], output[], len) = SHA256_PassHash; /// <p/>
 		#endif /// <p/>
@@ -14181,7 +14279,7 @@ native BAD_gpci(playerid, serial[], len) = gpci;
 	/// <library>fixes.inc</library>
 	native SetPlayerArmedWeapon__(playerid, WEAPON:weaponid) = SetPlayerArmedWeapon; /// <p/>
 	/// <library>fixes.inc</library>
-	native GetPlayerWeaponData__(playerid, slot, &WEAPON:weapons, &ammo) = GetPlayerWeaponData; /// <p/>
+	native GetPlayerWeaponData__(playerid, WEAPON_SLOT:slot, &WEAPON:weapons, &ammo) = GetPlayerWeaponData; /// <p/>
 	/// <library>fixes.inc</library>
 	native GivePlayerMoney__(playerid, money) = GivePlayerMoney; /// <p/>
 	/// <library>fixes.inc</library>
@@ -14345,7 +14443,7 @@ native BAD_gpci(playerid, serial[], len) = gpci;
 	/// <library>fixes.inc</library>
 	native DisablePlayerCheckpoint__(playerid) = DisablePlayerCheckpoint; /// <p/>
 	/// <library>fixes.inc</library>
-	native SetPlayerRaceCheckpoint__(playerid, type, Float:centerX, Float:centerY, Float:centerZ, Float:nextX, Float:nextY, Float:nextZ, Float:size) = SetPlayerRaceCheckpoint; /// <p/>
+	native SetPlayerRaceCheckpoint__(playerid, CP_TYPE:type, Float:centerX, Float:centerY, Float:centerZ, Float:nextX, Float:nextY, Float:nextZ, Float:size) = SetPlayerRaceCheckpoint; /// <p/>
 	/// <library>fixes.inc</library>
 	native DisablePlayerRaceCheckpoint__(playerid) = DisablePlayerRaceCheckpoint; /// <p/>
 	/// <library>fixes.inc</library>
@@ -14490,9 +14588,9 @@ native BAD_GetWeaponName(weaponid, const weapon[], len) = GetWeaponName;
 		#endif
 
 		#if FIX_defaults
-			native FIXES_GetWeaponName(playerid, name[], len) = GetWeaponName;
+			native FIXES_GetWeaponName(weaponid, weapon[], len) = GetWeaponName;
 		#else
-			native FIXES_GetWeaponName(playerid, name[], len = sizeof (name)) = GetWeaponName;
+			native FIXES_GetWeaponName(weaponid, weapon[], len = sizeof (name)) = GetWeaponName;
 		#endif
 
 		#if _FIXES_SAMP
@@ -14504,7 +14602,7 @@ native BAD_GetWeaponName(weaponid, const weapon[], len) = GetWeaponName;
 			#error _ALS_GetWeaponName defined
 		#endif
 
-		native FIXES_GetWeaponName(playerid, const name[], len = sizeof (name)) = GetWeaponName;
+		native FIXES_GetWeaponName(weaponid, const weapon[], len = sizeof (name)) = GetWeaponName;
 
 		#if _FIXES_SAMP
 			#define _ALS_GetWeaponName
@@ -14547,7 +14645,9 @@ native BAD_GetWeaponName(weaponid, const weapon[], len) = GetWeaponName;
 		#error _ALS_SHA256_PassHash defined
 	#endif
 
-	#pragma deprecated Use BCrypt or better for hashing passwords.
+	#if FIX_SHA256
+		#pragma deprecated Use BCrypt or better for hashing passwords.
+	#endif
 	native FIXES_SHA256_PassHash(password[], salt[], output[], len = sizeof (output)) = SHA256_PassHash;
 
 	#if _FIXES_SAMP
@@ -15685,7 +15785,6 @@ static stock _FIXES_CheckMaxPlayers()
 					Text:t;
 
 			#if FIX_GameTextStyles
-
 				// Global style 7 (vehicle name).
 				t = FIXES_gsGTStyle[7] = TextDrawCreate__(608.0, 344.0, FIXES_gsSpace),
 				TextDrawLetterSize__(t, 1.0, 3.0),
@@ -15788,7 +15887,7 @@ static stock _FIXES_CheckMaxPlayers()
 				t = FIXES_gsGTStyle[14] = TextDrawCreate__(608.0, 22.0, FIXES_gsSpace),
 				TextDrawLetterSize__(t, 0.55, 2.2),
 				TextDrawAlignment__(t, _FIXES_TEXT_DRAW_ALIGN_RIGHT),
-				TextDrawColor__(t, 0xE1E1E1FF),
+				TextDrawColor__(t, 0xC3C3C3FF),
 				TextDrawSetShadow__(t, 0),
 				TextDrawSetOutline__(t, 2),
 				TextDrawBackgroundColor__(t, 0x000000AA),
@@ -15811,7 +15910,6 @@ static stock _FIXES_CheckMaxPlayers()
 				TextDrawUseBox__(t, true),
 				TextDrawBoxColor__(t, 0x00000080),
 				TextDrawTextSize__(t, 230.5, 200.0);
-
 			#endif
 
 				// Global style 0.
@@ -15918,7 +16016,6 @@ static stock _FIXES_CheckMaxPlayers()
 					PlayerText:t;
 
 			#if FIX_GameTextStyles
-
 				// Global style 7 (playerid, vehicle name).
 				t = FIXES_gsPGTStyle[playerid][7] = CreatePlayerTextDraw__(playerid, 608.0, 344.0, FIXES_gsSpace),
 				PlayerTextDrawLetterSize__(playerid, t, 1.0, 3.0),
@@ -16021,7 +16118,7 @@ static stock _FIXES_CheckMaxPlayers()
 				t = FIXES_gsPGTStyle[playerid][14] = CreatePlayerTextDraw__(playerid, 608.0, 22.0, FIXES_gsSpace),
 				PlayerTextDrawLetterSize__(playerid, t, 0.55, 2.2),
 				PlayerTextDrawAlignment__(playerid, t, _FIXES_TEXT_DRAW_ALIGN_RIGHT),
-				PlayerTextDrawColor__(playerid, t, 0xE1E1E1FF),
+				PlayerTextDrawColor__(playerid, t, 0xC3C3C3FF),
 				PlayerTextDrawSetShadow__(playerid, t, 0),
 				PlayerTextDrawSetOutline__(playerid, t, 2),
 				PlayerTextDrawBackgroundColor__(playerid, t, 0x000000AA),
@@ -16044,7 +16141,6 @@ static stock _FIXES_CheckMaxPlayers()
 				PlayerTextDrawUseBox__(playerid, t, true),
 				PlayerTextDrawBoxColor__(playerid, t, 0x00000080),
 				PlayerTextDrawTextSize__(playerid, t, 230.5, 200.0);
-
 			#endif
 
 				// Global style 0.
@@ -16693,8 +16789,9 @@ static stock _FIXES_CountFilterscripts()
 		// Reset the frame header.
 
 		// Adjust the parameter count.
+		const minus8 = -8;
 		#emit LOAD.S.pri       8
-		#emit ADD.C            0xFFFFFFF8
+		#emit ADD.C            minus8
 		#emit STOR.S.pri       16
 
 		// Move the return address.
@@ -21140,7 +21237,7 @@ native BAD_GetPlayerMenu(playerid) = GetPlayerMenu;
 					// And have the weapon data clobber the ammo data, thus
 					// avoiding a variable allocation (wow, a whole ONE
 					// instruction...).
-					GetPlayerWeaponData__(playerid, 4, WEAPON:model, ammo);
+					GetPlayerWeaponData__(playerid, WEAPON_SLOT:4, WEAPON:model, ammo);
 					if (model)
 					{
 						SetPlayerArmedWeapon__(playerid, WEAPON:model);
@@ -21748,9 +21845,9 @@ native BAD_DisablePlayerCheckpoint(playerid) = DisablePlayerCheckpoint;
  */
 
 #if FIX_SetPlayerRaceCheckpoint
-	forward _FIXES_SetRaceCheckpoint(playerid, type, Float:x, Float:y, Float:z, Float:nextx, Float:nexty, Float:nextz, Float:size);
+	forward _FIXES_SetRaceCheckpoint(playerid, CP_TYPE:type, Float:x, Float:y, Float:z, Float:nextx, Float:nexty, Float:nextz, Float:size);
 
-	public _FIXES_SetRaceCheckpoint(playerid, type, Float:x, Float:y, Float:z, Float:nextx, Float:nexty, Float:nextz, Float:size)
+	public _FIXES_SetRaceCheckpoint(playerid, CP_TYPE:type, Float:x, Float:y, Float:z, Float:nextx, Float:nexty, Float:nextz, Float:size)
 	{
 		#if FIXES_Single
 			if (FIXES_gsPlayerBools[playerid] & e_FIXES_BOOLS_RACE_CP_DELAYED)
@@ -24008,6 +24105,7 @@ native BAD_memcpy(dest[], const source[], index = 0, numbytes, maxlength = sizeo
 			if (numbytes <= _FIXES_CELLBYTES)
 			{
 				// Silly case.
+				small[1] = dest[0];
 				if (memcpy(small, source[index], _FIXES_CELLBYTES - fraction, numbytes + fraction, 2))
 				{
 					return
@@ -24018,7 +24116,7 @@ native BAD_memcpy(dest[], const source[], index = 0, numbytes, maxlength = sizeo
 			else
 			{
 				if (memcpy(small, source[index], _FIXES_CELLBYTES - fraction, _FIXES_CELLBYTES + fraction, 2) &&
-					memcpy(dest, source[index + 1], _FIXES_CELLBYTES - fraction, numbytes - _FIXES_CELLBYTES + fraction, 2))
+					memcpy(dest, source[index + 1], _FIXES_CELLBYTES - fraction, numbytes - _FIXES_CELLBYTES + fraction, numbytes))
 				{
 					return
 						dest[0] = small[1],
@@ -25393,14 +25491,14 @@ native BAD_GetPlayerWeaponData(playerid, slot, &weapon, &ammo) = GetPlayerWeapon
  */
 
 #if FIX_GetPlayerWeaponData
-	stock FIXES_GetPlayerWeaponData(playerid, slot, &WEAPON:weapon, &ammo)
+	stock FIXES_GetPlayerWeaponData(playerid, WEAPON_SLOT:slot, &WEAPON:weapon, &ammo)
 	{
 		// This reuses the "slot" variable so we don't have to declare a new one
 		// and can put all the code in a single statement.
 		return
-			slot = GetPlayerWeaponData__(playerid, slot, weapon, ammo),
+			slot = WEAPON_SLOT:GetPlayerWeaponData__(playerid, slot, weapon, ammo),
 			weapon = ammo ? weapon : _FIXES_WEAPON_FIST,
-			slot;
+			_:slot;
 	}
 
 	#if _FIXES_SAMP
@@ -25617,7 +25715,7 @@ native bool:BAD_ispacked(const string[]) = ispacked;
 	// function with the same name as a `native` for one compiler pass.  It also
 	// doesn't seem to appear in the compiled output, which was an effect I
 	// tried to create for a long time then gave up on (see
-	// <c>ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ()</c> for my alternative work-around).
+	// <c>Zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz()</c> for my alternative work-around).
 	_FIXES_FUNC_PAWNDOC(bool:ispacked(const packedString[]));
 	#if _FIXES_SAMP
 		#define _ALS_ispacked
@@ -25777,7 +25875,7 @@ native BAD_SetPlayerPosFindZ(playerid, Float:x, Float:y, Float:z) = SetPlayerPos
 						ammo[_FIXES_WEAPON_SLOTS];
 					for (slot = 0; slot != _FIXES_WEAPON_SLOTS; ++slot)
 					{
-						GetPlayerWeaponData__(playerid, slot, weapons[slot], ammo[slot]);
+						GetPlayerWeaponData__(playerid, WEAPON_SLOT:slot, weapons[slot], ammo[slot]);
 					}
 					weapons[11] = _FIXES_WEAPON_FIST,
 					ResetPlayerWeapons__(playerid);
@@ -27222,15 +27320,15 @@ native BAD_strcmp(const string1[], const string2[], bool:ignorecase = false, len
 		generated documentation always.  This is the best way to hide them.  You
 		still see one function (this one), but at least the documentation for
 		this one function can explain why it exists.
-		<p />
-		This is <c>ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ</c> and starts the internal
+		<p/>
+		This is <c>Zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz</c> and starts the internal
 		functions block.  This is the last possible name before the first
 		character is <c>_</c> when the functions are sorted lexicographically
-		(alphabetically).  There's also <c>ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZY</c>
+		(alphabetically).  There's also <c>Zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzy</c>
 		that starts the variables block; they could have the same name if they
 		were not declared in the same scope, but they might not always be
 		separately defined.
-		<p />
+		<p/>
 		Note that the actual hiding itself is done by an XML comment started
 		here and ended by a later variable.
 	</remarks>
@@ -27238,7 +27336,7 @@ native BAD_strcmp(const string1[], const string2[], bool:ignorecase = false, len
 	<!--
 */
 
-static stock ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ() {}
+static stock Zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz() {}
 
 /**
 	<library>fixes.inc</library>
@@ -27250,9 +27348,9 @@ static stock ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ() {}
 		common pattern used throughout fixes.inc (and most of programming).
 		Unfortunately these weirdly named internal functions appear in the
 		generated documentation always.  This is the best way to hide them.  You
-		still see one function (<c>ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ</c>), but at
+		still see one function (<c>Zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz</c>), but at
 		least the documentation for that can explain why it exists.
-		<p />
+		<p/>
 		This is <c>_zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz</c> and ends the internal
 		functions block.  This is the last possible name before the first
 		character is no longer <c>_</c> when the functions are sorted
@@ -27260,7 +27358,7 @@ static stock ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ() {}
 		<c>_zzzzzzzzzzzzzzzzzzzzzzzzzzzzzy</c> that ends the variables block;
 		they could have the same name if they were not declared in the same
 		scope, but they might not always be separately defined.
-		<p />
+		<p/>
 		Note that the actual hiding itself is done by an XML comment started
 		earlier and ended here.
 	</remarks>
@@ -27282,15 +27380,15 @@ static stock _zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz() {}
 		generated documentation always.  This is the best way to hide them.  You
 		still see one variable (this one), but at least the documentation for
 		this one variable can explain why it exists.
-		<p />
-		This is <c>ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZY</c> and starts the internal
+		<p/>
+		This is <c>Zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzy</c> and starts the internal
 		variables block.  This is the last possible name, except one, before the
 		first character is <c>_</c> when the functions are sorted
 		lexicographically (alphabetically).  There's also
-		<c>ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ</c> that starts the functions block;
+		<c>Zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz</c> that starts the functions block;
 		they could have the same name if they were not declared in the same
 		scope, but they might not always be separately defined.
-		<p />
+		<p/>
 		Note that the actual hiding itself is done by an XML comment started
 		here and ended by a later variable.
 	</remarks>
@@ -27298,7 +27396,7 @@ static stock _zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz() {}
 	<!--
 */
 
-static stock ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZY;
+static stock Zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzy;
 
 /**
 	<library>fixes.inc</library>
@@ -27310,9 +27408,9 @@ static stock ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZY;
 		common pattern used throughout fixes.inc (and most of programming).
 		Unfortunately these weirdly named internal variables appear in the
 		generated documentation always.  This is the best way to hide them.  You
-		still see one variable (<c>ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZY</c>), but at
+		still see one variable (<c>Zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzy</c>), but at
 		least the documentation for that can explain why it exists.
-		<p />
+		<p/>
 		This is <c>_zzzzzzzzzzzzzzzzzzzzzzzzzzzzzy</c> and ends the internal
 		variables block.  This is the last possible name before the first
 		character is no longer <c>_</c>, except for one, when the functions are
@@ -27320,7 +27418,7 @@ static stock ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZY;
 		<c>_zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz</c> that ends the functions block;
 		they could have the same name if they were not declared in the same
 		scope, but they might not always be separately defined.
-		<p />
+		<p/>
 		Note that the actual hiding itself is done by an XML comment started
 		earlier and ended here.
 	</remarks>
@@ -27344,7 +27442,7 @@ static stock _zzzzzzzzzzzzzzzzzzzzzzzzzzzzzy;
 		an external setting and needs its documentation exposing, unless the
 		library is built with <c>FIXES_NoPawndoc</c>, in which case these are
 		hidden as well.
-		<p />
+		<p/>
 		Note that the actual hiding itself is done by an XML comment started
 		here and ended by a later variable.
 	</remarks>
@@ -27372,7 +27470,7 @@ static stock _zzzzzzzzzzzzzzzzzzzzzzzzzzzzzy;
 		an external setting and needs its documentation exposing, unless the
 		library is built with <c>FIXES_NoPawndoc</c>, in which case these are
 		hidden as well.
-		<p />
+		<p/>
 		Note that the actual hiding itself is done by an XML comment started
 		earlier and ended here.
 	</remarks>
@@ -27393,7 +27491,7 @@ static stock FIXES_zzzzzzzzzzzzzzzzzzzzzzzzy;
 		This variable only exists to hide other variables.  It starts a massive
 		comment block in the pawndoc XML output that hides all fixes.inc
 		options, i.e. those that start with <c>FIX_</c>.
-		<p />
+		<p/>
 		Note that the actual hiding itself is done by an XML comment started
 		here and ended by a later variable.
 	</remarks>
@@ -27410,7 +27508,7 @@ static stock FIX_;
 		This variable only exists to hide other variables.  It ends a massive
 		comment block in the pawndoc XML output that hides all fixes.inc
 		options, i.e. those that start with <c>FIX_</c>.
-		<p />
+		<p/>
 		Note that the actual hiding itself is done by an XML comment started
 		earlier and ended here.
 	</remarks>
@@ -27427,7 +27525,7 @@ static stock FIX_zzzzzzzzzzzzzzzzzzzzzzzzzzy;
 		This enum only exists to hide other enums.  It starts a massive comment
 		block in the pawndoc XML output that hides all fixes.inc enums when the
 		library is built with <c>FIXES_NoPawndoc</c>.
-		<p />
+		<p/>
 		Note that the actual hiding itself is done by an XML comment started
 		here and ended by a later variable.
 	</remarks>
@@ -27452,7 +27550,7 @@ _FIXES_ENUM_PAWNDOC(e_FIXES);
 		This enum only exists to hide other enums.  It ends a massive comment
 		block in the pawndoc XML output that hides all fixes.inc enums when the
 		library is built with <c>FIXES_NoPawndoc</c>.
-		<p />
+		<p/>
 		Note that the actual hiding itself is done by an XML comment started
 		earlier and ended here.
 	</remarks>
@@ -27478,7 +27576,7 @@ _FIXES_ENUM_PAWNDOC(e_FIXESzzzzzzzzzzzzzzzzzzzzzz);
 		This constant only exists to hide other consts.  It ends a massive
 		comment block in the pawndoc XML output that hides all fixes.inc
 		consts when the library is built with <c>FIXES_NoPawndoc</c>.
-		<p />
+		<p/>
 		Note that the actual hiding itself is done by an XML comment started
 		earlier and ended here.
 	</remarks>
@@ -27496,7 +27594,7 @@ const e_FIXESzzzzzzzzzzzzzzzzzzzzzzzz:e_FIXES_zzzzzzzzzzzzzzzzzzzzzzz = e_FIXESz
 		comment block in the pawndoc XML output that hides all fixes.inc
 		functions when the library is built with <c>FIXES_NoPawndoc</c>.  It is
 		the last valid function name where they start with <c>FIXES_</c>.
-		<p />
+		<p/>
 		Note that the actual hiding itself is done by an XML comment started
 		earlier and ended here.
 	</remarks>
@@ -27513,7 +27611,7 @@ static stock e_FIXESzzzzzzzzzzzzzzzzzzzzzzzz:FIXES_zzzzzzzzzzzzzzzzzzzzzzzzz() {
 		This constant only exists to hide other consts.  It starts a massive
 		comment block in the pawndoc XML output that hides all fixes.inc
 		consts when the library is built with <c>FIXES_NoPawndoc</c>.
-		<p />
+		<p/>
 		Note that the actual hiding itself is done by an XML comment started
 		here and ended by a later variable.
 	</remarks>
@@ -27531,7 +27629,7 @@ const e_FIXES:e_FIXES_ = e_FIXES;
 		comment block in the pawndoc XML output that hides all fixes.inc
 		functions when the library is built with <c>FIXES_NoPawndoc</c>.  It is
 		the last valid function name before they start with <c>FIXES_</c>.
-		<p />
+		<p/>
 		Note that the actual hiding itself is done by an XML comment started
 		here and ended by a later variable.
 	</remarks>

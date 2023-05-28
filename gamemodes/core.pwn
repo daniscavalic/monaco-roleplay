@@ -24,10 +24,6 @@
 #define 	CGEN_MEMORY 		60000
 //			Core Includes
 #include 	<a_samp>
-#include 	<a_actor>
-#include 	<a_objects>
-#include 	<a_players>
-#include 	<a_vehicles>
 #include 	<crashdetect>
 #include 	<ysilib\YSI_Coding\y_hooks>
 #include 	<ysilib\YSI_Coding\y_va>

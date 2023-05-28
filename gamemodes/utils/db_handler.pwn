@@ -1,5 +1,6 @@
 #include <ysilib\YSI_Coding\y_hooks>
 #include <a_mysql>
+#include <database_migration>
 
 #define SQL_CONNECTION_TYPE (1) // (Default: 0)
 
@@ -28,6 +29,8 @@ hook OnGameModeInit()
         SendRconCommand("exit");
         return 1;
     }
+
+    MigrateSchemas(Database);
     
     return Y_HOOKS_CONTINUE_RETURN_1;
 }
